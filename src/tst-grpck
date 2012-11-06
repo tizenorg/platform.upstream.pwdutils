@@ -1,0 +1,104 @@
+#!/bin/bash
+
+export LANG=C
+export LC_ALL=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+cat << EOT > $TEMPDIR/group
+root:*:0:
+bin:*:1:daemon
+daemon:*:2:
+sys:*:3:
+tty:*:5:
+disk:*:6:
+lp:*:7:
+www:*:8:
+kmem:*:9:
+wheel:*:10:
+mail:*:12:
+news:*:13:
+uucp:*:14:
+shadow:*:15:
+dialout:*:16:
+audio:*:17:
+floppy:*:19:
+cdrom:*:20:
+console:*:21:
+utmp:*:22:
+public:*:32:
+video:*:33:
+games:*:40:
+xok:*:41:
+modem:*:43:
+named:*:44:
+man:*:62:
+users:*:100:
+nobody:*:65533:
+nogroup:*:65534:nobody
+at:!:25:
+ntadmin:!:71:
+ldap:!:70:
+sshd:!:65:
+postfix:!:51:
+maildrop:!:59:
+EOT
+
+cat << EOT > tst-grpck.group-sorted
+root:*:0:
+bin:*:1:daemon
+daemon:*:2:
+sys:*:3:
+tty:*:5:
+disk:*:6:
+lp:*:7:
+www:*:8:
+kmem:*:9:
+wheel:*:10:
+mail:*:12:
+news:*:13:
+uucp:*:14:
+shadow:*:15:
+dialout:*:16:
+audio:*:17:
+floppy:*:19:
+cdrom:*:20:
+console:*:21:
+utmp:*:22:
+at:!:25:
+public:*:32:
+video:*:33:
+games:*:40:
+xok:*:41:
+modem:*:43:
+named:*:44:
+postfix:!:51:
+maildrop:!:59:
+man:*:62:
+sshd:!:65:
+ldap:!:70:
+ntadmin:!:71:
+users:*:100:
+nobody:*:65533:
+nogroup:*:65534:nobody
+EOT
+
+./grpck -s -P $TEMPDIR > tst-grpck.out1
+RET1=$?
+diff -q -u $TEMPDIR/group tst-grpck.group-sorted
+RET2=$?
+
+cat << EOT >> $TEMPDIR/group
+broken:x:
+EOT
+
+./grpck -P $TEMPDIR -r > tst-grpck.out3
+RET3=$?
+
+rm -rf $TEMPDIR
+
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 2 ] ; then
+  exit 1
+else
+  exit 0
+fi

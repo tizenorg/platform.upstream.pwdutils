@@ -1,0 +1,217 @@
+--- configure.in.orig
++++ configure.in
+@@ -3,9 +3,11 @@ dnl Copyright (c) 2001-2010 Thorsten Kuk
+ dnl
+ dnl Author: Thorsten Kukuk <kukuk@thkukuk.de>
+ dnl
+-AC_INIT(src/passwd.c)
++AC_INIT
++AC_CONFIG_SRCDIR([src/passwd.c])
+ AM_INIT_AUTOMAKE("pwdutils", 3.2.19)
+-AM_CONFIG_HEADER(config.h)
++AC_CONFIG_MACRO_DIR([m4])
++AC_CONFIG_HEADERS([config.h])
+ AC_PREFIX_DEFAULT(/usr)
+ AC_CANONICAL_HOST
+ 
+@@ -45,13 +47,13 @@ dnl Choose between lib and lib64
+ fi
+ 
+ dnl Checks for programs.
+-AC_PROG_CC
++AC_PROG_CC_STDC
+ AM_PROG_CC_C_O
+-AC_GNU_SOURCE
+-AC_ISC_POSIX
++AC_USE_SYSTEM_EXTENSIONS
++AC_SEARCH_LIBS([strerror],[cposix])
+ AC_PROG_INSTALL
+ AC_PROG_MAKE_SET
+-AC_PROG_LIBTOOL
++LT_INIT
+ AC_SYS_LARGEFILE
+ 
+ EXTRA_CFLAGS=""
+@@ -93,15 +95,14 @@ AM_WITH_DMALLOC
+ 
+ dnl Should we build pam_rpasswd?
+ AC_ARG_ENABLE([pam_rpasswd],
+-   AC_HELP_STRING([--enable-pam_rpasswd],[Enable build of pam_rpasswd]))
++   AS_HELP_STRING([--enable-pam_rpasswd],[Enable build of pam_rpasswd]))
+ AM_CONDITIONAL(build_PAM_RPASSWD, test "$enable_pam_rpasswd" = "yes")
+ 
+ dnl Should we compile with SELinux support? default: no
+ AC_ARG_ENABLE([selinux],
+-   AC_HELP_STRING([--disable-selinux],[Disable SELinux support]))
++   AS_HELP_STRING([--disable-selinux],[Disable SELinux support]))
+ AC_ARG_ENABLE([static-selinux],
+-   AC_HELP_STRING([--enable-static-selinux],
+-                  [Compile in SELinux support static]))
++   AS_HELP_STRING([--enable-static-selinux],[Compile in SELinux support static]))
+ if test "$enable_selinux" \!= "no" -a "$enable_static_selinux" = "yes" ; then
+    AC_CHECK_LIB(selinux,is_selinux_enabled,
+ 	[AC_DEFINE(WITH_SELINUX,1,
+@@ -120,7 +121,7 @@ AC_SUBST(SELINUX_LIB)
+ 
+ dnl Check for SLP support for rpasswd/rpasswdd
+ AC_ARG_ENABLE([slp],
+-   AC_HELP_STRING([--disable-slp],[Disable SLP support]))
++   AS_HELP_STRING([--disable-slp],[Disable SLP support]))
+ 
+ AC_CHECK_HEADERS([slp.h])
+ 
+@@ -137,7 +138,7 @@ AC_SUBST(SLP_LIBS)
+ 
+ LAUS_LIBS=""
+ AC_ARG_ENABLE([laus-plugin],
+-   AC_HELP_STRING([--disable-laus-plugin],[Disable build of LAuS plugin]))
++   AS_HELP_STRING([--disable-laus-plugin],[Disable build of LAuS plugin]))
+ if test "$enable_laus_plugin" \!= "no"
+ then
+   AC_CHECK_HEADER([laus.h], [ laus_header="yes" ], [ laus_header="no" ])
+@@ -151,7 +152,7 @@ AM_CONDITIONAL(build_LAUS_PLUGIN, test -
+ 
+ AUDIT_LIBS=""
+ AC_ARG_ENABLE([audit-plugin],
+-   AC_HELP_STRING([--disable-audit-plugin],[Disable build of Linux audit plugin]))
++   AS_HELP_STRING([--disable-audit-plugin],[Disable build of Linux audit plugin]))
+ if test "$enable_audit_plugin" \!= "no"
+ then
+   AC_CHECK_HEADER([libaudit.h], [audit_header="yes"], [audit_header="no"])
+@@ -298,9 +299,9 @@ if test "$enable_ldap" \!= "no"; then
+ 
+   AC_CHECK_FUNCS(ldap_set_rebind_proc)
+   AC_CACHE_CHECK(whether ldap_set_rebind_proc takes 3 arguments, pam_ldap_cv_ldap_set_rebind_proc, [
+-  AC_TRY_COMPILE([
++  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+ #include <lber.h>
+-#include <ldap.h>], [ldap_set_rebind_proc(0, 0, 0);], [pam_ldap_cv_ldap_set_rebind_proc=3], [pam_ldap_cv_ldap_set_rebind_proc=2]) ])
++#include <ldap.h>]], [[ldap_set_rebind_proc(0, 0, 0);]])],[pam_ldap_cv_ldap_set_rebind_proc=3],[pam_ldap_cv_ldap_set_rebind_proc=2]) ])
+   AC_DEFINE_UNQUOTED(LDAP_SET_REBIND_PROC_ARGS, $pam_ldap_cv_ldap_set_rebind_proc, ["Define to the number of arguments to ldap_set_rebindproc"])
+ 
+   dnl restore old LIBS variable
+@@ -321,7 +322,7 @@ AC_CHECK_FUNCS(nscd_flush_cache)
+ LIBS=$BACKUP_LIBS
+ 
+ dnl internationalization macros
+-AM_GNU_GETTEXT_VERSION
++AM_GNU_GETTEXT_VERSION(0.16.1)
+ AM_GNU_GETTEXT([external])
+ 
+ AC_CHECK_HEADERS(dirent.h)
+@@ -334,7 +335,8 @@ AC_CHECK_HEADERS(bioapi.h bioapi_util.h)
+ AC_CHECK_LIB([bioapi100], [BioAPI_Init], BIOAPI_LIB="-lbioapi100", BIOAPI_LIB="")
+ AC_SUBST(BIOAPI_LIB)
+ 
+-AC_OUTPUT(Makefile etc/Makefile lib/Makefile src/Makefile plugins/Makefile po/Makefile.in m4/Makefile )
++AC_CONFIG_FILES([Makefile etc/Makefile lib/Makefile src/Makefile plugins/Makefile po/Makefile.in m4/Makefile ])
++AC_OUTPUT
+ 
+ if test "$NSCD_LIB" == "" ; then
+    AC_MSG_WARN([libnscd not found, cannot flush nscd tables!])
+--- src/Makefile.am.orig
++++ src/Makefile.am
+@@ -60,32 +60,32 @@ pam_rpasswd_la_LIBADD = @PAM_LIBS@ @TLS_
+ 
+ chage_SOURCES = chage.c
+ chage_CFLAGS = @PIE_CFLAGS@
+-chage_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++chage_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ chage_LDFLAGS = @PIE_LDFLAGS@
+ 
+ chfn_SOURCES = chfn.c
+ chfn_CFLAGS = @PIE_CFLAGS@
+-chfn_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@ @NSCD_LIB@
++chfn_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@ @NSCD_LIB@
+ chfn_LDFLAGS = @PIE_LDFLAGS@
+ 
+ chsh_SOURCES = chsh.c
+ chsh_CFLAGS = @PIE_CFLAGS@
+-chsh_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++chsh_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ chsh_LDFLAGS = @PIE_LDFLAGS@
+ 
+ chpasswd_SOURCES = chpasswd.c
+-chpasswd_LDADD = ../lib/libpwdutils.a @LDAP_LIBS@ @NSL_LIB@ @CRYPT_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++chpasswd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @CRYPT_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ passwd_SOURCES = passwd.c
+ passwd_CFLAGS = @PIE_CFLAGS@
+-passwd_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@ @BIOAPI_LIB@
++passwd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@ @BIOAPI_LIB@
+ passwd_LDFLAGS = @PIE_LDFLAGS@
+ 
+ rpasswd_SOURCES = rpasswd.c
+-rpasswd_LDADD = ../lib/libpwdutils.a @TLS_LIBS@ @SLP_LIBS@
++rpasswd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @TLS_LIBS@ @SLP_LIBS@
+ 
+ rpasswdd_SOURCES = rpasswdd.c
+-rpasswdd_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @TLS_LIBS@ @SLP_LIBS@
++rpasswdd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @TLS_LIBS@ @SLP_LIBS@
+ rpasswdd_CFLAGS = @EXTRA_CFLAGS@ @PIE_CFLAGS@
+ rpasswdd_LDFLAGS = @PIE_LDFLAGS@
+ 
+@@ -97,17 +97,17 @@ expiry_LDFLAGS = @PIE_LDFLAGS@
+ 
+ gpasswd_SOURCES = gpasswd.c
+ gpasswd_CFLAGS = @PIE_CFLAGS@
+-gpasswd_LDADD = ../lib/libpwdutils.a @CRYPT_LIB@ @NSL_LIB@ @LDAP_LIBS@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++gpasswd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @CRYPT_LIB@ @NSL_LIB@ @LDAP_LIBS@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ gpasswd_LDFLAGS = @PIE_LDFLAGS@
+ 
+ groupadd_SOURCES = groupadd.c
+-groupadd_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++groupadd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ groupdel_SOURCES = groupdel.c
+-groupdel_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++groupdel_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ groupmod_SOURCES = groupmod.c
+-groupmod_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++groupmod_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ grpck_SOURCES = grpck.c
+ grpck_LDADD = ../lib/libpwdutils.a @SELINUX_LIB@ @ATTR_LIB@
+@@ -116,32 +116,32 @@ grpconv_SOURCES = grpconv.c
+ grpconv_LDADD = ../lib/libpwdutils.a
+ 
+ grpunconv_SOURCES = grpunconv.c
+-grpunconv_LDADD = ../lib/libpwdutils.a @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++grpunconv_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ pwck_SOURCES = pwck.c
+-pwck_LDADD = ../lib/libpwdutils.a @SELINUX_LIB@ @ATTR_LIB@
++pwck_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @SELINUX_LIB@ @ATTR_LIB@
+ 
+ pwconv_SOURCES = pwconv.c
+-pwconv_LDADD = ../lib/libpwdutils.a @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++pwconv_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ pwunconv_SOURCES = pwunconv.c
+-pwunconv_LDADD = ../lib/libpwdutils.a @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++pwunconv_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ useradd_SOURCES = useradd.c
+-useradd_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++useradd_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ userdel_SOURCES = userdel.c
+-userdel_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++userdel_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ usermod_SOURCES = usermod.c
+-usermod_LDADD = ../lib/libpwdutils.a @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
++usermod_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @PAM_LIBS@ @LDAP_LIBS@ @NSL_LIB@ @SELINUX_LIB@ @ATTR_LIB@ @NSCD_LIB@
+ 
+ vipw_SOURCES = vipw.c
+-vipw_LDADD = ../lib/libpwdutils.a @SELINUX_LIB@ @ATTR_LIB@
++vipw_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @SELINUX_LIB@ @ATTR_LIB@
+ 
+ newgrp_SOURCES = newgrp.c
+ newgrp_CFLAGS = @PIE_CFLAGS@
+-newgrp_LDADD = ../lib/libpwdutils.a @CRYPT_LIB@
++newgrp_LDADD = ../lib/libpwdutils.a @DL_LIBS@ @CRYPT_LIB@
+ newgrp_LDFLAGS = @PIE_LDFLAGS@
+ 
+ install-exec-hook:

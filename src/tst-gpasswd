@@ -1,0 +1,33 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+echo "root:valid:0:" > tst-gpasswd.group
+echo "root:!valid:0:" > tst-gpasswd.group.locked
+echo "root::0:" > tst-gpasswd.group.empty
+echo "root:!:0:" > tst-gpasswd.group.elocked
+
+cp -p tst-gpasswd.group $TEMPDIR/group
+./gpasswd -P $TEMPDIR -l root > tst-gpasswd.run 2>&1
+diff -q -u tst-gpasswd.group.locked $TEMPDIR/group
+RET1=$?
+cp -p tst-gpasswd.group.locked $TEMPDIR/group
+./gpasswd -P $TEMPDIR -u root >> tst-gpasswd.run 2>&1
+diff -q -u tst-gpasswd.group $TEMPDIR/group
+RET2=$?
+./gpasswd -P $TEMPDIR -r root >> tst-gpasswd.run 2>&1
+diff -q -u tst-gpasswd.group.empty $TEMPDIR/group
+RET3=$?
+cp -p tst-gpasswd.group.empty $TEMPDIR/group
+./gpasswd -P $TEMPDIR -l root > tst-gpasswd.run 2>&1
+diff -q -u tst-gpasswd.group.elocked $TEMPDIR/group
+RET4=$?
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 ] ; then
+  exit 1
+else
+  exit 0
+fi

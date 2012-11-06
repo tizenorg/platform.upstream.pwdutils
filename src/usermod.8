@@ -1,0 +1,158 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2005, 2006, 2010 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH usermod 8 "Feb 2010" "pwdutils"
+.SH NAME
+usermod \- modify a user account
+.SH SYNOPSIS
+.TP 8
+\fBusermod\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-g \fIgid\fR [\fB-o\fR]] [\fB-p \fIpassword\fR]
+.br
+[\fB--service \fIservice\fR] [\fB--help\fR] [\fB--usage\fR] [\fB-v\fR] \fIaccount\fR
+.SH DESCRIPTION
+\fBusermod\fR modifies an user account using the values specified
+on the command line.
+.SH OPTIONS
+.TP
+.BI "\-A, \-\-add\-to\-group" " group,..."
+With this option a list of  groups can be specified,
+which the user should become a member of. Each group is separated
+from the next one only by a comma, without whitespace.
+.TP
+.BI "\-c, \-\-comment" " comment"
+This option specifies the new users finger information.
+It is normally modified using the
+.BR chfn (1)
+utility.
+.TP
+.BI "\-d, \-\-home" " homedir"
+This option specifies the new home directory of the user.
+.TP
+.BI "\-e, \-\-expire" " expire"
+With this option the date when the account will be expired can
+be changed. \fIexpiredate\fR has to be specified as number of
+days since January 1st, 1970. The date may also be expressed in
+the format YYYY-MM-DD.
+.TP
+.BI "\-f, \-\-inactive" " inactive"
+This option is used to set the number of days of inactivity after
+a password has expired before the account is locked. A user whose
+account is locked must contact the system  administrator before
+being able to use the account again.
+A value of -1 disables this feature.
+.TP
+.BI "\-G, \-\-groups" " group,..."
+With this option a list of supplementary groups can be specified,
+which the user should become a member of. Each group is separated
+from the next one only by a comma, without whitespace. The user is
+removed from all other groups not specified.
+.TP
+.BI "\-g, \-\-gid" " gid"
+The group name or number of the user's new primary group. The group
+name must exist and a group number must refer to an already existing
+group.
+.TP
+.BI "\-l, \-\-login" " name"
+Specify the new account name for the user. The account name must begin
+with an alphabetic character and the rest of the string should be from
+the POSIX portable character class. Nothing else is changed.
+.TP
+.B "\-m, \-\-move_home"
+Move the user's home directory to the new directory specified with the
+.B "\-d"
+option. If the old directory does not exist, nothing is done. If the
+new directory already exists, the program aborts with an error.
+.TP
+.B "\-o, \-\-non-unique"
+Allow duplicate (non-unique) User IDs.
+.TP
+.BI "\-p, \-\-password" " password"
+Encrypted password as returned by
+.BR crypt (3)
+as the new password.
+.TP
+.BI "\-R, \-\-remove\-from\-group" " group,..."
+With this option a list of groups can be specified, from
+which the user should be removed. Each group is separated
+from the next one only by a comma, without whitespace.
+.TP
+.BI "\-s, \-\-shell" " shell"
+Specify user's new login shell. The value of \fIshell\fR must be a
+valid executable file. It is normally modified using the
+.BR chsh (1)
+utility.
+.TP
+.BI "\-u, \-\-uid" " uid"
+Change the userid to be the given number. This
+value must be positive and unique (unless the
+.B "\-o"
+option is used).
+Any file with the old UID of the user and which is located in
+the directory tree rooted at the user's home directory will be
+changed to be owned by the new UID automatically.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-L, \-\-lock"
+A system administrator can lock the account of the specified user.
+.TP
+.B "\-U, \-\-unlock"
+A system administrator can unlock the specified account, if the
+account is not passwordless afterwards (it will not unlock an
+account that has only  "!" as a password).
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below the
+specified directory path.
+\fBusermod\fR will use this files, not \fI/etc/passwd\fR and
+\fI/etc/shadow\fR.
+.TP
+.BI "\-\-service" " service"
+Modify the account from a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH NOTES
+\fBusermod\fR will not allow you to change the name, User ID or
+home directory of a user, which is logged in. \fBusermod\fR will
+not change the User ID of running processes and not the ownership
+of crontab and at jobs.
+.SH FILES
+/etc/group \- group information
+.br
+/etc/passwd \- user account information
+.br
+/etc/shadow \- shadow user account information
+.SH SEE ALSO
+.BR passwd (1),
+.BR login.defs (5),
+.BR group (5),
+.BR passwd (5),
+.BR shadow (5),
+.BR useradd (8),
+.BR userdel (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

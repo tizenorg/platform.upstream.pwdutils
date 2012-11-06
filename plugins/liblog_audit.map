@@ -1,0 +1,6 @@
+LIBLOG_AUDIT_1.0 {
+  global:
+	audit_open_sec_log; audit_sec_log;
+  local:
+    *;
+};

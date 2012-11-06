@@ -1,0 +1,44 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH grpunconv 8 "January 2004" "pwdutils"
+.SH NAME
+grpunconv \- convert from shadow group
+.SH SYNOPSIS
+.TP 5
+\fBgrpunconv\fR [\fB-P \fIpath\fR]
+.SH DESCRIPTION
+\fBgrpunconv\fR moves the passwords from \fI/etc/gshadow\fR to
+\fI/etc/group\fR. The \fIgshadow\fR file will be removed afterwards.
+All other informations stored in \fI/etc/gshadow\fR will go lost.
+.SH OPTIONS
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIgroup\fR and \fIgshadow\fR files are located below
+the specified directory path. \fBgrpunconv\fR will use this files,
+not \fI/etc/group\fR and \fI/etc/gshadow\fR.
+.SH FILES
+group \- group account information
+.br
+gshadow \- shadow group account information
+.SH SEE ALSO
+.BR gpasswd (1),
+.BR group (5),
+.BR grck (8),
+.BR grconv (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

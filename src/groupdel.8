@@ -1,0 +1,63 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH groupdel 8 "October 2003" "pwdutils"
+.SH NAME
+groupdel \- delete a group entry
+.SH SYNOPSIS
+.TP 8
+\fBgroupdel\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB--service \fIservice\fR]
+.br
+[\fB--help\fR] [\fB-u\fR] [\fB-v\fR] \fIgroup\fR
+.SH DESCRIPTION
+\fBgroupdel\fR removes a group entry from the local system files or
+a LDAP database. A primary group of any existing user is not removeable.
+All filesystems must be checked manually to insure that no
+files remain with the named group.
+.SH OPTIONS
+.TP
+.BI "\-\-service" " service"
+Add the account to a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBchpasswd\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-u, \-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH FILES
+group \- group information
+.SH SEE ALSO
+.BR passwd (1),
+.BR login.defs (5),
+.BR group (5),
+.BR groupadd (8),
+.BR groupmod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

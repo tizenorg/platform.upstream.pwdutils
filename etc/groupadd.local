@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# Here you can add your own stuff, that should be done for every
+# group which was new created.
+#
+# When you create a group with groupadd, this script will be called
+# with the group name and GID as parameter.
+#
+
+case "$1" in
+   --help|--version)
+     echo Usage: $0 group gid
+     exit 0
+     ;;
+esac
+
+# Check for the required argument.
+# Allow 3 arguments, groupadd can also add UID of calling process.
+if [ $# -lt 2 -o $# -gt 3 ]; then
+  echo Usage: $0 group gid
+  exit 1
+fi
+
+# Update NIS database
+# make -C /var/yp
+
+# All done.
+exit 0
+

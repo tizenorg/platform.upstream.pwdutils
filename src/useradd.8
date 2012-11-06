@@ -1,0 +1,165 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2005, 2010 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@thkukuk.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH useradd 8 "May 2010" "pwdutils"
+.SH NAME
+useradd \- create a new user account
+.SH SYNOPSIS
+.TP 8
+\fBuseradd\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-c \fIcomment\fR] [\fB-d \fIhomedir\fR]
+.br
+[\fB-e \fIexpire\fR] [\fB-f \fIinactive\fR] [\fB-G \fIgroup,...\fR] [\fB-g \fIgid\fR]
+.br
+[\fB-m \fR[\fB-k \fIskeldir\fR]] [\fB-o\fR] [\fB-p \fIpassword\fR] [\fB-u \fRuid\fR]
+.br
+[\fB-U \fIumask\fR] [\fB-r\fR] [\fB-s \fIshell\fR] [\fB--service \fIservice\fR] [\fB--help\fR]
+.br
+[\fB--usage\fR] [\fB-v\fR] [\fB--preferred-uid \fIuid\fR] \fIaccount\fR
+.TP 8
+\fBuseradd\fR \fB--show-defaults\fR
+.TP 8
+\fBuseradd\fR \fB--save-defaults\fR [\fB-d \fIhomedir\fR] [\fB-e \fIexpire\fR] [\fB-f \fIinactive\fR]
+[\fB-g \fIgid\fR] [\fB-G \fIgroup,...\fR] [\fB-k \fIskeldir\fR] [\fB-U \fIumask\fR] [\fB-s \fIshell\fR]
+.SH DESCRIPTION
+\fBuseradd\fR creates a new user account using the default values
+from \fI/etc/default/useradd\fR and the specified on the command line.
+Depending on the command line options the new account will be added to
+the system files or LDAP database, the home directory will be created
+and the initial default files and directories will be copied.
+
+The account name must begin with an alphabetic character and the rest
+of the string should be from the POSIX portable character class
+([A-Za-z_][A-Za-z0-9_-.]*[A-Za-z0-9_-.$]).
+.SH OPTIONS
+.TP
+.BI "\-c, \-\-comment" " comment"
+This option specifies the users finger information.
+.TP
+.BI "\-d, \-\-home" " homedir"
+This option specifies the users home directory.
+If not specified, the default from \fI/etc/default/useradd\fR is used.
+.TP
+.BI "\-e, \-\-expire" " expire"
+With this option the date when the account will be expired can
+be changed. \fIexpiredate\fR has to be specified as number of
+days since January 1st, 1970. The date may also be expressed in
+the format YYYY-MM-DD.
+If not specified, the default from \fI/etc/default/useradd\fR is used.
+.TP
+.BI "\-f, \-\-inactive" " inactive"
+This option is used to set the number of days of inactivity after
+a password has expired before the account is locked. A user whose
+account is locked must contact the system  administrator before
+being able to use the account again.
+A value of -1 disables this feature.
+If not specified, the default from \fI/etc/default/useradd\fR is used.
+.TP
+.BI "\-G, \-\-groups" " group,..."
+With this option a list of supplementary groups can be specified,
+which the user should become a member of. Each group is separated
+from the next one only by a comma, without whitespace.
+If not specified, the default from \fI/etc/default/useradd\fR is used.
+.TP
+.BI "\-g, \-\-gid" " gid"
+The group name or number of the user's main group. The group name
+or number must refer to an already existing group.
+If not specified, the default from \fI/etc/default/useradd\fR is used.
+.TP
+.BI "\-k, \-\-skel" " skeldir"
+Specify an alternative skel directory. This option is only valid,
+if the home directory for the new user should be created, too.
+If not specified, the default from \fI/etc/default/useradd\fR or
+\fI/etc/skel\fR is used.
+.TP
+.B "\-m, \-\-create-home"
+Create home directory for new user account.
+.TP
+.B "\-o, \-\-non-unique"
+Allow duplicate (non-unique) User IDs.
+.TP
+.BI "\-p, \-\-password" " password"
+Encrypted password as returned by
+.BR crypt (3)
+for the new account. The default is to disable the account.
+.TP
+.BI "\-U, \-\-umask" " umask"
+The permission mask is initialized to this value. It is used by
+useradd for creating new home directories. The default
+is taken from \fI/etc/default/useradd\fR.
+.TP
+.BI "\-u, \-\-uid" " uid"
+Force the new userid to be the given number. This value must be
+positive and unique. The default is to use the first free ID after
+the greatest used one. The range from which the user ID is chosen
+can be specified in \fI/etc/login.defs\fR.
+.TP
+.BI "\-\-preferred\-uid" " uid"
+Set the new userid to the specified value if possible. If that value
+is already in use the first free ID will be chosen as described
+above.
+.TP
+.B "\-r, \-\-system"
+Create a system account. A system account is an user with an UID
+between SYSTEM_UID_MIN and SYSTEM_UID_MAX as defined in
+\fI/etc/login.defs\fR, if no UID is specified. The GROUPS entry
+in \fI/etc/default/useradd\fR is ignored, too.
+.TP
+.B "\-s, \-\-shell" " shell"
+Specify user's login shell. The default for normal user accounts
+is taken from \fI/etc/default/useradd\fR, the default for system
+accounts is \fI/bin/false\fR.
+.TP
+.BI "\-\-service" " service"
+Add the account to a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBuseradd\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH FILES
+/etc/passwd \- user account information
+.br
+/etc/shadow \- shadow user account information
+.br
+/etc/group \- group information
+.br
+/etc/default/useradd \- default values for account creation
+.br
+/etc/skel \- directory containing default files
+.SH SEE ALSO
+.BR passwd (1),
+.BR login.defs (5),
+.BR passwd (5),
+.BR shadow (5),
+.BR userdel (8),
+.BR usermod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

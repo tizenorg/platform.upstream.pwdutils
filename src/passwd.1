@@ -1,0 +1,194 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2005, 2006 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH passwd 1 "November 2005" "pwdutils"
+.SH NAME
+passwd \- change user password
+.SH SYNOPSIS
+\fBpasswd\fR [\fB-f\fR|\fB-g\fR|\fB-s\fR|\fB-k\fR[\fB-q\fR]] [\fIname\fR]
+.br
+\fBpasswd\fR [\fB-D \fIbinddn\fR][\fB-n \fImin\fR][\fB-x \fImax\fR][\fB-w \fIwarn\fR][\fB-i \fIinact\fR] \fIaccount\fR
+.br
+\fBpasswd\fR [\fB-D \fIbinddn\fR] {\fB-l\fR|\fB-u\fR|\fB-d\fR|\fB-S\fR[\fB-a\fR]|\fB-e\fR} \fIname\fR
+.br
+\fBpasswd\fR --bioapi [\fIaccount\fR]
+.br
+\fBpasswd\fR --stdin [\fIaccount\fR]
+.SH DESCRIPTION
+\fBpasswd\fR changes passwords for user and group accounts.
+While an administrator may change the password for any account or
+group, a normal user is only allowed to change the password for
+their own account.
+\fBpasswd\fR also changes account information, such as the full name
+of the user, their login shell, password expiry dates and intervals
+or disable an account.
+.PP
+\fBpasswd\fR is written to work through the \fBPAM\fR API.
+Essentially, it initializes itself as a "passwd" service
+and utilizes configured \fI"password"\fR
+modules to authenticate and then update a user's password.
+.TP
+A sample \fI/etc/pam.d/passwd\fR file might look like this:
+
+#%PAM-1.0
+.br
+auth      required  pam_unix2.so    nullok
+.br
+account   required  pam_unix2.so
+.br
+password  required  pam_pwcheck.so  nullok
+.br
+password  required  pam_unix2.so    nullok \\
+.br
+                      use_first_pass use_authtok
+.br
+session   required  pam_unix2.so
+.LP
+.SS Password Changes
+If an old password is present, the user is first promted for it
+and the password is compared agaisnt the stored one. This can be
+changed, depending which PAM modules are used.
+An administrator is permitted to bypass this step so that forgotten
+passwords may be changed.
+.PP
+After the user is authenticated, password aging information
+are checked to see if the user is permitted to change their password
+at this time. Else \fBpasswd\fR refuses to change the password.
+.PP
+The user is then prompted for a replacement password.
+Care must be taken to not include special control characters
+or characters, which are not available on all keyboards.
+.PP
+If the password is accepted,
+\fBpasswd\fR will prompt again and compare the second entry
+against the first.
+Both entries are require to match in order for the password
+to be changed.
+.SH OPTIONS
+.TP
+.B "\-f"
+Change the finger (gecos) information. This
+are the users fullname, office room number, office phone
+number and home phone number. This information is stored
+in the \fI/etc/passwd\fR file and typically printed by
+.BI finger (1)
+and similiar programs.
+.TP
+.B "\-g"
+With this option, the password for the named group will be changed.
+.TP
+.B "\-s"
+This option is used to change the user login shell. A normal
+user may only change the login shell for their own account, the
+super user may change the login shell for any account.
+.TP
+.B "\-k"
+Keep non-expired authentication tokens. The password will only
+be changed if it is expired.
+.TP
+.B "\-q"
+Try to be quiet. This option can only be used with
+.BR "\-k" .
+.LP
+.SS  Password expiry information
+.TP
+.BI "\-n" " min"
+With this option the minimum number of days between password
+changes is changed. A value of zero for this field indicates that
+the user may change her password at any time. Else the user will not be
+permitted to change the password until \fImin\fR days have elapsed.
+.TP
+.BI "\-x" " max"
+With this option the maximum number of days during which a
+password is valid is changed. When \fImaxdays\fR plus \fIlastday\fR
+is less than the current day, the user will be required to change
+his password before being able to use the account.
+.TP
+.BI "\-w" " warn"
+With this option the number of days of warning before a password
+change is required can be changed. This option is the number of
+days prior to the password expiring that a user will be warned
+the password is about to expire.
+.TP
+.BI "\-i" " inact"
+This option is used to set the number of days of inactivity after
+a password has expired before the account is locked. A user whose
+account is locked must contact the system  administrator before
+being able to use the account again.
+A value of -1 disables this feature.
+.LP
+.SS Account maintenance
+.TP
+.B "\-l"
+A system administrator can lock the account of the specified user.
+.TP
+.B "\-u"
+A system administrator can unlock the specified account, if the
+account is not passwordless afterwards (it will not unlock an
+account that has only  "!" as a password).
+.TP
+.B "\-d"
+The password of the given account can be deleted by the system
+administrator. If the BioAPI interface is used the BioAPI data
+for that account is removed.
+.TP
+.B "\-S"
+Report password status on the named account. The first part
+indicates if the user account is locked (LK), has no password (NP),
+or has an existing or locked password (PS). The second part gives the
+date of the last password change. The next parts are the minimum age,
+maximum age, warning period, and inactivity period for the password.
+.TP
+.B "\-a"
+Report the password status for all accounts. Can only be used in
+conjunction with
+.BR "\-S" .
+.TP
+.B "\-e"
+The user will be forced to change the password at next login.
+.TP
+.BI "\-P" " path"
+Search passwd and shadow file in \fBpath\fR. This option cannot be
+used with changing passwords.
+.TP
+.B "\-\-bioapi"
+This option is used to indicate that \fBpasswd\fR should use the
+BioAPI for managing the authentication token of an account. It is
+only supported with a small subset of other options. This option is
+not always available.
+.TP
+.B "\-\-stdin"
+This option is used to indicate that \fBpasswd\fR should read the new
+password from standard input, which can be a pipe (only by a system
+administrator).
+.SS Name service switch options
+.TP
+.BI "\-D" " binddn"
+Use the Distinguished Name \fIbinddn\fR to bind to the
+LDAP directory.
+.SH FILES
+passwd \- user account information
+.br
+shadow \- shadow user account information
+.SH SEE ALSO
+.BR passwd (1),
+.BR group (5),
+.BR passwd (5),
+.BR shadow (5),
+.BR pam (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

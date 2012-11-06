@@ -1,0 +1,88 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH groupadd 8 "December 2003" "pwdutils"
+.SH NAME
+groupadd \- create a new group entry
+.SH SYNOPSIS
+.TP 8
+\fBgroupadd\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-g \fIgid\fR [\fB-o\fR]] [\fB-p \fIpassword\fR] [\fB--preferred-gid \fIgid\fR]
+.br
+[\fB-r\fR] [\fB--service \fIservice\fR] [\fB--help\fR] [\fB--usage\fR] [\fB-v\fR] \fIgroup\fR
+.SH DESCRIPTION
+\fBgroupadd\fR creates a new group entry using the values specified
+on the command line. Depending on the command line options the new
+entry will be added to the system files or LDAP database.
+
+The group name must begin with an alphabetic character and the rest
+of the string should be from the POSIX portable character class
+([A-Za-z_][A-Za-z0-9_-.]*).
+.SH OPTIONS
+.TP
+.BI "\-g, \-\-gid" " gid"
+Force the new group ID to be the given number. This value must be
+positive and unique. The default is to use the first free ID after
+the greatest used one. The range from which the group ID is chosen
+can be specified in \fI/etc/login.defs\fR.
+.TP
+.BI "\-\-preferred\-gid" " gid"
+Set the new group ID to the specified value if possible. If that value
+is already in use the first free ID will be chosen as described
+above.
+.TP
+.B "\-o, \-\-non-unique"
+Allow duplicate (non-unique) group IDs.
+.TP
+.BI "\-p, \-\-password" " password"
+Encrypted password as returned by
+.BR crypt (3)
+for the new account. The default is to disable the account.
+.TP
+.B "\-r, \-\-system"
+Create a system group. A system group is an entry with an GID
+between SYSTEM_GID_MIN and SYSTEM_GID_MAX as defined in
+\fI/etc/login.defs\fR, if no GID is specified.
+.TP
+.BI "\-\-service" " service"
+Add the group to a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIgroup\fR file is located below the specified directory path.
+\fBgroupadd\fR will use this files,  not \fI/etc/group\fR.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH FILES
+/etc/group \- group account information
+.SH SEE ALSO
+.BR login.defs (5),
+.BR group (5),
+.BR groupdel (8),
+.BR groupmod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

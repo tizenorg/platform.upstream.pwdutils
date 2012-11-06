@@ -1,0 +1,63 @@
+Index: pwdutils-3.2.19/etc/pam.d/chage
+===================================================================
+--- pwdutils-3.2.19.orig/etc/pam.d/chage
++++ pwdutils-3.2.19/etc/pam.d/chage
+@@ -1,6 +1,6 @@
+ #%PAM-1.0
+ auth     sufficient	pam_rootok.so
+-auth	 include	common-auth
+-account	 include	common-account
+-password include	common-password
+-session	 include	common-session
++auth	 include	system-auth
++account	 include	system-auth
++password include	system-auth
++session	 include	system-auth
+Index: pwdutils-3.2.19/etc/pam.d/chfn
+===================================================================
+--- pwdutils-3.2.19.orig/etc/pam.d/chfn
++++ pwdutils-3.2.19/etc/pam.d/chfn
+@@ -1,8 +1,8 @@
+ #%PAM-1.0
+ # For chfn command
+ auth     sufficient	pam_rootok.so
+-auth     include        common-auth
+-account  include        common-account
+-password include        common-password
+-session  include        common-session
++auth     include        system-auth
++account  include        system-auth
++password include        system-auth
++session  include        system-auth
+ 
+Index: pwdutils-3.2.19/etc/pam.d/chsh
+===================================================================
+--- pwdutils-3.2.19.orig/etc/pam.d/chsh
++++ pwdutils-3.2.19/etc/pam.d/chsh
+@@ -1,8 +1,8 @@
+ #%PAM-1.0
+ # For chsh command
+ auth     sufficient	pam_rootok.so
+-auth     include        common-auth
+-account  include        common-account
+-password include        common-password
+-session  include        common-session
++auth     include        system-auth
++account  include        system-auth
++password include        system-auth
++session  include        system-auth
+ 
+Index: pwdutils-3.2.19/etc/pam.d/passwd
+===================================================================
+--- pwdutils-3.2.19.orig/etc/pam.d/passwd
++++ pwdutils-3.2.19/etc/pam.d/passwd
+@@ -1,5 +1,5 @@
+ #%PAM-1.0
+-auth	 include	common-auth
+-account  include	common-account
+-password include	common-password
+-session	 include	common-session
++auth	 include	system-auth
++account  include	system-auth
++password include	system-auth
++session	 include	system-auth

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+touch $TEMPDIR/{group,passwd}
+
+./groupadd -P $TEMPDIR primary
+RET=$?
+if [ $RET != 0 ]; then
+	rm -rf $TEMPDIR
+	exit $RET
+fi
+./groupadd -P $TEMPDIR secondary
+RET=$?
+if [ $RET != 0 ]; then
+	rm -rf $TEMPDIR
+	exit $RET
+fi
+./groupadd -P $TEMPDIR third
+RET=$?
+if [ $RET != 0 ]; then
+        rm -rf $TEMPDIR
+        exit $RET
+fi
+
+for i in `seq 50000 56000`
+do
+	./useradd -P $TEMPDIR u$i -u $i -g primary -G secondary -d / -s /sbin/nologin
+	RET=$?
+	if [ $RET != 0 ]; then
+		rm -rf $TEMPDIR
+		exit $RET
+	fi
+	./usermod -P $TEMPDIR -G secondary,third u$i
+	RET=$?
+	if [ $RET != 0 ]; then
+		rm -rf $TEMPDIR
+		exit $RET
+	fi
+done
+
+cp $TEMPDIR/passwd tst-long-group-entry.passwd
+cp $TEMPDIR/group tst-long-group-entry.group
+
+rm -rf $TEMPDIR
+
+exit 0
+

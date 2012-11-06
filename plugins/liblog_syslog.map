@@ -1,0 +1,6 @@
+LIBLOG_SYSLOG_1.0 {
+  global:
+	syslog_open_sec_log; syslog_sec_log;
+  local:
+    *;
+};

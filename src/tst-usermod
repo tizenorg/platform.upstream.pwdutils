@@ -1,0 +1,38 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+echo "root:x:0:0:root:/root:/bin/bash" > tst-usermod.passwd
+echo "root:valid:0:0:root:/root:/bin/bash" > tst-usermod.noshadow
+echo "root:!valid:0:0:root:/root:/bin/bash" > tst-usermod.noshadow.locked
+echo "root::0:0:root:/root:/bin/bash" > tst-usermod.noshadow.deleted
+echo "root:valid:12116:0:10000::::" > tst-usermod.shadow
+echo "root:!valid:12116:0:10000::::" > tst-usermod.locked
+echo "root::12116:0:10000::::" > tst-usermod.deleted
+
+cp -p tst-usermod.noshadow $TEMPDIR/passwd
+./usermod -P $TEMPDIR -L root > tst-usermod.run 2>&1
+diff -q -u tst-usermod.noshadow.locked $TEMPDIR/passwd
+RET1=$?
+./usermod -P $TEMPDIR -U root >> tst-usermod.run 2>&1
+diff -q -u tst-usermod.noshadow $TEMPDIR/passwd
+RET2=$?
+
+cp -p tst-usermod.passwd $TEMPDIR/passwd
+cp -p tst-usermod.shadow $TEMPDIR/shadow
+./usermod -P $TEMPDIR -L root >> tst-usermod.run 2>&1
+diff -q -u tst-usermod.locked $TEMPDIR/shadow
+RET3=$?
+./usermod -P $TEMPDIR -U root >> tst-usermod.run 2>&1
+diff -q -u tst-usermod.shadow $TEMPDIR/shadow
+RET4=$?
+
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 ] ; then
+  exit 1
+else
+  exit 0
+fi

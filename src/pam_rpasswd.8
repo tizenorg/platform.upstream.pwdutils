@@ -1,0 +1,99 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2004, 2010 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH pam_rpasswd 8 "February 2004" "pwdutils"
+.SH NAME
+pam_rpasswd - PAM module to change remote password
+.SH DESCRIPTION
+The
+.B pam_rpasswd
+PAM module is for changing the password of user accounts
+on a remote server over a secure SSL connection. It only
+provides functionality for one PAM management group:
+\fIpassword changing\fR.
+.PP
+The options needs to be added in the PAM configuration files.
+.SH OPTIONS
+.TP
+.BI "config_file=" "<config-file>"
+Specify another configuration file than \fI/etc/rpasswd.conf\fR.
+.TP
+.B "debug"
+Print additinal debug messages to
+.BR syslogd (8).
+.TP
+.BI "use_slp=" "0|1"
+If compiled with SLP support, \fBpam_rpasswd\fR will use/not use
+SLP to find a server. The default is to not use SLP.
+.TP
+.BI "reqcert=" "never|allow|try|hard"
+.RS
+Specifies what checks to perform on server certificates in
+a SSL session. The default for this option is
+.IR hard .
+.TP
+.B never
+\fIpam_rpasswd\fR will not request or check any server certificate.
+.TP
+.B allow
+The server certificate is requested. If no certificate is provided,
+the session proceeds normally. If a bad certificate is provided, a
+warning will be shown but the session proceeds normally.
+.TP
+.B try
+The server certificate is requested. If no certificate is provided,
+the session proceeds normally. If a bad certificate is provided,
+the session is immediately terminated.
+.TP
+.B hard
+The server certificate is requested. If no or a bad certificate is
+provided, the session is immediately terminated. This is the default.
+.RE
+.TP
+.BI "host=" "<hostname>"
+Specify the name of the server, where
+.BR rpasswdd (8)
+is running.
+.TP
+.BI "port=" "<portnumber>"
+Specify the portnumber on which the server process
+.BR rpasswdd (8)
+is listening.
+.TP
+.B "verbose"
+Be verbose, print SSL connection data.
+.TP
+.B "quiet"
+Be quiet, don't print connection trys or SSL connection data. This option
+takes precedence over
+.BR verbose .
+.SH FILES
+/etc/rpasswd.conf \- configuration file
+.SH BUGS
+This manual page is far from complete, most options are missing.
+Please read the README and look at the source package.
+.SH "SEE ALSO"
+.BR login (1),
+.BR passwd (1),
+.BR pam.conf (8),
+.BR pam.d (8),
+.BR pam_pwcheck (8),
+.BR pam (8),
+.BR rpasswd (1),
+.BR rpasswdd (8),
+.BR rpc.yppasswdd (8),
+.BR yppasswd (1)

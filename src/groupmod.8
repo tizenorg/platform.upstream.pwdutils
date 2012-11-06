@@ -1,0 +1,80 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2004, 2005 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH groupmod 8 "April 2004" "pwdutils"
+.SH NAME
+groupmod \- modify a group entry
+.SH SYNOPSIS
+.TP 8
+\fBgroupmod\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-g \fIgid\fR [\fB-o\fR]] [\fB-p \fIpassword\fR]
+.br
+[\fB-A \fIuser\fR] [\fB-R \fIuser\fR] [\fB--service \fIservice\fR] [\fB--help\fR] [\fB-v\fR]
+.br
+[\fB--usage\fR] \fIgroup\fR
+.SH DESCRIPTION
+\fBgroupmod\fR modifies a group entry using the values specified
+on the command line.
+.SH OPTIONS
+.TP
+.BI "\-g, \-\-gid" " gid"
+Force the new group ID to be the given number. This value must be
+positive and unique. The group of any file owned by the old group
+must be changed manually.
+.TP
+.B "\-o, \-\-non-unique"
+Allow duplicate (non-unique) group IDs.
+.TP
+.BI "\-p, \-\-password" " password"
+Set the encrypted password as returned by
+.BR crypt (3)
+as the new group password.
+.TP
+.BI "\-A, \-\-add-user" " user"
+Add the user account to the specified group.
+.TP
+.BI "\-R, \-\-remove-user" " user"
+Remove the user account from the specified group.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIgroup\fR file is located below the specified directory path.
+\fBgroupmod\fR will use this file, not \fI/etc/group\fR.
+.TP
+.BI "\-\-service" " service"
+Modify the group from a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH FILES
+/etc/group \- group account information
+.SH SEE ALSO
+.BR login.defs (5),
+.BR group (5),
+.BR groupadd (8),
+.BR groupmod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

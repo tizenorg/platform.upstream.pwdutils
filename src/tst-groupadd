@@ -1,0 +1,35 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+cat << EOT > $TEMPDIR/group
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:14:
+dialout:x:16:
+audio:x:17:
+floppy:x:19:
+utmp:x:22:
+video:x:33:
+EOT
+./groupadd -P $TEMPDIR groupaddtest1
+RET1=$?
+./groupadd -P $TEMPDIR -g 99 groupaddtest2
+RET2=$?
+./groupadd -P $TEMPDIR -g 99 groupaddtest3 > tst-groupadd.out3 2>&1
+RET3=$?
+./groupadd -P $TEMPDIR -g 99 -o groupaddtest4
+RET4=$?
+./groupadd -P $TEMPDIR groupaddtest4 > tst-groupadd.out5 2>&1
+RET5=$?
+cp $TEMPDIR/group tst-groupadd.group
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 == 0 -o $RET4 != 0 -o $RET5 == 0 ]
+then
+  exit 1
+else
+  exit 0
+fi

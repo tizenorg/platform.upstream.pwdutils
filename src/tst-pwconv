@@ -1,0 +1,84 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+cat <<EOF > $TEMPDIR/passwd
+root:despassword:0:0:root:/root:/bin/bash
+bin:*:1:1:bin:/bin:/bin/bash
+daemon:*:2:2:Daemon:/sbin:/bin/bash
+lp:*:4:7:Printing daemon:/var/spool/lpd:/bin/bash
+mail:*:8:12:Mailer daemon:/var/spool/clientmqueue:/bin/false
+news:*:9:13:News system:/etc/news:/bin/bash
+uucp:*:10:14:Unix-to-Unix CoPy system:/etc/uucp:/bin/bash
+games:*:12:100:Games account:/var/games:/bin/bash
+man:*:13:62:Manual pages viewer:/var/cache/man:/bin/bash
+at:*:25:25:Batch jobs daemon:/var/spool/atjobs:/bin/bash
+wwwrun:*:30:8:WWW daemon apache:/var/lib/wwwrun:/bin/false
+ftp:*:40:49:FTP account:/srv/ftp:/bin/bash
+named:*:44:44:Nameserver daemon:/var/named:/bin/bash
+postfix:*:51:51:Postfix Daemon:/var/spool/postfix:/bin/false
+sshd:*:71:65:SSH daemon:/var/lib/sshd:/bin/false
+ntp:*:74:65534:NTP daemon:/var/lib/ntp:/bin/false
+ldap:*:76:70:User for OpenLDAP:/var/lib/ldap:/bin/bash
+nobody:*:65534:65533:nobody:/var/lib/nobody:/bin/bash
+EOF
+
+cat <<EOF > tst-pwconv.passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/bin/bash
+daemon:x:2:2:Daemon:/sbin:/bin/bash
+lp:x:4:7:Printing daemon:/var/spool/lpd:/bin/bash
+mail:x:8:12:Mailer daemon:/var/spool/clientmqueue:/bin/false
+news:x:9:13:News system:/etc/news:/bin/bash
+uucp:x:10:14:Unix-to-Unix CoPy system:/etc/uucp:/bin/bash
+games:x:12:100:Games account:/var/games:/bin/bash
+man:x:13:62:Manual pages viewer:/var/cache/man:/bin/bash
+at:x:25:25:Batch jobs daemon:/var/spool/atjobs:/bin/bash
+wwwrun:x:30:8:WWW daemon apache:/var/lib/wwwrun:/bin/false
+ftp:x:40:49:FTP account:/srv/ftp:/bin/bash
+named:x:44:44:Nameserver daemon:/var/named:/bin/bash
+postfix:x:51:51:Postfix Daemon:/var/spool/postfix:/bin/false
+sshd:x:71:65:SSH daemon:/var/lib/sshd:/bin/false
+ntp:x:74:65534:NTP daemon:/var/lib/ntp:/bin/false
+ldap:x:76:70:User for OpenLDAP:/var/lib/ldap:/bin/bash
+nobody:x:65534:65533:nobody:/var/lib/nobody:/bin/bash
+EOF
+
+cp $TEMPDIR/passwd $TEMPDIR/passwd.orig
+
+./pwconv -P $TEMPDIR
+RET1=$?
+diff -q -u tst-pwconv.passwd $TEMPDIR/passwd
+RET2=$?
+diff -q -u $TEMPDIR/passwd.old $TEMPDIR/passwd.orig
+RET3=$?
+#diff -q -u tst-pwconv.shadow $TEMPDIR/shadow
+#RETXXX=$?
+
+echo "mysql:password:60:2:MySQL admin:/var/lib/mysql:/bin/false" >> $TEMPDIR/passwd
+echo "mysql:x:60:2:MySQL admin:/var/lib/mysql:/bin/false" >> tst-pwconv.passwd
+echo "mysql:!:12343:0:99999:7:::" >> $TEMPDIR/shadow
+
+./pwconv -P $TEMPDIR
+RET4=$?
+diff -q -u tst-pwconv.passwd $TEMPDIR/passwd
+RET5=$?
+
+cp $TEMPDIR/shadow $TEMPDIR/shadow.result
+echo "toremove:x:::::::" >> $TEMPDIR/shadow
+./pwconv -P $TEMPDIR
+RET6=$?
+diff -q -u $TEMPDIR/shadow.result $TEMPDIR/shadow
+RET7=$?
+
+cat $TEMPDIR/shadow > tst-pwconv.shadow-generated
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 -o \
+     $RET5 != 0 -o $RET6 != 0 -o $RET7 != 0 ] ; then
+  exit 1
+else
+  exit 0
+fi

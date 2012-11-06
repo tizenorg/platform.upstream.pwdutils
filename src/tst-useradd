@@ -1,0 +1,81 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+touch $TEMPDIR/passwd
+cat << EOT > $TEMPDIR/group
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:14:
+dialout:x:16:
+audio:x:17:
+floppy:x:19:
+utmp:x:22:
+video:x:33:
+EOT
+cat << EOT > tst-group.useraddtest4
+root:x:0:bigsister,useraddtest4
+bin:x:1:daemon
+uucp:x:14:
+dialout:x:16:
+audio:x:17:useraddtest4
+floppy:x:19:useraddtest4
+utmp:x:22:
+video:x:33:useraddtest4
+EOT
+cat << EOT > tst-group.useraddtest5
+root:x:0:bigsister,useraddtest4
+bin:x:1:daemon
+uucp:x:14:
+dialout:x:16:
+audio:x:17:useraddtest4,useraddtest5
+floppy:x:19:useraddtest4,useraddtest5
+utmp:x:22:
+video:x:33:useraddtest4,useraddtest5
+EOT
+./useradd -P $TEMPDIR -G "" useraddtest1
+RET1=$?
+./useradd -P $TEMPDIR -G "" -g bin useraddtest2
+RET2=$?
+./useradd -P $TEMPDIR -G "" -g 1 useraddtest3
+RET3=$?
+./useradd -P $TEMPDIR -G audio,video,floppy,root useraddtest4
+RET4=$?
+diff -u tst-group.useraddtest4 $TEMPDIR/group
+RET4a=$?
+./useradd -P $TEMPDIR -G audio,video,floppy -u 64000 useraddtest5
+RET5=$?
+diff -u tst-group.useraddtest5 $TEMPDIR/group
+RET5a=$?
+./useradd -P $TEMPDIR -G "" -u 64000 useraddtest6 > /dev/null 2>&1
+RET6=$?
+./useradd -P $TEMPDIR -G "" -o -u 64000 useraddtest7
+RET7=$?
+./useradd -P $TEMPDIR -G "" -u 0 useraddtest8 > /dev/null 2>&1
+RET8=$?
+./useradd -P $TEMPDIR -G nogroup useraddtest9 > /dev/null 2>&1
+RET9=$?
+./useradd -P $TEMPDIR -G 14,16 useraddtest10 > /dev/null 2>&1
+RET10=$?
+./useradd -P $TEMPDIR -G 42 useraddtest11 > /dev/null 2>&1
+RET11=$?
+# Test, if adding new users to shadow work, too.
+touch $TEMPDIR/shadow
+./useradd -P $TEMPDIR -G "" useraddtest12 > /dev/null 2>&1
+RET12=$?
+test -s $TEMPDIR/shadow || RET12=1
+./useradd -P $TEMPDIR -G "" -u 9999999999 useraddtest13 > /dev/null 2>&1
+if [ $? -ne 6 ] ; then RET13=1; else RET13=0; fi
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 -o $RET5 != 0 -o \
+     $RET6 == 0 -o $RET7 != 0 -o $RET8 == 0 -o $RET4a != 0 -o $RET5a != 0 -o \
+     $RET9 == 0 -o $RET10 != 0 -o $RET11 == 0 -o $RET12 != 0 \
+    -o $RET13 != 0 ]
+then
+  exit 1
+else
+  exit 0
+fi

@@ -1,0 +1,104 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2002, 2003, 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH chfn 1 "February 2004" "pwdutils"
+.SH NAME
+chfn \- change finger information
+.SH SYNOPSIS
+.TP 5
+\fBchfn\fR
+[\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-f \fIname\fR] [\fB-o \fIoffice\fR] [\fB-p \fIphone\fR] [\fB-h \fIhome_phone\fR] [\fB-m \fIother\fR] [\fB-r \fIservice\fR] [\fB-q\fR] [\fB-u\fR] [\fB-v\fR] [\fIuser\fR]
+.SH DESCRIPTION
+\fBchfn\fR is used to change the user finger information. This are
+the users fullname, office room number, office phone number and home phone
+number. This information is stored in the \fI/etc/passwd\fR file and
+typically printed by
+.BR finger (1)
+and similiar programs. A normal user may only change the fields for their
+own account, the super user may change the fields for any account. Also,
+only the super user may use the \fB-o\fR option to change the undefined
+portions of the GECOS field.
+.PP
+If no information is given on the command line, \fBchfn\fR operates in
+an interactive fashion, prompting the user for each field.
+Enter the new value to change the field, or leave the line blank to use
+the current value. Enter \fInone\fR or a blank only to remove the current
+value. The current value is displayed between a pair of \fB[ ]\fR marks.
+.PP
+The only restrictions placed on the contents of the fields is that no
+control characters may be present, nor any of comma, colon, or equal
+sign. The \fIother\fR field does not have this restriction, and is used to
+store accounting information used by other applications.
+.PP
+This version of \fBchfn\fR is able to change the shell of
+local, NIS, NIS+ and LDAP accounts, if the permissions allow
+it.
+.SH OPTIONS
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBchfn\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+This is useful for example on NIS master servers, where you do
+not want to give all users in the NIS database automatic access
+to your NIS server and the NIS map is build from special files.
+.TP
+.B "\-f, \-\-full-name"
+Specify your real name.
+.TP
+.B "\-o, \-\-office"
+Specify your office room number.
+.TP
+.B "\-p, \-\-phone"
+Specify your office phone number.
+.TP
+.B "\-h, \-\-home-phone"
+Specify your home phone number.
+.TP
+.B "\-m, \-\-other"
+Specify the undefined portions of the GECOS field.
+.TP
+.B "\-r, \-\-service"
+Specify the service where the GECOS field should be changed.
+Supported services are \fIfiles\fR, \fIldap\fR, \fInis\fR and \fInisplus\fR.
+.TP
+.B "\-q, \-\-quite"
+Don't be verbose.
+.TP
+.B "\-u, \-\-usage"
+Print a usage message and exit.
+.TP
+.B "    \-\-help"
+Print a more verbose help text and exit.
+.TP
+.B "-v, \-\-version"
+Print version information and exit.
+.SH ENVIRONMENT
+SHADOW_CHFN \- If this environment variable is set to \fI1\fR, the chfn
+options are compatible to the version from the shadow suite.
+.SH FILES
+/etc/passwd \- user account information
+.SH SEE ALSO
+.BR chsh (1),
+.BR finger (1),
+.BR passwd (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

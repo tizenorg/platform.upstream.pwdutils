@@ -1,0 +1,109 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2002, 2003, 2005 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH chage 1 "November 2005" "pwdutils"
+.SH NAME
+chage \- change user password expiry information
+.SH SYNOPSIS
+.TP 6
+\fBchage\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-m \fImindays\fR]
+[\fB-M \fImaxdays\fR] [\fB-d \fIlastday\fR] [\fB-I \fIinactive\fR]
+[\fB-E \fIexpiredate\fR] [\fB-W \fIwarndays\fR] \fIuser\fR
+.TP 5
+\fBchage\fR \fB-l\fR [\fIuser\fR]
+.SH DESCRIPTION
+\fBchage\fR is used to list and change the password expiry information
+of a user. It allows the system administrator to change the number of
+days between allowed and required password changes and the date of the
+last password change. It allows also to define when an account will
+expire. The \fBchage\fR command is restricted to the system administrator,
+except for the \fB-l\fR option, which may be used by an user to determine
+when his password or account is due to expire.
+.PP
+If no option is given, \fBchage\fR operates in an interactive mode, prompting
+the user with the current values for all of the fields. Enter the new
+value to change the field, or leave the line blank to use the  current
+value. If the users exists in the local \fIpasswd\fR file, but not in
+the local \fIshadow\fR file, chage will create a new entry in the
+\fIshadow\fR file.
+.SH OPTIONS
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBchage\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+This is useful for example on NIS master servers, where you do
+not want to give all users in the NIS database automatic access
+to your NIS server and the NIS map is build from special files.
+.TP
+.B "\-l, \-\-list"
+This option will list the password expiry information in a human
+readable format. The user will see the date when he changed the
+password the last time, when the password will be expire, when the
+password will be locked and when the account will expire.
+.TP
+.BI "\-m, \-\-mindays" " mindays"
+With this option the minimum number of days between password
+changes is changed. A value of zero for this field indicates that
+the user may change her password at any time. Else the user will not be
+permitted to change the password until \fImin\fR days have elapsed.
+.TP
+.BI "\-M, \-\-maxdays" " maxdays"
+With this option the maximum number of days during which a
+password is valid is changed. When \fImaxdays\fR plus \fIlastday\fR
+is less than the current day, the user will be required to change
+his password before being able to use the account.
+.TP
+.BI "\-d, \-\-lastday" " lastday"
+With this option the date when the password was last changed can
+be set to another value. \fIlastday\fR has to be specified as
+number of days since January 1st, 1970. The date may also be
+expressed in the format YYYY-MM-DD. If supported by the system,
+a value of zero forces the user to change the password at next
+login.
+.TP
+.BI "\-E, \-\-expiredate" " expiredate"
+With this option the date when the account will be expired can
+be changed. \fIexpiredate\fR has to be specified as number of
+days since January 1st, 1970. The date may also be expressed in
+the format YYYY-MM-DD.
+.TP
+.BI "\-I, \-\-inactive" " inactive"
+This option is used to set the number of days of inactivity after
+a password has expired before the account is locked. A user whose
+account is locked must contact the system  administrator before
+being able to use the account again.
+A value of -1 disables this feature.
+.TP
+.BI "\-W, \-\-warndays" " warndays"
+With this option the number of days of warning before a password
+change is required can be changed. This option is the number of
+days prior to the password expiring that a user will be warned
+the password is about to expire.
+.SH FILES
+passwd \- user account information
+.br
+shadow \- shadow user account information
+.SH SEE ALSO
+.BR passwd (1),
+.BR passwd (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

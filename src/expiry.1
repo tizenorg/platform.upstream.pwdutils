@@ -1,0 +1,41 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH expiry 1 "March 2003" "pwdutils"
+.SH NAME
+expiry \- check password expiration and enforce password change
+.SH SYNOPSIS
+.TP 5
+\fBexpiry\fR [\fB-f\fR]
+.SH DESCRIPTION
+\fBexpiry\fR checks the current password expiration and
+prints a warning if the password is expiring or enforces a change
+when required.
+.SH OPTIONS
+.TP
+.B "\-f"
+The caller is forced to change the password if it is expired
+but inactive.
+.SH FILES
+passwd \- user account information
+.br
+shadow \- shadow user account information
+.SH SEE ALSO
+.BR passwd (1),
+.BR passwd (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

@@ -1,0 +1,269 @@
+.\" Copyright 2004, 2010 Thorsten Kukuk
+.\" Copyright 1991 - 1993, Julianne Frances Haugh and Chip Rosenthal
+.\" All rights reserved.
+.\"
+.\" Redistribution and use in source and binary forms, with or without
+.\" modification, are permitted provided that the following conditions
+.\" are met:
+.\" 1. Redistributions of source code must retain the above copyright
+.\"    notice, this list of conditions and the following disclaimer.
+.\" 2. Redistributions in binary form must reproduce the above copyright
+.\"    notice, this list of conditions and the following disclaimer in the
+.\"    documentation and/or other materials provided with the distribution.
+.\" 3. Neither the name of Julianne F. Haugh nor the names of its contributors
+.\"    may be used to endorse or promote products derived from this software
+.\"    without specific prior written permission.
+.\"
+.\" THIS SOFTWARE IS PROVIDED BY JULIE HAUGH AND CONTRIBUTORS ``AS IS'' AND
+.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+.\" ARE DISCLAIMED.  IN NO EVENT SHALL JULIE HAUGH OR CONTRIBUTORS BE LIABLE
+.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+.\" SUCH DAMAGE.
+.TH LOGIN 5
+.SH NAME
+/etc/login.defs \- Login configuration
+.SH DESCRIPTION
+The
+.I /etc/login.defs
+file defines the site-specific configuration for the shadow login
+suite.  This file is required.  Absence of this file will not prevent
+system operation, but will probably result in undesirable operation.
+.PP
+This file is a readable text file, each line of the file describing
+one configuration parameter.  The lines consist of a configuration
+name and value, seperated by whitespace.  Blank lines and comment
+lines are ignored.  Comments are introduced with a `#' pound sign and
+the pound sign must be the first non-white character of the line.
+.PP
+Parameter values may be of four types:  strings, booleans, numbers,
+and long numbers.  A string is comprised of any printable characters.
+A boolean should be either the value ``yes'' or ``no''.  An undefined
+boolean parameter or one with a value other than these will be given
+a ``no'' value.  Numbers (both regular and long) may be either decimal
+values, octal values (precede the value with ``0'') or hexadecimal
+values (precede the value with ``0x'').  The maximum value of the
+regular and long numeric parameters is machine-dependant.
+.PP
+The following configuration items are provided:
+.\"
+.IP "CHARACTER_CLASS (string)"
+User accounts and Group names have to match the regex expression
+of this variable.
+.\"
+.IP "CHFN_AUTH (boolean)"
+If
+.IR yes ,
+the
+.B chfn
+and
+.B chsh
+programs will ask for password before making any changes, unless
+run by the superuser.
+.\"
+.IP "CHFN_RESTRICT (string)"
+This parameter specifies which values in the
+.I gecos
+field of the
+.I passwd
+file may be changed by regular users using the
+.B chfn
+program.  It can be any combination of letters
+.IR f ,
+.IR r ,
+.IR w ,
+.IR h ,
+for Full name, Room number, Work phone, and Home phone, respectively.
+If not specified, only the superuser can make any changes.
+.\"
+.IP "DEFAULT_HOME (boolean)"
+If the home directory of a user is not reachable, should the
+use be allowed to login ?
+.\"
+.IP "ENV_PATH (string)"
+This parameter must be defined as the search path for regular users.
+When a login with UID other than zero occurs, the PATH environment
+parameter is initialized to this value.
+.\"
+.IP "ENV_ROOTPATH (string)"
+This parameter must be defined as the search path for root.
+.\"
+.IP "FAIL_DELAY (number)"
+Delay time in seconds after each failed login attempt.
+.\"
+.IP "GID_MAX (number)"
+.IP "GID_MIN (number)"
+Range of group IDs to choose from for the
+.B groupadd
+program.
+.\"
+.IP "HUSHLOGIN_FILE (string)"
+This parameter is used to establish ``hushlogin'' conditions.  There
+are two possible ways to establish these conditions.  First, if the
+value of this parameter is a filename and that file exists in the
+user's home directory then ``hushlogin'' conditions will be in effect.
+The contents of this file are ignored; its mere presence triggers
+``hushlogin'' conditions.  Second, if the value of this parameter is
+a full pathname and either the user's login name or the user's shell
+is found in this file, then ``hushlogin'' conditions will be in effect.
+In this case, the file should be in a format similar to:
+.nf
+.sp
+.ft I
+	demo
+	/usr/lib/uucp/uucico
+	\0\0.
+	\0\0.
+	\0\0.
+.ft R
+.sp
+.fi
+When ``hushlogin'' conditions are established, the message of the day
+printed by
+.B /bin/login
+is suppressed. See MOTD_FILE for related information.
+.\"
+.IP "LOG_UNKFAIL_ENAB (boolean)"
+If
+.I yes
+then unknown usernames will be included when a login failure is
+recorded.  Note that this is a potential security risk; a common login
+failure mode is transposition of the user name and password, thus this
+mode will often cause passwords to accumulate in the failure logs.
+If this option is disabled then unknown usernames will be suppressed
+in login failure messages.
+.\"
+.IP "LOGIN_TIMEOUT (number)"
+Time in seconds after the
+.B login
+program exits if the user doesn't type his password.
+.\"
+.IP "MOTD_FILE (string)"
+This parameter specifies a colon-delimited list of pathnames to ``message
+of the day'' files.
+If a specified file exists, then its contents are displayed to the user
+upon login.
+If this parameter is not defined or ``hushlogin'' login conditions are
+in effect, this information will be suppressed.
+.\"
+.IP "PASS_MIN_DAYS (number)"
+The minimum number of days allowed between password changes.  Any password
+changes attempted sooner than this will be rejected.  If not specified, a
+zero value will be assumed.
+.\"
+.IP "PASS_MAX_DAYS (number)"
+The maximum number of days a password may be used.  If the password is
+older than this, then the account will be locked.  If not specified,
+a large value will be assumed.
+.\"
+.IP "PASS_WARN_AGE (number)"
+The number of days warning given before a password expires.  A zero means
+warning is given only upon the day of expiration, a negative value means
+no warning is given.  If not specified, no warning will be provided.
+.\"
+.IP "SYSTEM_GID_MAX (number)"
+Max group ID value used by automatic gid selection in groupadd for system groups
+.IP "SYSTEM_GID_MIN (number)"
+Min group ID value used by automatic gid selection in groupadd for system groups
+.\"
+.IP "SYSTEM_UID_MAX (number)"
+Max user ID value used by automatic uid selection in useradd for system accounts
+.IP "SYSTEM_UID_MIN (number)"
+Min user ID value used by automatic uid selection in useradd for system accounts
+.\"
+.IP "TTYGROUP (string or number)"
+The group ownership of the terminal is initialized to this group
+name or number.  One well-known security attack involves forcing terminal
+control sequences upon another user's terminal line.  This problem
+can be averted by disabling permissions which allow other users to
+access the terminal line, but this unfortunately prevents programs
+such as
+.B write
+from operating.  Another solution is to use a version of the
+.B write
+program which filters out potentially dangerous character sequences,
+make this program ``setgid'' to a special group, assign group ownership
+of the terminal line to this special group, and assign permissions of
+\fI0620\fR to the terminal line.  The TTYGROUP definition has been
+provided for just this situation.  If this item is not defined, then
+the group ownership of the terminal is initialized to the user's group
+number.  See TTYPERMS for related information.
+.\"
+.IP "TTYPERM (number)"
+The login terminal permissions are initialized to this value.  Typical
+values will be \fI0622\fR to permit others write access to the line
+or \fI0600\fR to secure the line from other users.  If not specified,
+the terminal permissions will be initialized to \fI0622\fR.  See
+TTYGROUP for related information.
+.\"
+.IP "TTYTYPE_FILE (string)"
+This parameter specifies the full pathname to a file which maps terminal
+lines to terminal types.  Each line of the file contains a terminal
+type and a terminal line, seperated by whitespace, for example:
+.nf
+.sp
+.ft I
+	vt100\0	tty01
+	wyse60	tty02
+	\0\0.\0\0\0	\0\0.
+	\0\0.\0\0\0	\0\0.
+	\0\0.\0\0\0	\0\0.
+.ft R
+.sp
+.fi
+This information is only used to initialize the TERM environment parameter
+when it does not already exist.
+A line starting with a ``#'' pound sign will be treated as a comment.
+If this paramter is not specified, the file does not exist, or the terminal
+line is not found in the file, then the TERM environment parameter will not
+be set.
+.\"
+.IP "UID_MAX (number)"
+Max user ID value for automatic uid selection in useradd
+.IP "UID_MIN (number)"
+Min user ID value for automatic uid selection in useradd
+.\"
+.IP "USERADD_CMD (string)"
+If defined, this command is run after adding a user with \fBuseradd\fR.
+It can, for example, rebuild the NIS maps in this script.
+.\"
+.IP "USERDEL_PRECMD (string)"
+If defined, this command is run before removing a user with \fBuserdel\fR.
+It should remove any at/cron/print jobs etc. owned by the user to be
+removed (passed as the first argument).
+.\"
+.IP "USERDEL_POSTCMD (string)"
+If defined, this command is run after removing a user with \fBuserdel\fR.
+It can, for example, rebuild any NIS database etc. to remove the account from it.
+.\"
+.SH CROSS REFERENCE
+The following cross reference shows which programs in the shadow login
+suite use which parameters.
+.na
+.IP login 12
+DEFAULT_HOME ENV_PATH ENV_ROOTPATH FAIL_DELAY
+HUSHLOGIN_FILE LOG_UNKFAIL_ENAB LOGIN_TIMEOUT
+MOTD_FILE TTYPERM TTYGROUP TTYTYPE_FILE
+.IP useradd 12
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.IP passwd 12
+OBSCURE_CHECKS_ENAB PASS_MAX_LEN PASS_MIN_LEN PASS_ALWAYS_WARN
+CRACKLIB_DICTPATH PASS_CHANGE_TRIES
+.IP pwconv 12
+PASS_MAX_DAYS PASS_MIN_DAYS PASS_WARN_AGE
+.ad
+.SH BUGS
+Some of the supported configuration parameters are not documented in this
+manual page.
+.SH SEE ALSO
+.BR login (1),
+.BR passwd (5)
+.SH AUTHORS
+Julianne Frances Haugh (jockgrrl@ix.netcom.com)
+.br
+Thorsten Kukuk (kukuk@thkukuk.de)

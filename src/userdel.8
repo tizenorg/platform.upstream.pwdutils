@@ -1,0 +1,79 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH userdel 8 "October 2003" "pwdutils"
+.SH NAME
+userdel \- delete an user account
+.SH SYNOPSIS
+.TP 8
+\fBuserdel\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-r\fR[\fB-f\fR]]
+.br
+[\fB--service \fIservice\fR] [\fB--help\fR] [\fB-u\fR] [\fB-v\fR] \fIaccount\fR
+.SH DESCRIPTION
+\fBuserdel\fR deletes an user account from the local system files or
+a LDAP database and removes all entries that refer to \fIaccount\fR from the
+group database. Before the \fIaccount\fR is removed, the USERDEL_PRECMD
+command as defined in
+.BR login.defs (5)
+is called, after removal the USERDEL_POSTCMD command is called.
+.SH OPTIONS
+.TP
+.B "\-r, \-\-remove-home"
+Remove the whole home directory and the mail spool of the specified
+account. Files located in other directories will have to be searched
+for and deleted manually.
+.TP
+.B "\-f, \-\-force"
+This option is used to force the removal of files, even if not owned
+by the account.
+.TP
+.BI "\-\-service" " service"
+Add the account to a special directory. The default is \fIfiles\fR,
+but \fIldap\fR is also valid.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBchpasswd\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+.TP
+.B "\-\-help"
+Print a list of valid options with a short description.
+.TP
+.B "\-u, \-\-usage"
+Print a short list of valid options.
+.TP
+.B "\-v, \-\-version"
+Print the version number and exit.
+.SH FILES
+passwd \- user account information
+.br
+shadow \- shadow user account information
+.br
+group \- group information
+.SH SEE ALSO
+.BR passwd (1),
+.BR login.defs (5),
+.BR passwd (5),
+.BR shadow (5),
+.BR useradd (8),
+.BR usermod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

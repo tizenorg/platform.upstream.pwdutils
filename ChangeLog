@@ -1,0 +1,2241 @@
+2012-05-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.19
+
+	* src/passwd.c (pw_status): Fix check for locked password
+	[bnc#754081].
+
+2012-03-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.18
+
+2012-01-31  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/chown_dir_rec.c (chown_entry): Check against correct
+	old values [bnc#738114].
+
+2011-08-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/gpasswd.c (main): Remove dead code.
+
+2011-05-23  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (write_user_data): jump to correct label.
+
+2011-05=16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.17
+
+	* etc/useradd.local: Fix syntax error.
+
+2011-05-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.16
+
+	* etc/default/passwd: remove blowfish, make sha512 default
+	[FATE#312321].
+
+2011-05-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.15
+
+	* src/newgrp.c (main): Try at first getgroups to honour
+	dynamically assigned groups (for example by pam_group)
+	[bnc#680833].
+
+2011-02-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/useradd.local: Merge SELinux patch.
+
+2011-02-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.14
+
+	* lib/parse_grent.c (parse_grent): Special rules for +/- not
+	in strict mode.
+	* lib/parse_pwent.c (parse_pwent): Likewise.
+
+	* src/grpck.c (loop_over_group_file): Don't write two newlines
+	to /etc/group, check +/- entries,too. [FATE#310660].
+
+	* src/pwck.c (loop_over_passwd_file): Don't write two newlines,
+	check +/- entries,too. [FATE#310660].
+	(loop_over_shadow_file): Likewise.
+
+	* etc/login.defs: Remove LOGIN_RETRIES.
+	* etc/login.defs.5: Likewise.
+	* src/rpasswd-client.c: Use SSLv3 only, set auto retry option.
+
+2010-10-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.13
+
+	* lib/copy_dir_rec.c: Only copy regular files [bnc#645140].
+
+	* po/vi.po: Update.
+
+2010-09-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.12
+
+	* lib/group.c (write_group_data): Call fflush/fsync before
+	closing freshly written group files [bnc#639753].
+
+	* lib/user.c (write_user_data): Don't close old file twice
+	in error case.
+
+2010-08-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* README: Remove link to dead mailinglist archive.
+	* po/sv.po: Update.
+	* po/fr.po: Likewise.
+
+2010-07-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.11
+
+	* src/rpasswdd.c: Don't translate debug messages.
+	Patch by Benno Schulenberg.
+	* po/id.po: Update.
+	* po/da.po: Likewise.
+	* po/pl.po: Likewise.
+	* po/nl.po: New translation.
+	* po/LINUGUAS: Add nl.
+
+2010-06-18  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.10
+
+	* src/useradd.c: Include sys/stat.h.
+	* src/userdel.c: Likewise.
+	* src/usermod.c: Likewise.
+	Reported by Ludovic Courtès.
+
+	* src/pwck.c (main): Fix long read-only option.
+	* src/gpck.c (main): Likewise.
+	Reported by Dieter Bloms.
+
+	* po/pl.po: Fix encoding.
+
+2010-05-19  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.9
+
+	* src/useradd.c: Move umask value from /etc/login.defs to
+	/etc/default/useradd [bnc#606249].
+	* src/useradd.8: Document new -U umask option.
+	* etc/login.defs: Mark UMASK as deprecated and point to new
+	location.
+	* etc/login.defs.5: Remove UMASK.
+
+2010-02-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.8
+
+	* po/de.po: Fix encoding.
+
+2010-02-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.8: Document -A and -R option.
+
+	* src/pam_rpasswd.8: Document quiet option.
+
+	* src/pam_rpasswd.c: Add option "quiet".
+
+	* src/rpasswd.c (main): Adjust connect_to_server call.
+
+	* src/rpasswd-client.c (connect_to_server): Add new flag "quiet".
+
+2009-11-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.7
+
+	* src/userdel.c (remove_from_secondary_groups): Change pointer
+	in correct place of loop [bnc#551823].
+
+2009-11-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.6
+
+	* src/pam_rpasswd.c (handle_responses): Check if there
+	is really data for the client, else don't ask for it (solves
+	[bnc#551835], too.).
+
+2009-10-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs.5: HUSHLOGIN_FILE: remove PAM part.
+
+	* po/id.po: Update.
+	* po/da.po: Likewise.
+	* po/vi.po: Likewise.
+
+2009-08-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs.5: Adjust HUSHLOGIN_FILE comment, remove
+	LASTLOG_ENAB [bnc#527336].
+
+2009-07-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* po/fr.po: Update.
+	* po/pl.po: Likewise.
+	* po/sv.po: Likewise.
+
+2009-07-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.5
+
+	* po/da.po: New translation.
+
+	* src/pwconv.c (main): Remove temporary files on error.
+
+	* src/Makefile.am (uninstall-hook): Add uninstall-hook.
+
+2009-07-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 3.2.4
+
+	* lib/user.c (write_user_data): Call fflush and fsync to make
+	sure data on disk is really current.
+
+2009-04-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.3
+
+	* etc/default/passwd: Document sha256,sha512.
+
+2009-03-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* po/fr.po: New.
+	* po/id.po: New.
+
+2008-11-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.2
+
+	* src/useradd.c (main): Don't lock system accounts by default.
+
+2008-04-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.1
+
+	* configure.in: change check to xcrypt_gensalt_r.
+	* lib/parse_crypt_arg.c: Adjust #ifdefs.
+	* src/chpasswd.c: Likewise.
+	* src/gpasswd.c: Likewise.
+
+2008-02-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.2.0
+
+	* lib/libldap.c: Check asprintf return value.
+	* lib/call_script.c (call_script): Likewise.
+	* src/rpasswd-client.c: Likewise.
+	* src/rpasswdd.c: Likewise.
+	* src/chage.c: Likewise.
+
+	* lib/msg_table.h: New format for msg_table, includes now
+	result.
+	* plugins/liblog_syslog.c (syslog_sec_log): Adjust for new
+	msg_table.
+	* plugins/liblog_audit.c (audit_sec_log): Likewise.
+
+	* src/useradd.c: Add --preferred-uid option.
+	* src/groupadd.c: Likewise.
+	* src/groupadd.8: Document new option.
+	* src/useradd.8: Likewise.
+	Patch by Ludwig Nussel <lnussel@suse.de>
+
+2007-06-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.1.4
+
+	* src/pwconv.c (main): Support NIS entries [bnc#285834].
+
+	* src/pwconv.8: Document that orphaned entries in /etc/shadow
+	will be removed [bnc#285834].
+
+2007-03-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pwconv.8: Fix syntax error.
+
+2007-02-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.c (bioapi_chauthtok): Fix typo. Reported by
+	Clytie Siddall <clytie@riverland.net.au>.
+
+	* po/sv.po: Update translation.
+	* po/vi.po: Update translation.
+
+2007-02-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* po/pl.po: Update translation.
+
+2007-01-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs.5: Remove FTMP_FILE.
+	* etc/login.defs: Likewise.
+
+2006-11-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.1.3
+
+	* src/gpasswd.c: Add support to read password from stdin.
+	Based on patch from Nolan Eakins <sneakin@semanticgap.com>.
+
+	* etc/login.defs: Fix typos.
+	* etc/default/passwd: Likewise.
+	Reported by Silvan Minghetti <bullet@users.sourceforge.net>.
+
+	* po/sv.po: Update swedish translation.
+
+	* src/newgrp.c: Remove debug output.
+
+2006-10-23  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.1.2
+
+	* etc/userdel-pre.local: Check if crontab exists before calling it.
+
+	* src/pwconv.c (main): Don't free static strings.
+
+	* src/chage.c: Don't call locale functions if NLS is disabled.
+	* src/chfn.c: Likewise.
+	* src/chpasswd.c: Likewise.
+	* src/chsh.c: Likewise.
+	* src/expiry.c: Likewise.
+	* src/gpasswd.c: Likewise.
+	* src/groupadd.c: Likewise.
+	* src/groupdel.c: Likewise.
+	* src/groupmod.c: Likewise.
+	* src/grpck.c: Likewise.
+	* src/grpconv.c: Likewise.
+	* src/grpunconv.c: Likewise.
+	* src/newgrp.c: Likewise.
+	* src/passwd.c: Likewise.
+	* src/pwck.c: Likewise.
+	* src/pwconv.c: Likewise.
+	* src/pwunconv.c: Likewise.
+	* src/rpasswd.c: Likewise.
+	* src/rpasswdd.c: Likewise.
+	* src/useradd.c: Likewise.
+	* src/userdel.c: Likewise.
+	* src/usermod.c: Likewise.
+	* src/vipw.c: Likewise.
+	Patch from Mark Rosenstand <mark@borkware.net>.
+
+2006-09-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.1.1
+
+	* etc/pamd.d/chage: Update to use include statement.
+	* etc/pam.d/chfn: Likewise.
+	* etc/pam.d/chsh: Likewise.
+	* etc/pam.d/passwd: Likewise.
+	* etc/pam.d/rpasswd: Likewise.
+	* etc/pam.d/shadow: Likewise.
+	* etc/pam.d/useradd: Likewise.
+
+	* etc/login.defs: Enable groupadd.local by default.
+
+2006-07-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.1.0
+
+	* src/gpasswd.1: Document -l and -u options.
+
+	* src/gpasswd.c (main): Copy getpass() result for further
+	usage [BNC #190932]
+	(main): Add support for -l and -u flags.
+
+2006-06-01  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/passwd.c (main): Check return value of setuid call.
+
+2006-05-21  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/usermod.8: Document -L and -U option.
+
+	* src/passwd.c (passwd_main): Optimize lock/unlock of password.
+
+	* src/usermod.c (main): Implement lock/unlock of password.
+
+	* src/tst-chage: Adjust for latest chage fixes.
+
+	* src/tst-usermod: New test.
+	* src/Makefile.am: Add tst-usermod.
+
+2006-05-09  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/newgrp.c (main): Preserve grp pointer [SuSE #173696].
+
+2006-03-15  Ralf Haferkamp <rhafer@suse.de>
+
+	* lib/group.c: Add support for rfc2307bis.
+	* lib/libldap.c: Likewise.
+	* lib/libldap.h: Likewise.
+
+2006-02-15  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/vi.po: New translation.
+
+2006-01-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/passwd.c: Remove never implemented -h option.
+	* src/passwd.1: Likewise.
+
+2006-01-08  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* po/sv.po: New swedish translation
+
+	* configure.in: Add swedish translation
+
+2005-12-27  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/passwd.c (passwd_main): -d, -l and -u are exclusive.
+
+	* src/passwd.1: Document --bioapi option.
+
+2005-12-25  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* src/Makefile.am (passwd_LDADD): Link against bioapi library.
+
+	* configure.in: Check for BioAPI.
+
+2005-12-02  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* lib/libldap.c (ldap_create_user): Fix off by one error.
+	Reported by David Binderman <dcb314@hotmail.com>.
+
+2005-12-02  Thorsten Kukuk  <kukuk@thkukuk.de>
+
+	* release version 3.0.7
+
+	* src/passwd.1: Document -P option.
+
+	* src/passwd.c (passwd_main): Don't bail out if service
+	is unknown and we don't need it.
+
+2005-11-14  Thorsten Kukuk  <kukuk@thukuk.de>
+
+	* src/passwd.1: Fix value for disabling inactive field.
+
+2005-10-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.6
+
+	* src/chfn.c (main): Fix typo: work_phone -> home_phone.
+
+2005-10-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.5
+
+	* src/pam_rpasswd.c: Include syslog.h.
+
+2005-09-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs: Add missing 'Z's to CHARACTER_CLASS.
+	Reported by Bernd Glueckert <bernd.glueckert@gmx.de>.
+
+2005-08-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.4
+
+	* src/pam_rpasswd.c (pam_sm_chauthtok): Rewrote part to show
+	SLP information about found rpasswd daemon.
+
+2005-08-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.3
+
+	* src/usermod.c (main): Adjust sp_lstchg if -p option is given.
+
+	* src/chage.c (print_shadow_info): password expires and inactive
+	and account expires are disabled with -1, not 0.
+
+	* src/groupmod.8: Rename -r option to --service.
+	* src/usermod.8: Likewise.
+
+	* src/usermod.c (print_help): Remove wrong -k option.
+
+	* src/useradd.c (create_home_directory): Don't modify existing
+	home directory.
+
+2005-08-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/vipw.c: Include i18n.h.
+	* src/usermod.c: Likewise.
+	* src/userdel.c: Likewise.
+	* src/useradd.c: Likewise.
+	* src/rpasswdd.c: Likewise.
+	* src/rpasswd.c: Likewise.
+	* src/pwconv.c: Likewise.
+	* src/pwunconv.c: Likewise.
+	* src/passwd.c: Likewise.
+	* src/pwck.c: Likewise.
+	* src/newgrp.c: Likewise.
+	* src/grpunconv.c: Likewise.
+	* src/grpconv.c: Likewise.
+	* src/grpck.c: Likewise.
+	* src/groupmod.c: Likewise.
+	* src/groupdel.c: Likewise.
+	* src/groupadd.c: Likewise.
+	* src/gpasswd.c: Likewise.
+	* src/expiry.c: Likewise.
+	* src/chsh.c: Likewise.
+	* src/chpasswd.c: Likewise.
+	* src/chfn.c: Likewise.
+	* src/chage.c: Likewise.
+	* lib/user.c: Likewise.
+	* lib/selinux_utils.c: Likewise.
+	* lib/remove_dir_rec.c: Likewise.
+	* lib/print_error.c: Likewise.
+	* lib/passwd_nisplus.c: Likewise.
+	* lib/parse_crypt_arg.c: Likewise.
+	* lib/logging.c: Likewise.
+	* lib/lock_database.c: Likewise.
+	* lib/is_logged_in.c: Likewise.
+	* lib/group.c: Likewise.
+	* lib/libldap.c: Likewise.
+	* lib/get_ldap_password.c: Likewise.
+	* lib/get_caller_dn.c: Likewise.
+	* lib/copy_xattr.c: Likewise.
+	* lib/copy_dir_rec.c: Likewise.
+	* lib/chown_dir_rec.c: Likewise.
+	* lib/call_script.c: Likewise.
+	* lib/authentication.c: Likewise.
+
+2005-07-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* po/pl.po: Update fram translation project
+
+2005-07-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/i18n.h: New.
+
+2005-07-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.2
+
+	* src/pam_rpasswd.c (pam_sm_chauthtok): Print description of
+	found host if available.
+
+2005-07-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.c (main): Handle -a -G like -A (for shadow
+	compatibility).
+
+	* src/usermod.c (main): Use --service instead of -r.
+	* src/groupmod.c (main): Likewise.
+	* src/passwd.c (passwd_main): Likewise.
+	* src/chage.c (main): Likewise.
+	* src/chfn.c (main): Likewise.
+	* src/chpasswd.c (main): Likewise.
+	* src/chsh.c (main): Likewise.
+
+	* lib/logindefs.c: Print as error message the name of the file
+	from which we got the value, not "/etc/login.defs".
+
+	* lib/logging.c (store): Don't use fix syslog module names.
+
+2005-06-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0.1
+
+	* lib/group.h (write_group_data): Warn if return value is ignored.
+
+	* lib/user.c (write_user_data): Don't ignore SELinux errors.
+	(write_user_data): Likewise.
+	* lib/group.c (write_group_data): Likewise.
+	* src/vipw.c (edit): Likewise.
+	* src/pwck.c: Likewise.
+	* src/grpck.c: Likewise.
+
+	* lib/selinux_utils.c (restore_default_context): Don't ignore
+	errors.
+
+	* src/usermod.c (move_home_directory): Don't remove old directory
+	if copying failed.
+
+	* lib/public.h: If supported by compiler, warn about unused
+	results of certain function calls.
+
+2005-06-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 3.0
+
+	* lib/logging.h (MSG_STDIN_FOR_NONROOT_DENIED): New, for passwd.
+
+	* lib/msg_table.h (msg_table): Add message for stdin/passwd.
+
+	* src/passwd.c: Implement --stdin option.
+	* src/passwd.1: Document --stdin option.
+
+2005-05-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Check for Linux audit library.
+
+	* plugins/liblog_audit.c: New, use Linux audit library.
+	* plugins/liblog_audit.map: New.
+	* plugins/Makefile.am: Add liblog_audit plugin.
+
+2005-05-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c (main): Enable logging.
+	* lib/msg_table.h (msg_table): Add new messages from chage.
+	* lib/logging.h: Add new defines for chage messages.
+
+	* src/useradd.c (main): Log successfull creation of mail spool file.
+
+2005-04-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/default/useradd: Add CREATE_MAIL_SPOOL.
+	* src/useradd.c: Create mail spool file if requested.
+
+2005-04-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 2.6.98
+
+	* src/useradd.c: Check for fchown, fchmod, chown, chmod, link
+	  and write return values.
+	* src/usermod.c: Likewise.
+	* src/vipw.c: Likewise.
+	* src/pwck.c: Likewise.
+	* src/grpck.c: Likewise.
+
+2005-04-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/use_slp.c (register_slp): Fix handling of slp_descr.
+
+	* src/rpasswdd.c (main): Check for chdir return value.
+
+	* src/grpunconv.c (main): Check for link return value.
+
+	* src/rpasswd-client.c (query_slp): Check for fgets errors.
+
+	* src/newgrp.c (main): If second chdir fails, too, abort.
+
+	* lib/user.c (write_user_data): Check for errors of fchown,
+	fchmod, link and rename calls.
+	* lib/group.c (write_group_data): Likewise.
+	* src/pwconv.c (main): Likewise.
+
+2005-04-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c: Reset syslog after calling pam_* functions.
+
+	* src/chpasswd.c: Use logging.h.
+	* src/expiry.c: Likewise.
+
+	* lib/msg_table.h (msg_table): Add drop privilegs failed message.
+	* lib/logging.h (MSG_DROP_PRIVILEGE_FAILED): New.
+
+	* lib/authentication.c (do_authentication): Reset openlog
+	values after usage of PAM functions.
+
+	* src/gpasswd.c: Remove inclusion of PAM header files.
+	* src/chfn.c: Likewise.
+	* src/chage.c: Likewise.
+
+	* src/useradd.c (main): Write default homedirectory to
+	/etc/default/useradd, reported by
+	Heike Jurzik <jurzik@linux-journalist.com>.
+
+	* src/useradd.8: Add -k to -D list.
+
+2005-04-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 2.6.97
+
+	* configure.in: Check for -fpie/-pie
+	* src/Makefile.am: Compile/Link rpasswdd with -fpie/-pie
+
+2005-03-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd-client.c (print_x509_certificate_info):
+	cert_list_size is unsigned int.
+
+2005-03-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/passwd_nisplus.c: Add casts for gcc4.
+	* src/rpasswdd.c: Fix prototypes for GnuTLS/OpenSSL usage.
+
+2005-02-22  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.96
+
+	* src/pwck.c: Fix memory corruption.
+	* src/grpck.c: Likewise.
+
+2005-01-10  Jakub Bogusz  <qboosh@pld-linux.org>
+
+	* src/chfn.1: Fix typo.
+
+2005-01-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/logging.c: Implement stacking of logging plugings.
+	* lib/logging.h: Adjust prototypes and public macros.
+	* etc/pwdutils/logging: New, default config file for logging.
+
+	* configure.in: Add warning if no libnscd was found.
+
+	* lib/user.c: Unify error message format.
+	* src/chage.c: Likewise.
+	* src/expiry.c: Likewise.
+
+	* plugins/liblog_laus.c (laus_open_sec_log): Add parameter
+	for options.
+
+	* configure.in: Abort if neither GnuTLS nor OpenSSL was found.
+
+2004-12-19  Jakub Bogusz  <qboosh@pld-linux.org>
+
+	* src/groupmod.c: Fix typos in msgids.
+	* src/grpunconv.c: Likewise.
+	* src/pwunconv.c: Likewise.
+	* src/rpasswd.c: Likewise.
+	* src/rpasswdd.c: Likewise.
+
+	* po/pl.po: Add polish translation.
+
+2004-12-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.94
+
+	* plugins/liblog_laus.c: Plugin for LAuS.
+	* plugins/liblog_syslog.c: Plugin for syslog.
+	* lib/logging.h: Move msg_table from here ...
+	* lib/msg_table.h: ... to here. New file.
+	* lib/logging.c: dlopen liblog_syslog for logging.
+
+2004-12-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Add LAuS and plugin support.
+	* Makefile.am (SUBDIRS): Add plugins.
+
+2004-11-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.93
+
+	* src/useradd.c (main): Fix wrong list of arguments.
+
+	* src/usermod.c: Add sec_log support.
+
+	* lib/remove_gr_mem.c: New.
+
+2004-11-29  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.92
+
+	* src/userdel.c: Add sec_log support.
+
+	* src/useradd.c: Add sec_log support.
+
+	* lib/call_script.c (call_script): Use sec_log.
+
+	* etc/login.defs: Make CHARACTER_CLASS safe for usage with different
+	locales [SuSE #48625].
+
+2004-11-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/grpck.c (loop_over_group_file): Start with a bigger buffer
+	and increase it faster.
+
+	* lib/parse_grent.c (parse_grent): Work on a copy of input buffer
+	for the sake that the buffer is too small [SuSE #48278].
+
+2004-11-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/groupmod.c: Add sec_log support.
+	* src/passwd.c: Likewise.
+
+2004-11-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupdel.c: Add sec_log support.
+
+2004-11-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/newgrp.c (main): Add support for multiple groups with
+	the same name as used in NIS environments [SuSE #47712].
+
+2004-10-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd-client.c (start_ssl): Read all PEM files from
+	/etc/ssl/certs.
+
+	* configure.in: Check for dirent.h.
+
+	* release version 2.6.91
+
+2004-10-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/strtoid.c (strtoid): Don't allow UINT_MAX (equal
+	to -1) as UID or GID.
+
+2004-09-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c: Use external libnscd library.
+	* src/chfn.c: Likewise.
+	* src/gpasswd.c: Likewise.
+	* src/passwd.c: Likewise.
+	* src/chpasswd.c: Likewise.
+	* src/groupadd.c: Likewise.
+	* src/groupdel.c: Likewise.
+	* src/groupmod.c: Likewise.
+	* src/grpunconv.c: Likewise.
+	* src/pwconv.c: Likewise.
+	* src/pwunconv.c: Likewise.
+	* src/useradd.c: Likewise.
+	* src/userdel.c: Likewise.
+	* src/usermod.c: Likewise.
+
+	* lib/nscd.c: Removed.
+	* lib/public.h: nscd_flush_cache prototype removed.
+
+2004-09-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c: Implement support for GnuTLS.
+
+2004-08-31  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pam_rpasswd.c: Implement support for GnuTLS.
+
+	* src/rpasswd-client.c (gnutls_pk_algorithm_get_name): Add
+	compat function for old gnutls releases.
+
+2004-08-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Check for GnuTLS.
+
+	* src/rpasswd-client.c: Implement support for GnuTLS.
+	* src/rpasswd.c: Implement support for GnuTLS.
+
+2004-08-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.90
+
+	* src/pam_rpasswd.c (pam_sm_chauthtok): Get server description.
+
+	* src/rpasswd.c (main): Show server description if available.
+
+	* src/rpasswd-client.c (query_slp): Show server description
+	in host selection menu.
+
+	* etc/pam.d/*: Don't allow setting of empty passwords (should
+	be handled in a global way).
+
+2004-08-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd-client.c (MySLPSrvURLCallback): Copy hostp/portp
+	entries, too.
+
+2004-08-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupadd.c (main): Call GROUPADD_CMD script,
+	add sec_log function calls.
+
+	* lib/logging.c: Add new messages.
+	* lib/logging.h: Add new message IDs.
+
+2004-08-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/gpasswd.c (main): Add sec_log function calls.
+
+	* etc/groupadd.local: New.
+
+	* etc/Makefile.am (sbin_SCRIPTS): Add groupadd.local.
+
+	* etc/login.defs (GROUPADD_CMD): Added.
+
+2004-08-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.8: Add all slp options.
+
+	* src/chage.c (main): Add sec_log function calls.
+
+2004-07-19  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs.5: Document missing variables.
+
+2004-06-29  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/newgrp.c (main): Fix sg and newgrp compat
+	option handling.
+
+2004-06-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/logging.h: New, prototypes for logging plugin.
+
+	* lib/logging.c: New, for logging plugin.
+
+	* src/chage.c (main): Free pw_data in error case.
+	* src/chfn.c (main): Likewise.
+	* src/chsh.c (main): Likewise.
+
+	* lib/authentication.c (do_authentication): Don't free
+	pw_data, caller needs it for logging in error case later.
+
+2004-05-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c (main): Fix compiling without SLP support.
+
+	* src/useradd.c: Fix writing of SKEL and EXPIRE entry
+	in /etc/default/useradd
+
+2004-04-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupmod.c (main): Fix typo (user <-> group).
+
+	* lib/str2date.c (str2date): Fix comment.
+
+2004-04-26  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c (main): Add --slp-descr support.
+
+	* lib/use_slp.c (register_slp): Set description attribute
+	if description is configured.
+
+	* lib/use_slp.h (register_slp): Adjust prototype.
+
+	* src/rpasswd-client.c (query_slp): If we find more than one
+	rpasswd daemon and called by rpasswd, ask user which to use.
+
+2004-04-23  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.c (main): Add -R and -A options.
+
+2004-04-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupmod.c (main): Convert group and user names
+	between used locale and UTF8.
+
+2004-04-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupmod.8: Document -A and -R options.
+
+	* src/groupmod.c (main): Add -A and -R options (add/remove
+	user from a group).
+
+2004-04-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.4
+
+	* src/rpasswd-client.c (query_slp): Fix parsing of
+	SLP URL.
+
+2004-04-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.3
+
+	* src/newgrp.c: Add -c command flag to allow sg emulation.
+
+	* src/Makefile.am (install-exec-hook): Add sg compatibility link.
+
+	* src/sg.1: New.
+
+2004-04-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.2
+
+	* src/rpasswdd.c (main): Add timeout support for SLP registration.
+
+	* lib/use_slp.c (register_slp): Add refreshing of SLP registration.
+
+	* lib/use_slp.h: Adjust register_slp prototype.
+
+	* lib/copy_xattr.c (copy_xattr): Don't use SELinux functions
+	if not available. Reported by Jerone Young <jyoung5@us.ibm.com>.
+	(copy_xattr): Don't abort with error if we ignore attributes.
+
+	* src/groupdel.c: Fix program name. Reported by
+	Jerone Young <jyoung5@us.ibm.com>.
+
+2004-03-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6.1
+
+	* src/newgrp.c (main): Handle the case that we use already
+	NGROUPS_MAX groups and don't abort with an error.
+
+2004-03-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.6
+
+	* src/pwck.c (sort_passwd_file): sort passwd file.
+	(main): Fix calculating of return code.
+	* src/grpck.c (sort_group_file): sort group file.
+
+	* src/grpck.8: Rewrite.
+
+	* src/tst-pwck: New test for pwck.
+	* src/tst-grpck: New test for grpck.
+
+2004-03-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupmod.c (main): Clear nscd group cache, not passwd cache.
+
+	* src/grpck.c: Fix typo in help text.
+	* src/grpck.8: Fix typo for -s help text.
+
+2004-03-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/copy_xattr.c (copy_xattr): Don't set SELinux attributes
+	if no policy is loaded.
+
+2004-03-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/group.c (find_group_data): Don't close NSS handle twice.
+	* lib/user.c (do_getpwnam): Likewise.
+
+2004-02-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/authentication.c: Include syslog.h.
+
+2004-02-24  Andreas Voegele  <voegelas@gmx.net>
+
+	* src/newgrp.c (main): Do not dereference gp for incr.
+
+2004-02-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c (check_field): Fix for UTF-8 strings.
+
+	* lib/get_caller_dn.c: New.
+
+	* lib/get_ldap_password.c: New.
+
+	* src/groupadd.c: Remove duplicate code.
+	* src/groupdel.c: Likewise.
+	* src/groupmod.c: Likewise.
+	* src/useradd.c: Likewise.
+	* src/userdel.c: Likewise.
+	* src/usermod.c: Likewise.
+
+	* src/chage.c: Fix usage of -l with -D.
+
+2004-02-23  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupadd.c (main): Add unsupported -f option.
+
+	* src/groupdel.c (main): Fix LDAP support.
+
+	* lib/copy_xattr.c (copy_xattr): Free memory in error case.
+
+2004-02-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/login.defs: Fix typo
+
+2004-02-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupdel.c: Convert groups between UTF-8/local locale.
+
+	* src/expiry.c: Convert account to local locale.
+
+	* src/chsh.1: Document -P/-D.
+
+	* src/newgrp.c (main): Translate group name from locale to UTF-8.
+
+	* src/vipw.c: Unify output.
+	* src/usermod.c: Likewise.
+
+	* src/chfn.1: Adjust manual page.
+
+2004-02-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c: Add -D and -P option.
+
+	* lib/check_name.c (check_name): Use regex for syntax checking.
+
+	* etc/login.defs: Add CHARACTER_CLASS, which defines a regex
+	for allowed account names.
+
+2004-02-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/newgrp.c (main): Check for variable overflow (patch
+	from Thomas Biege).
+
+	* src/usermod.c (main): Fix changing of shadow information.
+	Convert between local locale and UTF-8.
+
+2004-02-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (write_user_data): Fix detecting of changed
+	data.
+
+	* src/usermod.c (main): Don't change gecos to "" if
+	something else is changed. Don't return an error if the
+	home directory does not exist, but the UID is changed.
+
+2004-02-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c (main): Handle UTF-8 accounts correct.
+	* src/chsh.c: Likewise.
+
+	* lib/get_values.c: Convert input/output from/to UTF-8.
+
+	* lib/utf8conv.c: New, convert between UTF-8 and used locale.
+	* lib/utf8conv.h: New.
+
+2004-02-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chpasswd.8: Document /etc/default/passwd usage.
+	* src/gpasswd.1: Likewise.
+
+	* lib/parse_crypt_arg.c: New, common helper functions for crypt.
+	* lib/parse_crypt_arg.h: New.
+
+	* src/chpasswd.c: If not other specified, use crypt hash
+	specified in /etc/default/passwd.
+	(main): Fix lenght of allowed blowfish passwords.
+
+	* lib/logindefs.c: Read /etc/default/passwd, too.
+
+	* src/useradd.c: Better range checking for UIDs and GIDs.
+	* src/groupadd.c (main): Likewise.
+	* src/groupmod.c (main): Likewise.
+	* src/newgrp.c (main): Likewise.
+	* src/usermod.c (convert_grpopt_to_name): Likewise.
+
+	* lib/logindefs.c (getlogindefs_unum): Add range checking.
+	(getlogindefs_num): Likewise.
+
+	* lib/strtoid.c: New, converts string to uid/gid with better
+	range checking.
+
+2004-02-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pam_rpasswd.8: New.
+	* src/newgrp.1: New.
+
+2004-02-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/newgrp.c: New, POSIX conform implementation.
+
+2004-01-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd-client.c: Fix alignment problems.
+
+	* src/grpck.c: New.
+
+	* lib/read-files-group.c: Move parse_grent from here ...
+	* lib/parse_grent.c: ... to here.
+
+2004-01-27  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pwck.c: New.
+	* lib/yesno.c: New, from coreutils 5.1.2.
+	* lib/yesno.h: New.
+
+2004-01-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Check for getline/getdelim functions.
+
+	* lib/logindefs.c (_GNU_SOURCE): define.
+
+2004-01-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Enable SELinux per default if found.
+
+2004-01-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pam_rpasswd.c: New.
+
+	* src/rpasswd-client.c: Common functions moved from ...
+	* src/rpasswd.c: ... here.
+
+	* configure.in: Add option to enable PAM module.
+
+2004-01-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.1: Document new rpasswd options.
+
+	* src/rpasswd.c: Add search functions for a SLP server.
+
+	* src/rpasswdd.8: Document SLP option.
+
+	* src/rpasswdd.c: Make SLP support runtime option.
+
+2004-01-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* configure.in: Check for SLP support.
+	* lib/use_slp.c: New, functions to register/deregister from SLP.
+	* lib/use_slp.h: New, prototypes for register/deregister from SLP.
+
+	* src/rpasswdd.c: Add SLP support.
+
+	* src/dbg_log.[ch]: Moved from here ...
+	* lib/dbg_log.[ch]: ... to here.
+
+2004-01-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.5
+
+	* src/grpunconv.c: New.
+	* src/grpunconv.8: New.
+
+	* lib/read-files.c: Fix compiling with older gcc versions.
+
+2004-01-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.c: SELinux: Don't abort in permissive mode.
+	* src/chsh.c: Likewise.
+	* src/chfn.c: Likewise.
+
+2004-01-06  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/pwunconv.c: New.
+	* src/pwunconv.8: New.
+	* src/pwconv.8: New.
+	* src/tst-pwconv: New.
+	* src/tst-pwunconv: New.
+
+	* src/pwconv.c: Finish implementation.
+
+	* lib/copy_xattr.c: Check arguments.
+
+	* lib/public.h: Add DO_DELETE_SHADOW.
+
+	* lib/authentication.c: Include stdio.h.
+
+2004-01-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupadd.c (main): Fix compiling without LDAP support.
+	* src/userdel.c (main): Likewise.
+	* src/useradd.c (main): Likewise.
+	* src/usermod.c (main): Likewise.
+
+	* src/grpconv.8: New.
+	* src/pwconv.8: New.
+
+	* src/passwd.c (passwd_main): Adjust for new is_selinux_enabled.
+	* src/chfn.c (main): Likewise.
+	* src/chsh.c (main): Likewise.
+	* lib/copy_xattr.c (copy_xattr): Likewise.
+	* lib/selinux_utils.c (set_default_context): Likewise.
+	(restore_default_context): Likewise.
+
+2003-12-19  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupadd.8: Add description about valid group names.
+
+2003-12-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.4
+
+	* lib/user.c (write_user_data): Allow creating of new entry
+	in shadow map.
+
+	* src/chage.c (main): Add shadow entry for account if user
+	enters data.
+
+2003-12-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (write_user_data): Fix shadow temp file handling
+	in error case.
+
+	* src/passwd.c (passwd_main): Don't unlock a password that only
+	has "!" as password.
+
+	* src/passwd.1: Document new -u behavior.
+
+	* lib/check_home.c (check_home): New, check path to home
+	directory.
+
+	* src/useradd.c (main): If home directory exists, it must be
+	a directory.
+	* src/usermod.c (main): Likewise.
+
+	* src/passwd.1: Fix description of password status output.
+
+	* src/passwd.c (passwd_main): Only abort on failing do_getpwnam,
+	if we do more than changing passwords
+
+2003-12-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.99
+
+	* src/usermod.c (main): Remove user from all groups, if
+	-G with empty argument is specified.
+	Remove user only once from all old groups.
+
+2003-12-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.98
+
+2003-12-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/libldap.c (ldap_create_group): Implement.
+
+	* lib/libldap.h: Add prototype for ldap_create_group.
+
+	* lib/user.c (write_user_data): Implement changing of more LDAP
+	data.
+
+	* lib/group.c (write_group_data): Implement changing of more
+	LDAP data.
+
+	* release version 2.3.97
+
+	* lib/nsw.c (_getnswbyname): Return dummy "files" entry if no
+	nsswitch.conf file found.
+
+	* lib/user.c: Fix writing of shadow entry.
+
+	* src/tst-useradd: Check, if shadow data is written.
+
+2003-12-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/chown_dir_rec.c: New, change owner/group of a directory tree.
+
+	* src/useradd.c (create_home_directory): Adjust for new
+	copy_dir_rec interface.
+	* src/usermod.c: Likewise.
+
+	* lib/copy_dir_rec.c (copy_dir_rec): Add new option to preserve
+	the old owner/group of a file/directory.
+
+2003-11-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.8: New.
+	* src/useradd.8: Specify rule for account name.
+
+2003-11-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.c: Implement modifying of group data.
+
+	* src/expiry.c (main): Fix print_version call.
+
+	* src/chfn.c (main): Make standalone.
+	* src/chsh.c (main): Likewise.
+
+	* src/chage.c: Move common functions into libpwdutils.
+
+	* src/passwd.c (main): Moved from main.c.
+	(passwd_main): Add print_version years argument.
+
+	* src/main.h: Removed.
+	* src/main.c: Removed.
+
+	* lib/init_environment.c: New.
+	* lib/print_error.c: New.
+	* lib/print_version.c: New.
+	* lib/date2str.c: New.
+	* lib/str2date.c: New.
+
+2003-11-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/gpasswd.c: New.
+	* src/gpasswd.1: New.
+
+2003-10-30  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/Makefile.am: Link against libattr if necessary.
+
+	* lib/copy_xattr.c: Include <sys/types.h>.
+
+	* configure.in: Add check for -lattr, if attr/xattr.h is used.
+
+2003-10-29  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupmod.8: New manual page.
+
+2003-10-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/group.h: Add fields for new name and gid to group_t.
+
+	* src/groupmod.c: Initial version.
+
+2003-10-19  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/usermod.c: Initial version.
+
+	* lib/group.c: Reset errno if errno == ERANGE was returned.
+	* lib/user.c: Likewise.
+
+2003-10-18  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/tst-long-group-entry: Add new test.
+	* src/tst-32bit-uid-gid: New test.
+	* src/tst-userdel: New test.
+
+	* src/useradd.c: Fix lseek calls.
+
+2003-10-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.96
+
+	* src/chfn.c (chfn_main): Add SELinux support.
+	* src/chsh.c (chsh_main): Likewise.
+
+	* lib/selinux_utils.c (set_default_context): New.
+	(restore_default_context): New.
+
+	* src/vipw.c (edit): Set default security context before
+	creating new file.
+	* lib/user.c (write_user_data): Likewise.
+	* lib/group.c (write_group_data): Likewise.
+
+	* src/passwd.1: Document usage of PAM modules.
+
+2003-10-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.c (passwd_main): Add SELinux support.
+	* lib/selinux_utils.c: New.
+
+	* lib/public.h (copy_xattr,selinux_check_access): Add prototypes.
+
+	* lib/copy_xattr.c: New, function copying extended attributes.
+
+	* src/vipw.c (edit): Copy extended attributes.
+	* lib/group.c (write_group_data): Likewise.
+	* lib/user.c (write_user_data): Likewise.
+	* lib/copy_dir_rec.c (copy_dir_rec): Likewise.
+	* src/useradd.c (write_defaults): Likewise.
+
+2003-10-14  Andreas Schwab  <schwab@suse.de>
+
+	* lib/passwd_nisplus.c: Fix alignment warnings.
+	* lib/read-files-group.c: Likewise.
+
+2003-10-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.95
+
+	* src/Makefile.am (man_MANS): Add vipw.8, vigr.8.
+
+	* src/vipw.8: New file.
+	* src/vigr.8: New file.
+	* src/chsh.1: Fix format.
+	* src/chfn.1: Fix format.
+
+2003-10-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupadd.c: Fix -g handling.
+
+	* src/vipw.c: New.
+
+	* src/tst-groupadd: New, tests for groupadd.
+
+	* src/Makefile.am: Add vipw.
+
+	* lib/user.c (lock_database): Move from here ...
+	* lib/lock_database.c: ... to here.
+	* lib/Makefile.am: Add lock_database.
+
+2003-10-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.94
+
+	* src/groupadd.8: New.
+
+2003-10-07  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/groupdel.8: New.
+
+	* src/userdel.8: Fix typo.
+
+	* lib/group.c (write_group_data): Implement deletion of a group.
+
+	* src/groupdel.c: New.
+
+	* src/useradd.c: Fix format of ouput.
+
+	* src/groupadd.c: New.
+
+	* src/Makefile.am: Add groupadd.
+
+2003-09-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/userdel.c (main): Flush nscd cache if account is removed.
+
+	* src/chsh.c (chsh_main): Don't ask root for password on local accounts.
+	* src/chfn.c (chfn_main): Likewise.
+
+2003-08-29  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/useradd.8: Mention special handling of GROUPS in
+	for system account.
+
+2003-07-27  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/userdel.8: New manual page.
+
+	* src/useradd.8: Add FILES section.
+
+	* src/useradd.c (find_free_uid): Use SYSTEM_UID_MIN and
+	SYSTEM_UID_MAX.
+
+	* etc/login.defs: Add SYSTEM_UID_* and SYSTEM_GID_*
+
+2003-07-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/useradd.8: New manual page
+	* src/Makefile.am (man_MANS): add useradd.8 manual page.
+
+	* src/userdel.c (main): Make -u shortcut for --usage.
+
+2003-07-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release 2.3.93
+
+	* src/useradd.c: Allow -D option for binddn parameter.
+
+	* src/userdel.c: Add --service option.
+
+2003-07-23  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/useradd.c (main): Add support for creating LDAP accounts.
+
+	* src/userdel.c (remove_from_secondary_groups): Fix typo
+	in error message.
+	(main): Lock local password file only, if we don't delete LDAP
+	user.
+
+	* lib/libldap.c (ldap_find_user_baseou): New function.
+	(ldap_find_group_baseou): Likewise.
+	(ldap_create_user): Creata a user in a LDAP database.
+
+	* lib/libldap.h: Add ldap_find_user_baseou and
+	ldap_find_group_baseou prototypes.
+
+2003-07-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/userdel.c (remove_from_secondary_groups): fix query
+	for ldap DN and password.
+	* src/useradd.c (main): Likewise.
+
+	* lib/group.c (write_group_data): Print error message, if
+	LDAP operations fail.
+
+	* lib/libldap.h (convert_user_to_dn): Add prototype.
+
+	* lib/libldap.c (convert_to_dn): change bind data only if
+	bind is not NULL.
+
+	* src/chage.c: Don't include all ldap headers.
+	* src/chpasswd.c: Likewise.
+
+2003-07-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/libldap.c: Implement deleting of user and group objects.
+	* lib/libldap.h: Add prototypes for new functions.
+
+	* src/userdel.c: Implement deleting of LDAP accounts.
+
+2003-07-18  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3.92
+
+	* etc/userdel-pre.local: New, called from userdel.
+	* etc/userdel-post.local: New, called from userdel.
+
+	* etc/login.defs: Add USERDEL_PRECMD and USERDEL_POSTCMD.
+
+	* src/userdel.c: New, for userdel implementation.
+
+	* src/chage.c (main): Use write_user_data.
+	* src/useradd.c (main): Likewise.
+	* src/chfn.c (chfn_main): Likewise.
+	* src/chsh.c (chsh_main): Likewise.
+	* src/passwd.c (passwd_main): Likewise.
+	* src/chpasswd.c (main): Likewise.
+
+	* lib/public.h (write_user_data): Renamed from do_setpwnam.
+
+	* lib/user.c (do_setpwnam): Use new variable todo instead of
+	new_user, implement deleting of accounts, rename to write_user_data.
+
+	* lib/public.h (user_t): Add todo flag (modify, add, delete).
+
+	* etc/login.defs: Add USERDEL_PRECMD and USERDEL_POSTCMD.
+
+	* lib/libldap.c: Add LDAP_SET_REBIND_PROC_ARGS again.
+
+2003-07-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/is_logged_in.c: New, check if user is logged in.
+	* lib/public.h (is_logged_in): Add prototype.
+
+	* release version 2.3.91
+
+	* src/rpasswd.c (main): Fix memory leak.
+
+	* src/Makefile.am (install-exec-hook): Only change permissions
+	of usr/bin binaries if we install as root. Reported by
+	Arkadiusz Miskiewicz <arekm@pld-linux.org>
+
+	* src/chage.c (main): Close LDAP session.
+	* lib/user.c (do_setpwnam): Likewise.
+	* src/chpasswd.c (main): Likewise.
+
+	* lib/libldap.c (close_ldap_session): New function.
+	* lib/libldap.h (close_ldap_session): Add prototype.
+
+	* lib/group.c: Include libldap.h instead of ldapfcn.h.
+	* src/chage.c: Likewise.
+	* src/chpasswd.c: Likewise.
+
+	* lib/user.c (do_setpwnam): Use new ldaplib functions.
+
+2003-07-16  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/libldap.c: New, rewrite of ldapfcn to match our needs.
+	* lib/libldap.h: New.
+	* lib/ldapfcn.c: Replaced by libldap.c
+	* lib/ldapfcn.h: Replaced by libldap.h
+	* lib/Makefile.am: Replace ldapfcn with libldap.
+
+	* lib/ldapfcn.c (ldap_authentication): Fix authentication with
+	extra supplied binddn.
+
+	* src/useradd.c (main): More error checking.
+
+	* src/chpasswd.c (main): Call ldap_authentication.
+	* src/chage.c (main): Likewise.
+
+	* src/chfn.c (get_fields): Allow the user to abort with Ctrl-C.
+	* src/chsh.c (chsh_main): Likewise.
+
+	* lib/ldapfcn.h (ldap_authentication): Adjust prototype.
+
+	* src/useradd.c (main): Call write_group_data with "is_locked" set.
+
+	* lib/group.c (write_group_data): Add new parameter "is_locked".
+	* lib/group.h (write_group_data): Adjust protype.
+
+2003-07-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/default/useradd: New, default options for useradd
+
+	* lib/group.c (find_group_data): Allow searching for gid, too.
+
+	* src/useradd.c (main): Fix check if group was found.
+	(convert_grpopt_to_name): Search in correct service for group.
+
+2003-07-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (do_setpwnam): Implement changing of LDAP password.
+
+	* lib/chpasswd.c: Enable LDAP support.
+
+	* Release version 2.3.90
+
+	* lib/remove_dir_rec.c (remove_dir_rec): New, remove directory tree.
+
+	* lib/public.h (remove_dir_rec): Add prototype.
+
+	* lib/copy_dir_rec.c (copy_dir_rec): New, copy directory recursive.
+	* lib/public.h (copy_dir_rec): Add prototype.
+
+	* src/chfn.1: Describe util-linux compatible options.
+
+2003-07-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/authentication.c (do_authentication): Don't dereference
+	pw_data if it is NULL.
+
+	* etc/useradd.pamd: New, pam config file for useradd.
+
+	* src/useradd.c: Implement modifying of useradd defaults.
+
+	* src/rpasswdd.c: Use rpasswd as name for PAM config file.
+	* src/rpasswdd.8: Likewise.
+
+	* etc/chage.pamd: New, pam config file for useradd.
+	* etc/rpasswd.pamd: New, pam config file for rpasswd.
+
+	* etc/init.d: New directory, move *.init scripts here.
+	* etc/pam.d: New, move *.pamd config files here.
+
+2003-07-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/useradd.c (main): Call shell script after creating account.
+
+	* lib/call_script.c: New, call shell script.
+
+	* lib/public.h (call_script): Add prototype.
+
+	* lib/read-files-group.c: New, read entries from group files
+
+	* etc/useradd.local: New, can be called by useradd
+	* etc/userdel.local: New, can be called by userdel
+	* etc/login.defs: Add new variables
+
+2003-07-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/group.c: New, for modifying group entries.
+	* lib/group.h: New, contains prototypes.
+
+2003-07-07  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/read-files.h: Add files_getpwuid_r and files_getpwent_r.
+	* lib/read-files.c: Implement this functions.
+
+2003-07-06  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.c (passwd_main): Add -P option for not password
+	changing mode.
+
+2003-07-05  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (do_setpwnam): Fix off-by-one error.
+	* src/tst-chage: New, test for chage.
+	* src/tst-passwd: New, tests for passwd.
+
+2003-07-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c: Move do_authentication from here...
+	* lib/authentication.c: ...to here.
+
+	* lib/Makefile.am: Replace getdef.[ch] with logindefs.[ch].
+	* lib/logindefs.c: New file for reading /etc/login.defs.
+	* lib/logindefs.h: New file.
+	* lib/getdef.c: Removed.
+	* lib/getdef.h: Removed.
+	* src/chfn.c: Use new getlogindefs functions.
+	* src/chsh.c: Likewise.
+	* src/passwd.c: Likewise.
+	* src/useradd.c: Likewise.
+	* src/rpasswdd.c: Likewise.
+
+	* src/chfn.c: Make util-linux chfn options default, not shadow.
+
+2003-07-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* lib/user.c (do_setpwnam): Add new account from
+	pw/sp data to passwd/shadow file if new_user is set.
+
+	* lib/public.h: Add new field "new_user" to user_t.
+
+	* lib/user.c (lock_database): Wrapper for lckpwdf().
+
+2003-07-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* Moved error_codes.h, ldapfcn.c, nsw.c, read-files.c,
+	yppasswd_xdr.c, get_value.c, ldapfcn.h, nsw.h, read-files.h,
+	getdef.c, nispasswd.h, passwd_nisplus.c, user.c, getdef.h,
+	nscd.c, public.h, yppasswd.h to lib directory
+
+	* lib/Makefile.am: New
+
+	* src/Makefile.am: Link against new libpwdutils.a
+
+	* src/chfn.c (chfn_main): Use new do_authentication/
+	get_old_clear_password combo.
+	* src/chsh.c (chsh_main): Likewise.
+
+	* src/public.h (get_old_clear_password): Added prototype.
+	(do_authentication): Adjust prototype.
+
+	* src/user.c (do_authentication): Move special chfn/chsh hack
+	to chfn.c/chsh.c, don't ask for old password in clear text.
+	(get_old_clear_password): Ask for old password in clear text.
+
+	* src/chage.c (main): Call get_old_clear_password() to make
+	sure we have the old password in clear text.
+
+2003-07-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.3
+
+	* configure.in: Move crypt header/function check before LDAP
+	checks.
+	* src/rpasswd.c (main): Fix setting/loading of SSL cert path.
+	* src/chpasswd.c: Disable LDAP support.
+
+	* src/ldapfcn.h: Protect with USE_LDAP.
+	* src/chage.c: Make LDAP support compile option.
+
+	* src/rpasswd.conf.5: Document reqcert option.
+
+2003-07-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.c (load_config): Implement reqcert option.
+	(main): Make certificate checking depending on reqcert value.
+
+2003-06-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chpasswd.c (main): Implement -c option, add preliminary
+	LDAP support.
+
+	* src/chpasswd.8: New.
+	* src/Makefile.am (man_MANS): Add chpasswd.8
+
+2003-06-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.c (main): Check server certificate and warn user
+	if necessary.
+
+	* src/rpasswdd.c (main): Initialise SSL before backgrouding.
+
+	* src/read-files.c (parse_pwent): Don't inline.
+	(parse_spent): Likewise.
+
+	* src/rpasswd.c (main): Use SSLv23_client_method.
+
+2003-04-07  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/ldapfcn.c: Export ldap_get_lderrno if needed
+	* src/ldapfcn.h: Add prototype for ldap_get_lderrno if needed
+
+2003-03-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c (print_help): Add help for -P.
+	* src/chage.1: Add description for -D.
+
+	* src/chpasswd.c: New file.
+
+	* src/expiry.c (main): Drop all privilegs.
+
+	* src/chage.c (main): Mark all output for translation.
+
+	* src/Makefile.am (expiry_CFLAGS): Define passwd path.
+
+2003-03-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/expiry.1: Remove -c option, is now default.
+
+2003-03-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/Makefile.am (install-exec-hook): Fix permissions of expiry.
+	(bin_PROGRAMS): Add expiry.
+	* src/expiry.c: New file.
+	* src/expiry.1: New file.
+
+2003-02-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.2
+
+	* src/ldapfcn.c: Only use syslog, if stderr is no tty.
+
+	* src/Makefile.am: Fix creating of chsh/chfn hardlinks.
+	Reported by Seth Chaiklin <seth@psy.au.dk>.
+
+2003-02-12  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.1: Fix typo.
+
+	* src/user.c (do_setpwnam): Add support to change expire date in LDAP.
+
+	* src/rpasswdd.c (main): Better error message, if certificate or
+	privatkey file not found.
+	(main): Correct usage of htons for port.
+
+	* src/chage.c (main): If binddn is given, use this for changing
+	data in a LDAP database.
+
+2003-02-11  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/passwd.c (passwd_main): Fix more error messages,
+	implement binddn option, ask for binddn password.
+	* src/ldapfcn.c (ldap_update_shell): Call ldap_update_field.
+	(ldap_update_gecos): Likewise.
+	(ldap_update_field): Fix to use binddn if given.
+	* src/public.h: Add binddn to struct user.
+	* src/user.c (free_user_t): Free binddn.
+
+2003-02-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/ldapfcn.c: pretty print.
+	(ldap_update_field): New function.
+
+	* src/passwd.c (passwd_main): Fix error message.
+
+2003-02-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.1
+
+	* src/passwd.c (print_usage): Add missing newline.
+
+	* src/chage.1: Fix typo.
+
+	* src/passwd.1: Rewritten, document all options.
+
+2003-02-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/Makefile.am: Link rpasswd and rpasswdd only against ssl.
+	* configure.in: Put LDAP libraries in seperate variable.
+	* configure.in: Add switch to disable LDAP.
+	* src/ldapfcn.c: Don't include functions if LDAP is disabled.
+	* src/user.c: Don't call ldap functions if LDAP is disabled.
+
+2003-01-27  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 2.0
+
+	* src/chfn.c: Fix typo in help message
+
+	* src/Makefile.am: Use AM_CFLAGS instead of CFLAGS
+
+	* configure.in: add AM_GNU_GETTEXT_VERSION
+
+2003-01-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c: Rename print_usage to print_usage_shadow,
+	rename print_help to print_help_shadow,
+	(print_usage_util): New function.
+	(print_help_util): New function.
+
+	* src/read-files.c: Update from pam_unix2 1.14,
+	Fix compiling with gcc 2.95.x (libc-lock).
+
+2003-01-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.1: Fix syntax error, add -p option.
+
+	* src/rpasswdd.c: Add prototype for setresuid, use getservbyname
+	to find default port to listen on.
+
+	* src/user.c: Include read-files.h, rename path to files_etc_dir.
+	* src/chage.c (main): Use files_etc_dir instead of path.
+	* src/read-files.c: Update from pam_unix2 1.13.
+	* src/read-files.h: New.
+
+	* src/ldapfcn.c: Sync with pam_ldap-156.
+
+2003-01-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.1: Expand -d description.
+	* src/rpasswdd.c: Add sanity checks from Olaf Kirch.
+	* src/rpasswd-client.h: Use port 774 as default.
+
+2002-10-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c (print_version): New, don't use the heimdal
+	version.
+
+2002-08-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/ldapfcn.c (get_ldapuser_info): LDAP_FILT_MAXSIZ does
+	not exist any longer with openldap 2.1.4, add a workaround.
+
+2002-08-13  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/read-files.c: Include own parser based on glibc macros.
+
+2002-08-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c: Rewrite IPv4/IPv6 binding, so that it works
+	with plain and USAGI Linux kernel.
+
+	* src/rpasswd.c (print_usage): Add username as parameter.
+	* src/rpasswd.1: Likewise.
+
+2002-07-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c (main): Parameters -d and -E could be the number
+	of days since 1.1.1970 or a date.
+	* src/chage.1: Fix description of -d and -E.
+
+2002-07-15  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.99
+
+	* src/chage.c (main): Print info message if no shadow data
+	is available for an account.
+
+	* src/user.c (do_authentication): Make query for plaintext
+	password configurable.
+	* src/public.h: Adjust prototype for do_authentication.
+	* src/chsh.c (chsh_main): Require plaintext password.
+	* src/chfn.c (chfn_main): Likewise.
+
+	* src/chage.c (main): Fix searching for user given by argument,
+	implement -P (--path) option, don't require clear password for
+	-l option.
+	(change_shadow_info): Fix memory leaks, round the return value
+	correct, print error messages.
+	*src/chage.1: New.
+
+2002-07-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/files-spwd.c: Rename to ...
+	* src/read-files.c: ... this, add support for passwd, too.
+
+2002-07-09  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chsh.c (get_shell_list): Don't abort if line does not end
+	with newline, could be removed already.
+
+	* src/passwd.c (passwd_main): If we cannot lock/unlock the password,
+	abort with an error code.
+
+	* src/user.c (do_getpwnam): Use local copy of getspnam_r for files.
+
+2002-07-04  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/user.c (do_setpwnam): Set correct permissions of temporary
+	files as early as possible (Reported by
+	Artem Frolov <frolov@sigma.ispras.ru>).
+
+2002-10-17  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c: Implement changing values with options.
+
+2002-05-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chsh.c (chsh_main): Allow ldap for -r option.
+
+	* src/chage.c (print_shadow_info): if lstchg is zero, print
+	unknown date and hint that user is forced to change password.
+	(main): Allow ldap for -r option.
+
+	* src/user.c (do_setpwnam): Save aging information only if
+	they have changed.
+
+	* src/chage.c (main): Implement missing queries for new
+	aging values.
+	* src/public.h: Add flag if aging informations have changed.
+	* src/user.c (do_getpwnam): initialize sp_changed with FALSE.
+	* src/passwd.c (passwd_main): Adjust to new do_getpwnam()
+	interface.
+
+2002-05-21  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c: Fix some comments.
+	* src/user.c (do_getpwnam): clear sp field if no shadow entry
+	is found, else initialize spn with sp.
+
+2002-05-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chage.c: New file.
+
+2002-05-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.98
+
+	* src/rpasswdd.c (server_run): Set timeout for initial request to
+	1 second.
+
+	* src/rpasswdd.8: New manual page.
+	* src/Makefile.am (man_MANS): Add rpasswdd.8.
+	* src/rpasswdd.c (main): Remote unused nthreads variable.
+
+2002-05-08  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.c (print_usage): Print correct options.
+	(print_help): Add --verbose description.
+	* src/Makefile.am (man_MANS): Add rpasswd.1.
+	* src/rpasswd.1: New manual page.
+
+2002-05-06  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.97
+
+	* src/Makefile.am (man_MANS): Add rpasswd.conf.5
+
+	* src/rpasswd.conf.5: New file.
+
+	* src/rpasswd.c (load_config): Read server name and port number
+	from config file.
+
+	* src/rpasswdd.c (handle_request): If uid of user is zero, call
+	pam_authenticate() to make sure nobody changes remote the root
+	password without knowing the old one. Ask always for a password,
+	even if account does not exists.
+
+2002-05-05  Thorsten Kukuk  <kukuk@suse.de>
+
+        * release version 1.96
+
+	* src/rpasswd.c (start_request): Send current LANG variable as
+	locale to server.
+
+	* src/rpasswdd.c (handle_request): Call setlocale.
+	(main): set locale to "C".
+
+	* src/rpasswd.c (read_string): Simply function, remove unessary
+	timeout code.
+
+2002-05-03  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c (handle_request): Print info messages in admin mode.
+
+	* src/rpasswd.c: Add -a option to enable admin mode, only print
+	SSL certificate information if -v option is given.
+
+2002-05-02  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c: Undo last move of reading first data, does not work
+	due SSL buffering.
+	(safe_read): Use poll with timeout for waiting for data.
+	(read_string): Use safe_read() to avoid waiting for ever.
+	(server_start): Use safe_read() to avoid blocking the server by
+	one user.
+
+2002-05-01  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswdd.c (server_start): Move first read of data from here ...
+	* src/rpasswdd.c (handle_request): ... to here (avoid possible DoS
+	attacks), in admin mode, let other side authenticate as root and
+	don't call setresuid().
+
+	* src/rpasswd-client.h: Add request_type enum.
+
+2002-04-28  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/rpasswd.c: Make compile with older gcc.
+	* src/rpasswdd.c: Likewise.
+
+2002-04-27  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.95
+
+	* src/ldapfcn.h: Sync with pam_ldap-142.
+	* src/ldapfcn.c: Likewise. remove pam_ldap prefix from syslog
+	messages.
+
+	* configure.in: Add options for ldap.conf and ldap.secrets location.
+
+2002-04-25  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.94
+
+	* src/rpasswdd.c (init_limits): New function, set correct limits.
+	(main): Ignore SIGHUP and SIGXFSZ.
+
+	* src/main.c (init_environment): New function, set correct limits
+	and ignore most signals.
+
+	* src/user.c (do_setpwnam): Close files before renaming them,
+	rewrote complete error handling to give the error really back to
+	calling function.
+
+	* src/rpasswdd.c (server_run): If poll is interupted by a signal,
+	don't print an error message.
+
+2002-04-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.93
+
+	* src/rpasswdd.c: read_string: Allow max. 1024 bytes of data,
+	add SIGCHLD signal handler to cleanup childs.
+
+	* src/rpasswdd.c: Check if sock4/sock6 is equal or greater zero,
+	not only greater.
+
+	* etc/rpasswdd.init: Fix typo.
+
+	* release version 1.92
+
+	* etc/rpasswdd.init: SuSE Linux 8.0 init script
+	* etc/Makefile.am (EXTRA_DIST): Add rpasswdd.init
+
+	* src/chfn.1: New.
+	* src/chsh.1: New.
+	* src/chsh.c (print_usage): Remove wrong options.
+	* src/Makefile.am: Add rpasswdd.h header file and chfn.1/chsh.1.
+
+	* src/rpasswdd.c: Code cleanup, correct error checking for SSL
+	functions, fix some memory leaks.
+
+2002-04-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* Makefile.am (SUUBDIRS): Remove intl.
+	* configure.in (AC_OUTPUT): Remove intl/Makefile.
+	(AM_GNU_GETTEXT): Add "external" as argument.
+	* src/Makefile.am (INCLUDES): Remove ../intl from search path.
+	(LDADD): Use LIBINTL instead of INTLLIBS.
+
+2002-04-24  gettextize  <bug-gnu-gettext@gnu.org>
+
+	* Makefile.am (SUBDIRS): Add m4.
+	(ACLOCAL_AMFLAGS): New variable.
+	(EXTRA_DIST): New variable.
+	* configure.in (AC_OUTPUT): Add m4/Makefile.
+
+2002-04-14  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/nsw.c (nsw_free): Fix type (remove ; aftr if).
+	* src/Makefile.am: Add rpasswd and rpasswdd sources.
+	* src/rpasswd.c: New.
+	* src/rpasswd-client.h: New.
+	* src/rpasswdd.c: New.
+	* src/dbg_log.h: New.
+	* src/dbg_log.c: New.
+
+2002-03-10  Thorsten Kukuk  <kukuk@suse.de>
+
+	* etc/chfn.pamd: Use pam_deny for session management.
+	* etc/chsh.pamd: Likewise.
+	* etc/passwd.pamd: Reformat.
+
+2002-01-29  Thorsten Kukuk  <kukuk@suse.de>
+
+        * src/user.c (do_getpwnam): Create our own nsswitch data if
+        user uses service option.
+
+        * src/nsw.c (nsw_free): Fix memory leak.
+
+2002-01-24  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.91
+
+	* src/passwd.c (passwd_main): Implement password locking.
+
+	* src/user.c (do_setpwnam): Revert code to run through passwd
+	and shadow if needed: run only through /etc/passwd, if we have
+	something to change. Always run through /etc/shadow, if we
+	shadow informations.
+
+	* src/chsh.c (check_shell): If root changes the shell, print
+	only a warning and don't abort.
+
+	* src/main.c (main): If called as chfn or chsh, don't execute
+	passwd later.
+
+2002-01-20  Thorsten Kukuk  <kukuk@suse.de>
+
+	* release version 1.90
+
+	* src/chsh.c: Rename main to chsh_main.
+	* src/chfn.c: Likewise.
+
+	* src/main.c: If passwd is called as chfn or chsh, call
+	chfn_main and chsh_main.
+
+	* src/Makefile.am: chsh and chfn are now links to passwd.
+
+	* src/user.c (do_getpwnam): Also read shadow information.
+	(do_setpwnam): Save all shadow values, they could have changed.
+
+	* src/chfn.c (main): Add -q option.
+	* src/chsh.c (main): Likewise.
+
+	* src/chsh.c (main): Set locale before using it.
+	* src/chfn.c (main): Likewise.
+
+2002-01-19  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/chfn.c (check_field): New function, check if parts of
+	gecos field does not contain invalid characters.
+
+	* src/ldapfcn.h: Add prototype for ldap_update_gecos().
+
+	* src/ldapfcn.c (ldap_update_gecos): New function.
+
+	* src/user.c (do_setpwnam): Also test, if gecos fields needs
+	to be updated.
+
+	* src/chsh.c (main): Check if new_shell is not NULL befor
+	using it.
+
+	* src/get_value.c (get_value): If "none" is entered, return
+	empty string. If only <return> is entered, return old value.
+
+2002-01-18  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/get_value.c (get_value): If old value is NULL, print
+	empty string.
+
+	* src/user.c (do_authentication): New function for user
+	authentication with PAM.
+
+	* src/chsh.c (main): Flush passwd cache.
+	* src/chfn.c (main): Likewise.
+
+	* src/public.h (nscd_flush_cache): Add prototype.
+
+	* src/nscd.c: New file.
+
+2002-01-07  Thorsten Kukuk  <kukuk@suse.de>
+
+	* src/get_value.c: Start new implementation of pwdutils.

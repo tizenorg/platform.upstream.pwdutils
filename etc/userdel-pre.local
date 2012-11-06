@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Here you can add your own stuff, that should be done for every user
+# who will be deleted.
+#
+# When you delete a user with userdel, this script will be called
+# with the login name, UID, GID and the HOME directory as parameter.
+#
+
+case "$1" in
+   --help|--version)
+     echo Usage: $0 username uid gid home
+     exit 0
+     ;;
+esac
+
+# Check for the required argument.
+if [ $# != 4 ]; then
+  echo Usage: $0 username uid gid home
+  exit 1
+fi
+
+# Remove cron jobs
+test -x /usr/bin/crontab && /usr/bin/crontab -r -u $1
+
+# All done.
+exit 0
+

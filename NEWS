@@ -1,0 +1,252 @@
+pwdutils NEWS -- history of user-visible changes.
+
+Copyright (C) 2002-2012 Thorsten Kukuk
+
+Please send bug reports, questions and suggestions to <kukuk@thkukuk.de>.
+
+Version 3.2.19
+* Fix passwd -S
+
+Version 3.2.18
+* Fix changing of permissions if uid/gid of user will be modified
+
+Version 3.2.17
+* Fix useradd.local
+
+Version 3.2.16
+* Make sha512 new default password hash
+
+Version 3.2.15
+* newgrp: honour dynamically assigned groups
+
+Version 3.2.14
+* pwck: check +/- entries, too
+* grpck: check */- entries, too
+* login.defs: remove LOGIN_RETRIES
+ 
+Version 3.2.13
+* Only copy regular files if usermod moves home directory
+
+Version 3.2.12
+* Make sure modified group files are written to disk
+* Update translations for sv, fr
+
+Version 3.2.11
+* Update translations
+* Add translation for nl
+
+Version 3.2.10
+* Fix encoding of polish translations
+* Fix long options of grpck/pwck
+ 
+Version 3.2.9
+* Move UMASK from /etc/login.defs to /etc/default/useradd
+
+Version 3.2.8
+* Fix usermod manual page
+* Add quiet option to pam_rpasswd.so
+
+Version 3.2.7
+* Fix possible endless loop in userdel
+
+Version 3.2.6
+* Fix rpasswd protocol error
+* Update translations
+
+Version 3.2.5
+* Add translations for da
+* pwconv: Remove temporary files in case of an error
+
+Version 3.2.4
+* Make sure changes are really written to disk
+
+Version 3.2.3
+* New translations
+* Adjust documentation
+
+Version 3.2.2
+* Don't lock system accounts by default
+
+Version 3.2.1
+* Adjust for new libxcrypt
+
+Version 3.2.0
+* Better support for audit plugin
+* --preferred-uid/gid option for useradd and groupadd
+
+Version 3.1.4
+* Update polish translation.
+* Remove FTMP references.
+* Better pwconv support for  NIS entries
+
+Version 3.1.3
+* Allow compiling without native language support.
+* Update swedish translation.
+
+Version 3.1.2
+* Check if crontab is installed before calling it.
+* Fix seg.fault in pwconv in error case.
+
+Version 3.1.1
+* Adjust PAM config files
+
+Version 3.1.0
+* gpasswd: Add -l and -u option to lock/unlock group passwords
+* passwd: Add support for BioAPI
+* Add LDAP support for RFC2307bis
+
+Version 3.0.7
+* passwd.1: correct manual page
+* passwd: Allow changing passwords with PAM even if service is unknown
+
+Version 3.0.6
+* chfn: Fix syntax check for home phone number
+
+Version 3.0.5
+* Fix compilation error of PAM module with new Linux-PAM release
+* Fix CHARACTER_CLASS in /etc/login.defs
+
+Version 3.0.4
+* Fix pam_rpasswd.so
+
+Version 3.0.3
+* usermod: Adjust sp_lstchg if -p option is used
+* useradd: Preserve existing home directory
+* chage: Fix off-by-one errors in output
+
+Version 3.0.2
+* Fix loading of logging plugins
+* Unify options (use always --service)
+* Add -a option to usermod for shadow compatibility
+
+Version 3.0.1
+* usermod: Don't remove old home directory if an error occured
+
+Version 3.0
+* Add --stdin option for passwd
+* Fix useradd -D option
+* Fix PAM/syslog interaction
+* Fix lot of ignored failing syscalls
+* Compile daemons with -fpie/-pie
+* Add support for logging plugins
+* Add plugin for LAuS support
+* Add plugin for audit support
+* Add plugin to log with syslog
+* Use libnscd
+* Add support for GnuTLS
+* groupmod: Add options to remove/add single user from a group
+* usermod: Add options to remove/add single user from a list of groups
+* rpasswd/rpasswdd: Better SLP support
+
+Version 2.6.4
+* rpasswd/pam_rpasswd.so: Fix SLP URL parsing
+
+Version 2.6.3
+* newgrp: Add -c option to allow sg emulation
+
+Version 2.6.2
+* Fix compile problem if SELinux is disabled
+* rpasswdd: Re-register SLP service after timeout
+
+Version 2.6.1
+* newgrp: Fix NGROUPS_MAX handling
+
+Version 2.6
+* Add -f compat flag to groupadd
+* Add UTF8/local locale translation
+* Make regex for allowed accounts/groups configurable
+* Add optional pam_rpasswd module
+* Add SLP support to rpasswd/rpasswdd
+* Add pwck
+* Add grpck
+* Add newgrp
+* Add /etc/default/passwd support
+
+Version 2.5.1
+* Install all manual pages
+
+Version 2.5
+* Adjust for libselinux v1.5
+* Add pwconv/pwunconv
+* Add grpunconv
+
+Version 2.4
+* Fix -G handling of usermod
+* Fix LDAP support
+* Add gpasswd, groupmod and usermod
+* Copy always all extended attributes
+* Add SELinux support for passwd, chsh and chfn
+* Make sure that group, passwd and shadow are always created with
+  correct security attributes
+* groupadd -g handling fixed
+* vipw/vigr added
+* Lot of bug fixes
+* Add manual pages
+* Add groupadd and groupdel
+* useradd and userdel can now create/delete LDAP accounts
+* Make compile with OpenLDAP 2.0.x again
+* Rewrite ldap functions to meet demands
+* chpasswd can now change LDAP passwords
+* useradd: Lot of new error checks and bug fixes
+* chfn/chsh: Allow user to abort with Ctrl-C during data input
+* Add test suite
+
+Version 2.3
+* Add chpasswd
+* Add expiry
+* Fix chage options
+* rpasswd client now checks server certificate
+
+Version 2.2
+* Add "-D binddn" option, to allow modifying LDAP data with a special
+  account.
+* passwd and chage: Allow modifying of password expiry informations
+  stored in a LDAP database.
+
+Version 2.1
+* Add --disable-ldap option to configure
+* Fix typos in chage.1 manual page
+* Rewrite passwd manual page and explain all options
+
+Version 2.0
+* Fix -d and -E option of chage
+* Use port 774 as new default
+* Make compile with glibc 2.3 and gcc 2.95/3.2/3.3
+
+Version 1.99
+* Add chage
+* Allow modifying of passwd/shadow file not in /etc (only chage yet)
+
+Version 1.98
+* Add manual pages for rpasswd and rpasswdd
+
+Version 1.97
+* rpasswd now reads config file with server name and port number
+* Security fix for rpasswdd: don't allow remote changing of root
+  password without authentification
+* Add manual page for rpasswd.conf
+
+Version 1.96
+* Make compile with gcc 2.x
+* root can now change passwords for other user
+* timeout if client does not answer fast enough
+* Sent LANG as locale to server
+
+Version 1.95
+* Make location of ldap config files compile time configurable
+
+Version 1.94
+* Add more sanity checks to prevent file corruption
+
+Version 1.93
+* Minor bug fixes to rpasswdd
+
+Version 1.92
+* Add rpasswd and rpasswdd fore secure, remote password changing
+* Update to gettext 0.11
+
+Version 1.91
+* Many bug fixes
+
+Version 1.90
+* Complete rewrite

@@ -1,0 +1,69 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH vipw 8 "October 2003" "pwdutils"
+.SH NAME
+vipw,vigr \- edit the password, group or shadow file
+.SH SYNOPSIS
+\fBvipw\fR [\fB-g\fR|\fB-p\fR|\fB-s\fR]
+.br
+\fBvigr\fR [\fB-g\fR|\fB-p\fR|\fB-s\fR]
+.SH DESCRIPTION
+\fBvipw\fR/\fBvigr\fR edits the \fIpasswd\fR,\fIgroup\fR or
+\fIshadow\fR file after setting the appropriate locks to prevent
+file corruption. \fBvipw\fR edits per default the \fI/etc/passwd\fR
+file, \fBvigr\fR the \fI/etc/group\fR file.
+Extended attributes (like ACLs or security attributes) are preserved.
+.SH ENVIRONMENT
+.TP
+EDITOR
+If the environment variable exists, the editor specified
+by this variable is used instead of the default
+.BR vi (1).
+.SH OPTIONS
+.TP
+.B "\-g, \-\-group"
+Edit \fI/etc/group\fR.
+.TP
+.B "\-p, \-\-passwd"
+Edit \fI/etc/passwd\fR.
+.TP
+.B "\-s, \-\-shadow"
+Edit \fI/etc/shadow\fR.
+.TP
+.B "\-u, \-\-usage"
+Print a usage message and exit.
+.TP
+.B "    \-\-help"
+Print a more verbose help text and exit.
+.TP
+.b "-v, \-\-version"
+Print version information and exit.
+.SH FILES
+/etc/group \ - group account information
+.br
+/etc/passwd \- user account information
+.br
+/etc/shadow \- shadow account information
+.SH SEE ALSO
+.BR attr (5),
+.BR passwd (1),
+.BR passwd (5),
+.BR shadow (5),
+.BR vi (1)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

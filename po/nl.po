@@ -1,0 +1,3100 @@
+# Dutch translations for pwdutils.
+# This file is distributed under the same license as the pwdutils package.
+#
+# Berichtvertalingen die met ### beginnen zijn in feite debug-meldingen
+# en de bijbehorende msgids zouden niet in dit bestand moeten voorkomen.
+#
+# Benno Schulenberg <benno@vertaalt.nl>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: pwdutils-3.2.10\n"
+"Report-Msgid-Bugs-To: kukuk@thkukuk.de\n"
+"POT-Creation-Date: 2011-05-10 16:46+0200\n"
+"PO-Revision-Date: 2010-07-06 10:49+0200\n"
+"Last-Translator: Benno Schulenberg <benno@vertaalt.nl>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: lib/authentication.c:46 src/passwd.c:840
+#, c-format
+msgid "%s: PAM Failure, aborting: %s\n"
+msgstr "%s: PAM-fout -- gestopt: %s\n"
+
+#: lib/authentication.c:100
+#, c-format
+msgid "Enter login(%s) password:"
+msgstr "Geef het wachtwoord voor %s:"
+
+#: lib/call_script.c:68 src/vipw.c:89
+#, c-format
+msgid "Cannot fork: %s\n"
+msgstr "Kan geen nieuw proces starten: %s\n"
+
+#: lib/call_script.c:76
+#, c-format
+msgid "waitpid (%d) failed: %s\n"
+msgstr "waitpid(%d) is mislukt: %s\n"
+
+#: lib/check_name.c:70
+#, c-format
+msgid "Can't compile regular expression: %s\n"
+msgstr "Kan reguliere expressie niet compileren: %s\n"
+
+#: lib/chown_dir_rec.c:54 lib/copy_dir_rec.c:147 lib/group.c:389
+#: lib/user.c:495 lib/user.c:759 src/grpck.c:277 src/grpck.c:654
+#: src/pwck.c:284 src/pwck.c:554 src/pwck.c:916 src/pwconv.c:206
+#: src/useradd.c:564 src/useradd.c:1036 src/useradd.c:1111 src/vipw.c:295
+#, c-format
+msgid "Cannot change owner/group for `%s': %s\n"
+msgstr "Kan groep of eigenaar van '%s' niet wijzigen: %s\n"
+
+#: lib/copy_dir_rec.c:77 lib/group.c:369 lib/user.c:475 lib/user.c:739
+#: src/grpck.c:259 src/grpck.c:634 src/pwck.c:266 src/pwck.c:536
+#: src/pwck.c:896 src/pwconv.c:198 src/useradd.c:547 src/usermod.c:543
+#: src/vipw.c:189
+#, c-format
+msgid "Can't create `%s': %m\n"
+msgstr "Kan '%s' niet aanmaken: %m\n"
+
+#: lib/copy_dir_rec.c:99
+#, c-format
+msgid "Cannot create directory `%s': %s\n"
+msgstr "Kan map '%s' niet aanmaken: %s\n"
+
+#: lib/copy_dir_rec.c:113 lib/copy_dir_rec.c:199 lib/group.c:378
+#: lib/user.c:484 lib/user.c:748 src/grpck.c:267 src/grpck.c:643
+#: src/pwck.c:274 src/pwck.c:544 src/pwck.c:905 src/pwconv.c:215
+#: src/useradd.c:554 src/useradd.c:1046 src/useradd.c:1117 src/vipw.c:287
+#, c-format
+msgid "Cannot change permissions for `%s': %s\n"
+msgstr "Kan de toegangsrechten van '%s' niet wijzigen: %s\n"
+
+#: lib/copy_dir_rec.c:138
+#, c-format
+msgid "Cannot create symlink `%s': %s\n"
+msgstr "Kan symbolische koppeling '%s' niet maken: %s\n"
+
+#: lib/copy_dir_rec.c:185 src/vipw.c:230 src/vipw.c:238
+#, c-format
+msgid "Cannot copy `%s': %s\n"
+msgstr "Kan '%s' niet kopiëren: %s\n"
+
+#: lib/copy_dir_rec.c:215
+#, c-format
+msgid "Warning: ignoring `%s', not a regular file\n"
+msgstr ""
+
+#: lib/copy_xattr.c:51 lib/copy_xattr.c:69
+#, c-format
+msgid "Cannot get attributes for `%s': %m\n"
+msgstr "Kan eigenschappen van '%s' niet bepalen: %m\n"
+
+#: lib/copy_xattr.c:93 lib/copy_xattr.c:113
+#, c-format
+msgid "Cannot get attribute %s of `%s': %m\n"
+msgstr "Kan eigenschap %s van '%s' niet bepalen: %m\n"
+
+#: lib/copy_xattr.c:127
+#, c-format
+msgid "SELinux not enabled, ignore attribute %s for `%s'.\n"
+msgstr ""
+"SELinux is niet ingeschakeld; eigenschap %s voor '%s' wordt genegeerd.\n"
+
+#: lib/copy_xattr.c:133
+#, c-format
+msgid "Cannot set attribute %s for `%s': %m\n"
+msgstr "Kan eigenschap %s van '%s' niet instellen: %m\n"
+
+#: lib/copy_xattr.c:154
+#, c-format
+msgid "%s: Can't get context for `%s'"
+msgstr "%s: Kan context van '%s' niet bepalen"
+
+#: lib/copy_xattr.c:161
+#, c-format
+msgid "%s: Can't set context for `%s'"
+msgstr "%s: Kan context voor %s niet instellen"
+
+#: lib/get_ldap_password.c:39 src/chpasswd.c:224 src/chsh.c:516
+#: src/passwd.c:881
+#, c-format
+msgid "Enter LDAP Password:"
+msgstr "Geef het LDAP-wachtwoord:"
+
+#: lib/group.c:305 src/groupadd.c:506 src/groupdel.c:365 src/grpck.c:820
+#, c-format
+msgid "Cannot lock group file: already locked.\n"
+msgstr "Kan groepsbestand niet vergrendelen: het is al vergrendeld.\n"
+
+#: lib/group.c:334 lib/group.c:409 lib/user.c:440 lib/user.c:514
+#: lib/user.c:704 lib/user.c:778 src/grpck.c:227 src/grpck.c:294
+#: src/grpck.c:599 src/grpck.c:674 src/pwck.c:234 src/pwck.c:301
+#: src/pwck.c:571 src/pwck.c:861 src/pwck.c:936 src/useradd.c:582
+#, c-format
+msgid "Can't open `%s': %m\n"
+msgstr "Kan '%s' niet openen: %m\n"
+
+#: lib/group.c:340 lib/user.c:446 lib/user.c:710 src/grpck.c:233
+#: src/grpck.c:605 src/grpunconv.c:225 src/pwck.c:240 src/pwck.c:510
+#: src/pwck.c:867 src/pwconv.c:224 src/pwunconv.c:172 src/useradd.c:538
+#: src/vipw.c:249 src/vipw.c:258 src/vipw.c:272
+#, c-format
+msgid "Can't stat `%s': %m\n"
+msgstr "Kan status van '%s' niet opvragen: %m\n"
+
+#: lib/group.c:435 lib/group.c:478 lib/group.c:492 lib/user.c:540
+#: lib/user.c:591 lib/user.c:605 lib/user.c:803 lib/user.c:873 src/grpck.c:703
+#: src/pwck.c:965
+#, c-format
+msgid "Error while writing `%s': %m\n"
+msgstr "Fout bij schrijven van '%s': %m\n"
+
+#: lib/group.c:503
+#, c-format
+msgid "Group not found (and not deleted): %s\n"
+msgstr "Groep niet gevonden (en niet verwijderd): %s\n"
+
+#: lib/group.c:511 lib/group.c:540 lib/user.c:623 lib/user.c:653
+#: lib/user.c:883 lib/user.c:912 src/grpck.c:715 src/grpck.c:723
+#: src/pwck.c:977 src/pwck.c:985
+#, c-format
+msgid "Error while closing `%s': %m\n"
+msgstr "Fout bij sluiten van '%s': %m\n"
+
+#: lib/group.c:520 lib/user.c:632 lib/user.c:893
+#, c-format
+msgid "Error while writing to disk `%s': %m\n"
+msgstr "Fout bij schrijven naar schijf '%s': %m\n"
+
+#: lib/group.c:530 lib/user.c:642 lib/user.c:903
+#, c-format
+msgid "Error while syncing to disk `%s': %m\n"
+msgstr "Fout bij synchroniseren naar schijf '%s': %m\n"
+
+#: lib/group.c:547 lib/user.c:661 lib/user.c:919 src/grpck.c:472
+#: src/grpck.c:730 src/pwck.c:468 src/pwck.c:734 src/pwck.c:992
+#, c-format
+msgid "Warning: cannot create backup file `%s': %m\n"
+msgstr "Waarschuwing: kan reservekopiebestand '%s' niet aanmaken: %m\n"
+
+#: lib/group.c:552 lib/user.c:666 lib/user.c:923
+#, c-format
+msgid "Error while renaming `%s': %m\n"
+msgstr "Fout tijdens hernoemen van '%s': %m\n"
+
+#: lib/group.c:693 lib/user.c:1094
+#, c-format
+msgid "LDAP information update failed: %s\n"
+msgstr "Bijwerken van LDAP-informatie is mislukt: %s\n"
+
+#: lib/group.c:702
+#, c-format
+msgid "Cannot modify/add NIS group entries.\n"
+msgstr "Kan NIS-groepsitems niet toevoegen/aanpassen.\n"
+
+#: lib/group.c:707 lib/user.c:1103
+#, c-format
+msgid "Unknown service %d.\n"
+msgstr "Onbekende dienst %d.\n"
+
+#: lib/libldap.c:1364 lib/libldap.c:1429 lib/libldap.c:1484 lib/libldap.c:1610
+#: lib/libldap.c:1752 lib/libldap.c:1992
+#, c-format
+msgid "Authentication failure.\n"
+msgstr "Authenticatie is mislukt.\n"
+
+#: lib/libldap.c:1760
+#, c-format
+msgid "Cannot find base ou for new users.\n"
+msgstr "Kan geen basis-OU voor nieuwe gebruikers vinden.\n"
+
+#: lib/libldap.c:1763
+#, c-format
+msgid "Base DN for user account `%s' is \"%s\".\n"
+msgstr "Basis-DN voor gebruiker '%s' is \"%s\".\n"
+
+#: lib/libldap.c:2000
+#, c-format
+msgid "Cannot find base ou for new groups.\n"
+msgstr "Kan geen basis-OU voor nieuwe groepen vinden.\n"
+
+#: lib/libldap.c:2003
+#, c-format
+msgid "Base DN for group `%s' is \"%s\".\n"
+msgstr "Basis-DN voor groep '%s' is \"%s\".\n"
+
+#: lib/logging.c:65
+#, c-format
+msgid ""
+"Cannot open logging plugin:\n"
+"%s\n"
+msgstr ""
+"Kan logboek-plugin niet openen:\n"
+"%s\n"
+
+#: lib/logging.c:81 lib/logging.c:99
+#, c-format
+msgid ""
+"Cannot find symbol `%s':\n"
+"%s\n"
+msgstr ""
+"Kan symbool '%s' niet vinden:\n"
+"%s\n"
+
+#: lib/logging.c:140
+#, c-format
+msgid "Error setting up logging subsystem!\n"
+msgstr "Fout tijdens initialisatie van logboeksubsysteem!\n"
+
+#: lib/parse_crypt_arg.c:87
+#, c-format
+msgid "Can't open %s for reading: %s\n"
+msgstr "Kan %s niet openen om te lezen: %s\n"
+
+#: lib/parse_crypt_arg.c:95
+#, c-format
+msgid "Unable to obtain entropy from %s\n"
+msgstr "Kan geen entropie verkrijgen uit %s\n"
+
+#: lib/parse_crypt_arg.c:110
+#, c-format
+msgid "Unable to generate a salt, check your crypt settings.\n"
+msgstr "Kan geen salt genereren; controleer uw cryptografie-instellingen.\n"
+
+#: lib/parse_crypt_arg.c:144
+#, c-format
+msgid "No support for blowfish compiled in, using MD5.\n"
+msgstr "Er is geen ondersteuning voor blowfish; MD5 wordt gebruikt.\n"
+
+#: lib/parse_crypt_arg.c:149
+#, c-format
+msgid "No support for %s available, using DES.\n"
+msgstr "Er is geen ondersteuning voor %s; DES wordt gebruikt.\n"
+
+#: lib/passwd_nisplus.c:306
+#, c-format
+msgid "Could not determine hostname!\n"
+msgstr "Kan hostnaam niet achterhalen!\n"
+
+#: lib/passwd_nisplus.c:322
+#, c-format
+msgid "Can't find %s's secret key\n"
+msgstr "Kan geheime sleutel van '%s' niet vinden.\n"
+
+#: lib/passwd_nisplus.c:338 lib/passwd_nisplus.c:359
+#, c-format
+msgid "Could not get public key for %s!\n"
+msgstr "Kan publieke sleutel van '%s' niet verkrijgen!\n"
+
+#: lib/passwd_nisplus.c:348
+#, c-format
+msgid "Could not determine the NIS+ root server!\n"
+msgstr "Kan de NIS+-hoofdserver niet bepalen!\n"
+
+#: lib/passwd_nisplus.c:366
+#, c-format
+msgid "Could not create conversion key!\n"
+msgstr "Kan geen conversiesleutel aanmaken!\n"
+
+#: lib/passwd_nisplus.c:378
+#, c-format
+msgid "DES encryption failure\n"
+msgstr "DES-versleuteling is mislukt\n"
+
+#: lib/passwd_nisplus.c:390
+#, c-format
+msgid "rpc.nispasswd not running on %s?\n"
+msgstr "rpc.nispasswd draait niet op %s?\n"
+
+#: lib/passwd_nisplus.c:411
+#, c-format
+msgid "ERROR: password incorrect, try again\n"
+msgstr "FOUT: onjuist wachtwoord; probeer het opnieuw\n"
+
+#: lib/passwd_nisplus.c:413 lib/passwd_nisplus.c:481
+#, c-format
+msgid ""
+"ERROR: %s\n"
+"       password not changed\n"
+msgstr ""
+"FOUT: %s\n"
+"    Wachtwoord is niet gewijzigd.\n"
+
+#: lib/passwd_nisplus.c:429 lib/passwd_nisplus.c:456
+#, c-format
+msgid "DES decryption failure!\n"
+msgstr "DES-ontsleuteling is mislukt!\n"
+
+#: lib/passwd_nisplus.c:514
+#, c-format
+msgid "ERROR: Unknown error, don't know what happened\n"
+msgstr "FOUT: onbekende fout; geen idee wat er gebeurd is\n"
+
+#: lib/passwd_nisplus.c:519
+#, c-format
+msgid "NIS+ password information changed for %s\n"
+msgstr "NIS+-wachtwoordinformatie voor %s is gewijzigd.\n"
+
+#: lib/passwd_nisplus.c:521
+#, c-format
+msgid "NIS+ credential information changed for %s\n"
+msgstr "NIS+-authenticatie-informatie voor %s is gewijzigd.\n"
+
+#: lib/passwd_nisplus.c:590
+#, c-format
+msgid "NIS+ passwd table not found: %s\n"
+msgstr "NIS+-wachtwoordentabel is niet gevonden: %s\n"
+
+#: lib/passwd_nisplus.c:606
+#, c-format
+msgid "User not found in NIS+ table.\n"
+msgstr "Gebruiker niet gevonden in NIS+-tabel.\n"
+
+#: lib/print_error.c:30 src/rpasswd.c:120 src/rpasswdd.c:139
+#, c-format
+msgid "Try `%s --help' or `%s --usage' for more information.\n"
+msgstr "Typ '%s --help' of '%s --usage' voor meer informatie.\n"
+
+#: lib/print_version.c:31 src/rpasswd.c:73 src/rpasswdd.c:90
+#, c-format
+msgid ""
+"Copyright (C) %s Thorsten Kukuk.\n"
+"This is free software; see the source for copying conditions.  There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+msgstr ""
+"Copyright (C) %s Thorsten Kukuk.\n"
+"Dit is vrije software; zie de programmatekst voor de kopieervoorwaarden.\n"
+"Er is GEEN garantie, zelfs niet voor VERKOOPBAARHEID of GESCHIKTHEID\n"
+"VOOR EEN BEPAALD DOEL.\n"
+
+#: lib/remove_dir_rec.c:74
+#, c-format
+msgid "Cannot remove file `%s': %s\n"
+msgstr "Kan bestand '%s' niet verwijderen: %s\n"
+
+#: lib/remove_dir_rec.c:83
+#, c-format
+msgid "Cannot remove directory `%s': %s\n"
+msgstr "Kan map '%s' niet verwijderen: %s\n"
+
+#: lib/selinux_utils.c:80
+#, c-format
+msgid "Couldn't get security context `%s': %s\n"
+msgstr "Kan beveiligingscontext '%s' niet verkrijgen: %s\n"
+
+#: lib/selinux_utils.c:88
+#, c-format
+msgid "Couldn't get default security context: %s\n"
+msgstr "Kan de standaard beveiligingscontext niet verkrijgen: %s\n"
+
+#: lib/selinux_utils.c:97
+#, c-format
+msgid "Couldn't set default security context to `%s': %s\n"
+msgstr "Kan de standaard beveiligingscontext niet instellen op '%s': %s\n"
+
+#: lib/selinux_utils.c:117
+#, c-format
+msgid "Couldn't reset default security context to `%s': %s\n"
+msgstr "Kan de standaard beveiligingscontext niet terugzetten op '%s': %s\n"
+
+#: lib/user.c:81
+#, c-format
+msgid "Can't find the NIS master server: %s\n"
+msgstr "Kan de NIS-hoofdserver niet vinden: %s\n"
+
+#: lib/user.c:88
+#, c-format
+msgid "rpc.yppasswdd not running on NIS master %s.\n"
+msgstr "rpc.yppasswdd draait niet op NIS-hoofdserver %s.\n"
+
+#: lib/user.c:94
+#, c-format
+msgid "rpc.yppasswdd running on illegal port on NIS master %s.\n"
+msgstr "rpc.yppasswdd draait op ongeldige poort op NIS-hoofdserver %s.\n"
+
+#: lib/user.c:411 src/groupmod.c:434 src/pwck.c:1082 src/useradd.c:1630
+#: src/userdel.c:569 src/usermod.c:1373
+#, c-format
+msgid "Cannot lock password file: already locked.\n"
+msgstr "Kan het wachtwoordbestand niet vergrendelen: het is al vergrendeld.\n"
+
+#: lib/user.c:615
+#, c-format
+msgid "User not found (and not deleted): %s\n"
+msgstr "Gebruiker niet gevonden (en niet verwijderd): %s\n"
+
+#: lib/user.c:858
+#, c-format
+msgid " Error while writing `%s': %m\n"
+msgstr " Fout tijdens schrijven van '%s': %m\n"
+
+#: lib/user.c:982
+#, c-format
+msgid "Error while changing the NIS data.\n"
+msgstr "Fout tijdens wijzigen van NIS-gegevens.\n"
+
+#: lib/user.c:991
+#, c-format
+msgid "Error while changing the NIS+ data.\n"
+msgstr "Fout tijdens wijzigen van NIS+-gegevens.\n"
+
+#: src/chage.c:56
+#, c-format
+msgid ""
+"Usage: %s [-D binddn][-P path][-m mindays][-M maxdays][-d lastday][-I "
+"inactive][-E expiredate][-W warndays] user\n"
+msgstr ""
+"Gebruik:  %s [-D bindnaam] [-P pad] [-m minimaal_aantal_dagen] [-M "
+"maximaal]\n"
+"                [-d laatste_dag] [-I inactiviteitstijd] [-E verloopdag]\n"
+"                [-W waarschuwingsdagen]  gebruiker\n"
+
+#: src/chage.c:58
+#, c-format
+msgid "       %s -l user\n"
+msgstr "         %s -l gebruiker\n"
+
+#: src/chage.c:66
+#, c-format
+msgid ""
+"%s - change user password expiry information\n"
+"\n"
+msgstr ""
+"%s  -  de verloopstijden van wachtwoorden aanpassen\n"
+"\n"
+
+#: src/chage.c:70 src/chfn.c:112 src/chpasswd.c:70 src/chsh.c:65
+#: src/gpasswd.c:94 src/groupadd.c:64 src/groupdel.c:64 src/groupmod.c:63
+#: src/passwd.c:401 src/useradd.c:67 src/userdel.c:68 src/usermod.c:67
+msgid "  -D binddn      Use dn \"binddn\" to bind to the LDAP directory\n"
+msgstr ""
+"  -D bindnaam     deze naam gebruiken om met LDAP-directory te verbinden\n"
+
+#: src/chage.c:73 src/chfn.c:115 src/chpasswd.c:73 src/chsh.c:68
+#: src/passwd.c:403 src/pwconv.c:54 src/pwunconv.c:54
+msgid "  -P path        Search passwd and shadow file in \"path\"\n"
+msgstr "  -P pad          'passwd'- en 'shadow'-bestanden in dit pad zoeken\n"
+
+#: src/chage.c:76 src/chfn.c:88 src/chfn.c:123 src/chpasswd.c:79 src/chsh.c:74
+#: src/gpasswd.c:93 src/groupmod.c:77 src/passwd.c:400 src/usermod.c:91
+msgid "  --service srv  Use nameservice 'srv'\n"
+msgstr "  --service NS    deze naamservice gebruiken\n"
+
+#: src/chage.c:77 src/chfn.c:86 src/chfn.c:124 src/chsh.c:75
+msgid "  -q, --quiet    Don't be verbose\n"
+msgstr "  -q, --quiet     geen gedetailleerde uitvoer produceren\n"
+
+#: src/chage.c:78 src/chfn.c:89 src/chfn.c:125 src/chpasswd.c:80 src/chsh.c:76
+#: src/expiry.c:52 src/groupadd.c:74 src/groupdel.c:70 src/groupmod.c:78
+#: src/grpck.c:68 src/grpconv.c:43 src/grpunconv.c:63 src/newgrp.c:66
+#: src/pwck.c:68 src/pwconv.c:56 src/pwunconv.c:56 src/useradd.c:92
+#: src/userdel.c:74 src/usermod.c:96 src/vipw.c:72
+msgid "      --help     Give this help list\n"
+msgstr "      --help      deze hulptekst tonen en stoppen\n"
+
+#: src/chage.c:79 src/chfn.c:90 src/chfn.c:126 src/chpasswd.c:81 src/chsh.c:77
+#: src/expiry.c:53 src/groupdel.c:71 src/grpck.c:69 src/grpconv.c:44
+#: src/grpunconv.c:64 src/newgrp.c:67 src/pwck.c:69 src/pwconv.c:57
+#: src/pwunconv.c:57 src/userdel.c:75 src/vipw.c:73
+msgid "  -u, --usage    Give a short usage message\n"
+msgstr "  -u, --usage     een korte gebruikssamenvatting tonen\n"
+
+#: src/chage.c:80 src/chfn.c:91 src/chfn.c:127 src/chpasswd.c:82 src/chsh.c:78
+#: src/expiry.c:54 src/groupadd.c:76 src/groupdel.c:72 src/groupmod.c:80
+#: src/grpck.c:70 src/grpconv.c:45 src/grpunconv.c:65 src/newgrp.c:68
+#: src/pwck.c:70 src/pwconv.c:58 src/pwunconv.c:58 src/useradd.c:94
+#: src/userdel.c:76 src/usermod.c:98 src/vipw.c:74
+msgid "  -v, --version  Print program version\n"
+msgstr "  -v, --version   programmaversie tonen en stoppen\n"
+
+#: src/chage.c:81 src/chfn.c:94 src/chfn.c:130 src/chpasswd.c:83 src/chsh.c:81
+#: src/passwd.c:409
+msgid "Valid services are: files, nis, nisplus, ldap\n"
+msgstr "Geldige diensten zijn: files, nis, nisplus, ldap\n"
+
+#: src/chage.c:109
+#, c-format
+msgid "Minimum:\t%ld\n"
+msgstr "Minimum:       %ld\n"
+
+#: src/chage.c:110
+#, c-format
+msgid "Maximum:\t%ld\n"
+msgstr "Maximum:       %ld\n"
+
+#: src/chage.c:111
+#, c-format
+msgid "Warning:\t%ld\n"
+msgstr "Waarschuwing:  %ld\n"
+
+#: src/chage.c:112
+#, c-format
+msgid "Inactive:\t%ld\n"
+msgstr "Inactief:      %ld\n"
+
+#: src/chage.c:113
+#, c-format
+msgid "Last Change:\t\t"
+msgstr "Laatst gewijzigd:  "
+
+#: src/chage.c:115
+#, c-format
+msgid "Unknown, password is forced to change at next login\n"
+msgstr ""
+"Onbekend; wachtwoord dient gewijzigd te worden bij volgende aanmelding\n"
+
+#: src/chage.c:117 src/chage.c:123 src/chage.c:129 src/chage.c:135
+#, c-format
+msgid "Never\n"
+msgstr "Nooit\n"
+
+#: src/chage.c:120
+#, c-format
+msgid "Password Expires:\t"
+msgstr "Wachtwoord verloopt:  "
+
+#: src/chage.c:126
+#, c-format
+msgid "Password Inactive:\t"
+msgstr "Inactiviteitsperiode van account (in dagen)"
+
+#: src/chage.c:133
+#, c-format
+msgid "Account Expires:\t"
+msgstr "Account vervalt:  "
+
+#: src/chage.c:147
+msgid "Minimum Password Age"
+msgstr "Minimumleeftijd voor wachtwoord (in dagen)"
+
+#: src/chage.c:154 src/chage.c:170 src/chage.c:186
+#, c-format
+msgid "Input is no integer value\n"
+msgstr "Invoer is geen geheel getal\n"
+
+#: src/chage.c:156 src/chage.c:172 src/chage.c:188
+#, c-format
+msgid "Negative numbers are not allowed as input (except -1)\n"
+msgstr "Negatieve getallen als invoer zijn niet toegestaan (behalve -1)\n"
+
+#: src/chage.c:163
+msgid "Maximum Password Age"
+msgstr "Maximum leeftijd voor wachtwoord (in dagen)"
+
+#: src/chage.c:179
+msgid "Password Expiration Warning"
+msgstr "Waarschuwingsdagen voor verlopen van wachtwoord"
+
+#: src/chage.c:195
+msgid "Password Inactive"
+msgstr "Inactiviteitsperiode van account (in dagen)"
+
+#: src/chage.c:203
+msgid "Last Password Change (YYYY-MM-DD)"
+msgstr "Datum van laatste wachtwoordwijziging (JJJJ-MM-DD)"
+
+#: src/chage.c:217 src/chage.c:237
+#, c-format
+msgid "Invalid date\n"
+msgstr "Ongeldige datum\n"
+
+#: src/chage.c:223
+msgid "Account Expiration Date (YYYY-MM-DD)"
+msgstr "Vervaldatum van account (JJJJ-MM-DD)"
+
+#: src/chage.c:340 src/chfn.c:478 src/chsh.c:337
+#, c-format
+msgid "Only root is allowed to specify another path\n"
+msgstr "Alleen root mag een ander pad opgeven.\n"
+
+#: src/chage.c:370 src/chfn.c:439 src/chpasswd.c:171 src/chsh.c:320
+#: src/gpasswd.c:197 src/groupadd.c:376 src/groupdel.c:224 src/groupmod.c:300
+#: src/passwd.c:523 src/useradd.c:1403 src/userdel.c:454 src/usermod.c:978
+#, c-format
+msgid "Service `%s' not supported.\n"
+msgstr "Dienst '%s' wordt niet ondersteund.\n"
+
+#: src/chage.c:395 src/chfn.c:510 src/chpasswd.c:208 src/chsh.c:363
+#: src/chsh.c:370 src/expiry.c:247 src/gpasswd.c:230 src/groupadd.c:413
+#: src/groupdel.c:249 src/groupmod.c:333 src/grpck.c:806 src/grpconv.c:100
+#: src/grpunconv.c:197 src/newgrp.c:155 src/passwd.c:589 src/pwck.c:1068
+#: src/pwconv.c:170 src/pwunconv.c:144 src/rpasswd.c:491 src/rpasswdd.c:1339
+#: src/useradd.c:1511 src/userdel.c:479 src/usermod.c:1014 src/vipw.c:410
+#, c-format
+msgid "%s: Too many arguments.\n"
+msgstr "%s: Te veel argumenten.\n"
+
+#: src/chage.c:402
+#, c-format
+msgid "%s: Do not include \"l\" with other flags\n"
+msgstr "%s: Optie '-l' gaat niet samen met andere opties\n"
+
+#: src/chage.c:427 src/chfn.c:531 src/chsh.c:397 src/expiry.c:267
+#: src/gpasswd.c:265 src/groupadd.c:450 src/groupdel.c:278 src/groupmod.c:362
+#: src/passwd.c:656 src/useradd.c:1545 src/userdel.c:507 src/usermod.c:1048
+#, c-format
+msgid "%s: Cannot determine your user name.\n"
+msgstr "%s: Kan uw gebruikersnaam niet bepalen.\n"
+
+#: src/chage.c:446 src/chfn.c:566 src/chsh.c:431 src/userdel.c:527
+#, c-format
+msgid "%s: User `%s' is not known to service `%s'.\n"
+msgstr "%s: Gebruiker '%s' is niet bekend bij dienst '%s'.\n"
+
+#: src/chage.c:449 src/chfn.c:555 src/chfn.c:569 src/chsh.c:421 src/chsh.c:434
+#: src/passwd.c:675 src/passwd.c:696 src/userdel.c:530
+#, c-format
+msgid "%s: Unknown user `%s'.\n"
+msgstr "%s: Onbekende gebruiker '%s'.\n"
+
+#: src/chage.c:467
+#, c-format
+msgid "Only an administrator is allowed to change aging information.\n"
+msgstr "Alleen root mag verouderingsgegevens wijzigen.\n"
+
+#: src/chage.c:483
+#, c-format
+msgid "This system does not support shadow accounts.\n"
+msgstr "Het systeem ondersteunt geen schaduw-accounts.\n"
+
+#: src/chage.c:489
+#, c-format
+msgid "This account does not have a shadow entry.\n"
+msgstr "Dit account heeft geen schaduw-item.\n"
+
+#: src/chage.c:535
+#, c-format
+msgid "You can only list your own aging information.\n"
+msgstr "U kunt alleen uw eigen verouderingsinformatie inzien.\n"
+
+#: src/chage.c:542 src/expiry.c:306 src/passwd.c:1019
+#, c-format
+msgid "%s: Failed to drop privileges: %s\n"
+msgstr "%s: Het afgeven van rechten is mislukt: %s\n"
+
+#: src/chage.c:554
+#, c-format
+msgid "No aging information available for %s.\n"
+msgstr "Er is geen verouderingsinformatie beschikbaar voor %s.\n"
+
+#: src/chage.c:574
+#, c-format
+msgid "Changing aging information for %s.\n"
+msgstr "Aanpassen van verouderingsinformatie voor %s.\n"
+
+#: src/chage.c:580 src/chage.c:667
+#, c-format
+msgid "Aging information not changed.\n"
+msgstr "Verouderingsinformatie is niet gewijzigd.\n"
+
+#: src/chage.c:623
+#, c-format
+msgid "Lastday is no date and no integer value >= -1\n"
+msgstr "Laatste dag is geen datum en geen geheel getal >= -1.\n"
+
+#: src/chage.c:643
+#, c-format
+msgid "Expiredate is no date and no integer value >= -1\n"
+msgstr "Verloopdag is geen datum en geen geheel getal >= -1.\n"
+
+#: src/chage.c:652
+#, c-format
+msgid "Error while parsing options.\n"
+msgstr "Fout tijdens ontleden van opties.\n"
+
+#: src/chage.c:698
+#, c-format
+msgid "Error while converting to shadow account.\n"
+msgstr "Fout tijdens omzetten naar schaduw-account.\n"
+
+#: src/chage.c:716
+#, c-format
+msgid "Error while changing aging information.\n"
+msgstr "Fout tijdens aanpassen van verouderingsinformatie.\n"
+
+#: src/chage.c:726
+#, c-format
+msgid "Aging information changed.\n"
+msgstr "Verouderingsinformatie is gewijzigd.\n"
+
+#: src/chfn.c:71
+#, c-format
+msgid ""
+"Usage: %s [-f name] [-r room] [-w work_phone]\n"
+"       [-h home_phone] [-o other] [-q] [-u] [-v] [user]\n"
+msgstr ""
+"Gebruik:  %s [-f volledige_naam] [-r kamernummer] [-w telefoon_werk]\n"
+"               [-h telefoon_thuis] [-o varia] [-q] [-u] [-v]  [gebruiker]\n"
+
+#: src/chfn.c:79 src/chfn.c:109
+#, c-format
+msgid ""
+"%s - change user name and information\n"
+"\n"
+msgstr ""
+"%s  -  gebruikersnaam en -informatie wijzigen\n"
+"\n"
+
+#: src/chfn.c:81 src/chfn.c:117
+msgid "  -f full-name   Change your real name\n"
+msgstr "  -f naam      uw echte naam wijzigen\n"
+
+#: src/chfn.c:82
+msgid "  -r room        Change your office room number\n"
+msgstr "  -r kamer     uw werkkamernummer wijzigen\n"
+
+#: src/chfn.c:83
+msgid "  -w work_phone  Change your office phone number\n"
+msgstr "  -w nummer    uw telefoonnummer op het werk wijzigen\n"
+
+#: src/chfn.c:84
+msgid "  -h home_phone  Change your home phone number\n"
+msgstr "  -h nummer    uw telefoonnummer thuis wijzigen\n"
+
+#: src/chfn.c:85
+msgid "  -o other       Change the undefined portions of the GECOS field\n"
+msgstr "  -o varia     andere delen van het GECOS-veld wijzigen\n"
+
+#: src/chfn.c:101
+#, c-format
+msgid ""
+"Usage: %s [-D binddn] [-P path] [-f name] [-o office] [-p office-phone]\n"
+"       [-h home-phone][-m other] [-q] [-u] [-v] [user]\n"
+msgstr ""
+"Gebruik:  %s [-D bindnaam] [-P pad] [-f naam] [-o kamer] [-p telefoon_werk]\n"
+"               [-h telefoon_thuis] [-m varia] [-q] [-u] [-v]  [gebruiker]\n"
+
+#: src/chfn.c:118
+msgid "  -o office      Change your office room number\n"
+msgstr "  -o kamer     uw werkkamernummer wijzigen\n"
+
+#: src/chfn.c:119
+msgid "  -p phone       Change your office phone number\n"
+msgstr "  -p nummer    uw telefoonnummer op het werk wijzigen\n"
+
+#: src/chfn.c:120
+msgid "  -h home-phone  Change your home phone number\n"
+msgstr "  -h nummer    uw telefoonnummer thuis wijzigen\n"
+
+#: src/chfn.c:121
+msgid "  -m other       Change the undefined portions of the GECOS field\n"
+msgstr "  -m varia     andere delen van het GECOS-veld wijzigen\n"
+
+#: src/chfn.c:165
+#, c-format
+msgid "Enter the new value, or press ENTER for the default\n"
+msgstr ""
+"(Voer een nieuwe waarde in of druk op Enter voor de standaardwaarde.)\n"
+
+#: src/chfn.c:171
+msgid "Full Name"
+msgstr "Volledige naam"
+
+#: src/chfn.c:173
+#, c-format
+msgid "\tFull Name: %s\n"
+msgstr "\tVolledige naam: %s\n"
+
+#: src/chfn.c:176
+msgid "Room Number"
+msgstr "Kamernummer"
+
+#: src/chfn.c:178
+#, c-format
+msgid "\tRoom Number: %s\n"
+msgstr "\tKamernummer: %s\n"
+
+#: src/chfn.c:181
+msgid "Work Phone"
+msgstr "Telefoon werk"
+
+#: src/chfn.c:183
+#, c-format
+msgid "\tWork Phone: %s\n"
+msgstr "\tTelefoon werk: %s\n"
+
+#: src/chfn.c:186
+msgid "Home Phone"
+msgstr "Telefoon thuis"
+
+#: src/chfn.c:188
+#, c-format
+msgid "\tHome Phone: %s\n"
+msgstr "\tTelefoon thuis: %s\n"
+
+#: src/chfn.c:191
+msgid "Other"
+msgstr "Varia"
+
+#: src/chfn.c:193
+#, c-format
+msgid "\tOther: %s\n"
+msgstr "\tVaria: %s\n"
+
+#: src/chfn.c:255
+#, c-format
+msgid "%s: The characters '%s\"' are not allowed.\n"
+msgstr "%s: De tekens '%s\"' zijn niet toegestaan.\n"
+
+#: src/chfn.c:261 src/chsh.c:204
+#, c-format
+msgid "%s: Control characters are not allowed.\n"
+msgstr "%s: Stuurtekens zijn niet toegestaan.\n"
+
+#: src/chfn.c:331 src/chsh.c:257
+#, c-format
+msgid "%s: Don't know what I should do.\n"
+msgstr "%s: Geen idee wat te doen.\n"
+
+#: src/chfn.c:377 src/chfn.c:395 src/chfn.c:407 src/chfn.c:451 src/chfn.c:460
+#: src/gpasswd.c:296 src/passwd.c:614 src/passwd.c:628
+#, c-format
+msgid "%s: Permission denied.\n"
+msgstr "%s: Toegang geweigerd.\n"
+
+#: src/chfn.c:586 src/chsh.c:451 src/passwd.c:712
+msgid "Unknown user context"
+msgstr "Onbekende gebruikerscontext"
+
+#: src/chfn.c:588
+#, c-format
+msgid "%s: %s is not authorized to change the finger information for %s.\n"
+msgstr ""
+"%s: %s is niet gerechtigd om de finger-informatie van %s te wijzigen.\n"
+
+#: src/chfn.c:601
+#, c-format
+msgid "SELinux is in permissive mode, continuing.\n"
+msgstr "SELinux is in gedoogmodus -- doorgegaan.\n"
+
+#: src/chfn.c:619
+#, c-format
+msgid "You cannot change the finger information for `%s'.\n"
+msgstr "U kunt de finger-informatie voor '%s' niet wijzigen.\n"
+
+#: src/chfn.c:626
+#, c-format
+msgid "Changing finger information for %s.\n"
+msgstr "Wijzigen van finger-informatie voor %s.\n"
+
+#: src/chfn.c:658
+#, c-format
+msgid "%s: Invalid name: `%s'\n"
+msgstr "%s: Ongeldige naam '%s'\n"
+
+#: src/chfn.c:666
+#, c-format
+msgid "%s: Invalid room number: `%s'\n"
+msgstr "%s: Ongeldig kamernummer '%s'\n"
+
+#: src/chfn.c:674
+#, c-format
+msgid "%s: Invalid work phone: `%s'\n"
+msgstr "%s: Ongeldig telefoonnummer '%s' voor werk\n"
+
+#: src/chfn.c:682
+#, c-format
+msgid "%s: Invalid home phone: `%s'\n"
+msgstr "%s: Ongeldig telefoonnummer '%s' voor thuis\n"
+
+#: src/chfn.c:690
+#, c-format
+msgid "%s: `%s' contains illegal characters.\n"
+msgstr "%s: '%s' bevat ongeldige tekens.\n"
+
+#: src/chfn.c:716
+#, c-format
+msgid "Finger information not changed.\n"
+msgstr "Finger-informatie is niet gewijzigd.\n"
+
+#: src/chfn.c:724
+#, c-format
+msgid "Error while changing finger information.\n"
+msgstr "Fout tijdens wijzigen van finger-informatie.\n"
+
+#: src/chfn.c:734
+#, c-format
+msgid "Finger information changed.\n"
+msgstr "Finger-informatie is gewijzigd.\n"
+
+#: src/chpasswd.c:59
+#, c-format
+msgid "Usage: %s [-D binddn] [-P path] [-e] [-c des|md5|blowfish] [file]\n"
+msgstr ""
+"Gebruik:  %s [-D bindnaam] [-P pad] [-e] [-c des|md5|blowfish]  [bestand]\n"
+
+#: src/chpasswd.c:67
+#, c-format
+msgid ""
+"%s - update password entries in batch\n"
+"\n"
+msgstr ""
+"%s  -  wachtwoorditems massaal aanpassen\n"
+"\n"
+
+#: src/chpasswd.c:75
+msgid ""
+"  -c, --crypt    Password should be encrypted with DES, MD5 or blowfish\n"
+msgstr "  -c, --crypt     wachtwoord versleutelen met DES, MD5 of blowfish\n"
+
+#: src/chpasswd.c:77
+msgid "  -e, --encrypted The passwords are in encrypted form\n"
+msgstr "  -e, --encrypted   wachtwoorden zijn in versleutelde vorm\n"
+
+#: src/chpasswd.c:278
+#, c-format
+msgid "%s: line %ld: missing new password\n"
+msgstr "%s: regel %ld: nieuw wachtwoord ontbreekt\n"
+
+#: src/chpasswd.c:287
+#, c-format
+msgid "%s: line %ld: unknown user %s\n"
+msgstr "%s: regel %ld: onbekende gebruiker '%s'\n"
+
+#: src/chpasswd.c:318 src/gpasswd.c:425
+#, c-format
+msgid "Cannot create salt for standard crypt"
+msgstr "Kan geen salt genereren voor standaardversleuteling"
+
+#: src/chpasswd.c:334 src/gpasswd.c:460
+#, c-format
+msgid "Cannot create salt for MD5 crypt"
+msgstr "Kan geen salt genereren voor MD5-versleuteling"
+
+#: src/chpasswd.c:350 src/gpasswd.c:441
+#, c-format
+msgid "Cannot create salt for blowfish crypt"
+msgstr "Kan geen salt genereren voor blowfish-versleuteling"
+
+#: src/chpasswd.c:380
+#, c-format
+msgid "%s: line %ld: cannot update password entry\n"
+msgstr "%s: regel %ld: kan wachtwoorditem niet bijwerken\n"
+
+#: src/chpasswd.c:395
+#, c-format
+msgid "%s: errors occurred, %ld passwords not updated\n"
+msgstr "%s: er zijn fouten opgetreden; %ld wachtwoorden zijn niet bijgewerkt\n"
+
+#: src/chsh.c:54
+#, c-format
+msgid ""
+"Usage: %s [-D binddn] [-P path] [-s shell] [-l] [-q]\n"
+"            [--help] [--usage] [--version] [user]\n"
+msgstr ""
+"Gebruik: %s [-D bindnaam] [-P pad] [-s shell] [-l] [-q]\n"
+"              [--help] [--usage] [--version]  [gebruiker]\n"
+
+#: src/chsh.c:62
+#, c-format
+msgid ""
+"%s - change login shell\n"
+"\n"
+msgstr ""
+"%s  -  aanmeld-shell aanpassen\n"
+"\n"
+
+#: src/chsh.c:70
+msgid "  -l             List allowed shells from /etc/shells\n"
+msgstr "  -l              toegestane shells uit /etc/shells tonen\n"
+
+#: src/chsh.c:72
+msgid "  -s shell       Use 'shell' as new login shell\n"
+msgstr "  -s shell        deze 'shell' als aanmeld-shell gebruiken\n"
+
+#: src/chsh.c:109
+#, c-format
+msgid "No known shells.\n"
+msgstr "Geen bekende shells.\n"
+
+#: src/chsh.c:177
+#, c-format
+msgid "%s: Shell must be a full path name.\n"
+msgstr "%s: shell moet een volledige padnaam zijn.\n"
+
+#: src/chsh.c:183
+#, c-format
+msgid "%s: `%s' does not exist.\n"
+msgstr "%s: '%s' bestaat niet.\n"
+
+#: src/chsh.c:189
+#, c-format
+msgid "%s: `%s' is not executable.\n"
+msgstr "%s: '%s' is niet uitvoerbaar.\n"
+
+#: src/chsh.c:199
+#, c-format
+msgid "%s: '%c' is not allowed.\n"
+msgstr "%s: '%c' is niet toegestaan.\n"
+
+#: src/chsh.c:212
+#, c-format
+msgid "Warning: \"%s\" is not listed in /etc/shells.\n"
+msgstr "Waarschuwing: '%s' staat niet in /etc/shells.\n"
+
+#: src/chsh.c:215
+#, c-format
+msgid "%s: \"%s\" is not listed in /etc/shells.\n"
+msgstr "%s: '%s' staat niet in /etc/shells.\n"
+
+#: src/chsh.c:217
+#, c-format
+msgid "%s: Use -l option to see list.\n"
+msgstr "%s: Gebruik optie '-l' om de lijst te zien.\n"
+
+#: src/chsh.c:453
+#, c-format
+msgid "%s: %s is not authorized to change the shell of `%s'.\n"
+msgstr "%s: %s is niet gerechtigd om de shell van '%s' te wijzigen.\n"
+
+#: src/chsh.c:466 src/passwd.c:728
+#, c-format
+msgid "SELinux is in permissive mode, continuing\n"
+msgstr "SELinux is in gedoogmodus -- doorgegaan.\n"
+
+#: src/chsh.c:484
+#, c-format
+msgid "You cannot change the shell for %s.\n"
+msgstr "U mag de shell voor '%s' niet wijzigen.\n"
+
+#: src/chsh.c:495
+#, c-format
+msgid "You cannot change a restricted shell.\n"
+msgstr "U mag een beperkte shell niet wijzigen.\n"
+
+#: src/chsh.c:501
+#, c-format
+msgid "Changing login shell for %s.\n"
+msgstr "Aanpassen van de aanmeld-shell voor '%s'.\n"
+
+#: src/chsh.c:545
+#, c-format
+msgid "Enter the new value, or press return for the default.\n"
+msgstr ""
+"(Voer een nieuwe waarde in of druk op Enter voor de standaardwaarde.)\n"
+
+#: src/chsh.c:546
+msgid "Login Shell"
+msgstr "Aanmeld-shell"
+
+#: src/chsh.c:554
+#, c-format
+msgid "Shell not changed.\n"
+msgstr "Shell is niet gewijzigd.\n"
+
+#: src/chsh.c:568
+#, c-format
+msgid "Error while changing login shell.\n"
+msgstr "Fout tijdens aanpassen van de aanmeld-shell.\n"
+
+#: src/chsh.c:578
+#, c-format
+msgid "Shell changed.\n"
+msgstr "Shell is gewijzigd.\n"
+
+#: src/expiry.c:40
+#, c-format
+msgid "Usage: %s [-f]\n"
+msgstr "Gebruik:  %s [-f]\n"
+
+#: src/expiry.c:48
+#, c-format
+msgid ""
+"%s - check password expiration and enforce password change\n"
+"\n"
+msgstr ""
+"%s  -  wachtwoordveroudering controleren en -wijziging afdwingen\n"
+"\n"
+
+#: src/expiry.c:50
+msgid "  -f, --force    The caller is forced to change the password\n"
+msgstr ""
+"  -f, --force     de aanroeper wordt gedwongen het wachtwoord te wijzigen\n"
+
+#: src/expiry.c:100
+#, c-format
+msgid "Age field for %s is wrong"
+msgstr "Het leeftijdsveld voor %s is onjuist"
+
+#: src/expiry.c:121
+#, c-format
+msgid "Your password has expired. Choose a new password."
+msgstr "Uw wachtwoord is verlopen.  Bedenk een nieuwe."
+
+#: src/expiry.c:139
+#, c-format
+msgid "Your login has expired. Contact the system administrator.\n"
+msgstr "Uw account is verlopen.  Neem contact op met de systeembeheerder.\n"
+
+#: src/expiry.c:147
+#, c-format
+msgid "Password changing requested. Choose a new password.\n"
+msgstr "Er is om wachtwoordwijziging verzocht.  Bedenk een nieuwe.\n"
+
+#: src/expiry.c:157
+#, c-format
+msgid "Your password is inactive. Contact the system administrator.\n"
+msgstr "Uw account is inactief.  Neem contact op met de systeembeheerder.\n"
+
+#: src/expiry.c:162
+#, c-format
+msgid "Your password has expired. Choose a new password.\n"
+msgstr "Uw wachtwoord is verlopen.  Bedenk een nieuwe.\n"
+
+#: src/expiry.c:171
+#, c-format
+msgid "Your password will expire in %ld days.\n"
+msgstr "Uw wachtwoord verloopt binnen %ld dagen.\n"
+
+#: src/expiry.c:174
+#, c-format
+msgid "Your password will expire tomorrow.\n"
+msgstr "Uw wachtwoord verloopt morgen.\n"
+
+#: src/expiry.c:176
+#, c-format
+msgid "Your password will expire within 24 hours.\n"
+msgstr "Uw wachtwoord verloopt binnen 24 uur.\n"
+
+#: src/gpasswd.c:63 src/passwd.c:796
+#, c-format
+msgid "%s: error reading from stdin!\n"
+msgstr "%s: Fout bij lezen van standaardinvoer!\n"
+
+#: src/gpasswd.c:80
+#, c-format
+msgid "Usage: %s [-r|-l|-u] group\n"
+msgstr "Gebruik:  %s [-r|-l|-u] groep\n"
+
+#: src/gpasswd.c:87
+#, c-format
+msgid ""
+"%s - change group password\n"
+"\n"
+msgstr ""
+"%s  -  groepswachtwoord wijzigen\n"
+"\n"
+
+#: src/gpasswd.c:88
+msgid "  -r             Remove the password for this group\n"
+msgstr "  -r              het wachtwoord van de groep verwijderen\n"
+
+#: src/gpasswd.c:89
+msgid "  -l             Locks the password entry for \"group\"\n"
+msgstr "  -l              het wachtwoorditem van de groep vergrendelen\n"
+
+#: src/gpasswd.c:91
+msgid "  -u             Try to unlock the password entry for \"group\"\n"
+msgstr "  -u              het wachtwoorditem van de groep ontgrendelen\n"
+
+#: src/gpasswd.c:96
+msgid "  -P path        Search group file in \"path\"\n"
+msgstr "  -P pad          het bestand 'group' in dit pad zoeken\n"
+
+#: src/gpasswd.c:98 src/passwd.c:406 src/rpasswd.c:111 src/rpasswdd.c:130
+msgid "  --help         Give this help list\n"
+msgstr "  --help          deze hulptekst tonen en stoppen\n"
+
+#: src/gpasswd.c:99 src/passwd.c:407 src/rpasswd.c:112 src/rpasswdd.c:131
+msgid "  --usage        Give a short usage message\n"
+msgstr "  --usage         een korte gebruikssamenvatting tonen\n"
+
+#: src/gpasswd.c:100 src/passwd.c:408 src/rpasswd.c:113 src/rpasswdd.c:132
+msgid "  --version      Print program version\n"
+msgstr "  --version       programmaversie tonen en stoppen\n"
+
+#: src/gpasswd.c:101
+msgid "  --stdin        Receive input from stdin instead of /dev/tty\n"
+msgstr "  --stdin         standaardinvoer in plaats van /dev/tty gebruiken\n"
+
+#: src/gpasswd.c:102
+msgid "Valid services for -r are: files, nis, nisplus, ldap\n"
+msgstr "Geldige diensten voor '-r' zijn: files, nis, nisplus, ldap\n"
+
+#: src/gpasswd.c:238
+#, c-format
+msgid "%s: Group argument missing.\n"
+msgstr "%s: Groepsargument ontbreekt.\n"
+
+#: src/gpasswd.c:277
+#, c-format
+msgid "%s: Group `%s' is not known to service `%s'.\n"
+msgstr "%s: Groep '%s' is niet bekend bij dienst '%s'.\n"
+
+#: src/gpasswd.c:280 src/groupdel.c:300 src/groupmod.c:384 src/useradd.c:220
+#: src/usermod.c:185
+#, c-format
+msgid "%s: Unknown group `%s'.\n"
+msgstr "%s: Onbekende groep '%s'.\n"
+
+#: src/gpasswd.c:314 src/passwd.c:909 src/usermod.c:1125
+#, c-format
+msgid "Cannot unlock the password for `%s'!\n"
+msgstr "Kan wachtwoord voor '%s' niet ontgrendelen!\n"
+
+#: src/gpasswd.c:336 src/passwd.c:936 src/usermod.c:1104
+#, c-format
+msgid "Password for `%s' is already locked!\n"
+msgstr "Wachtwoord voor '%s' is al vergrendeld!\n"
+
+#: src/gpasswd.c:348
+#, c-format
+msgid "Changing the password for group %s.\n"
+msgstr "Aanpassen van wachtwoord voor groep '%s'.\n"
+
+#: src/gpasswd.c:355 src/gpasswd.c:357
+msgid "New Password: "
+msgstr "Nieuw wachtwoord: "
+
+#: src/gpasswd.c:366
+#, c-format
+msgid "Password change aborted.\n"
+msgstr "Wachtwoordwijziging is afgeblazen.\n"
+
+#: src/gpasswd.c:379 src/gpasswd.c:381
+msgid "Re-enter new password: "
+msgstr "Nieuw wachtwoord nogmaals invoeren: "
+
+#: src/gpasswd.c:392
+#, c-format
+msgid "Sorry, passwords do not match.\n"
+msgstr "De twee wachtwoorden komen niet overeen.\n"
+
+#: src/gpasswd.c:400
+#, c-format
+msgid "%s: Try again later.\n"
+msgstr "%s: U kunt het later nog eens proberen.\n"
+
+#: src/gpasswd.c:448
+#, c-format
+msgid "No support for blowfish compiled in. Using MD5\n"
+msgstr "Er is geen ondersteuning voor blowfish; MD5 wordt gebruikt.\n"
+
+#: src/gpasswd.c:475
+#, c-format
+msgid "%s: Error changing password.\n"
+msgstr "%s: Fout tijdens aanpassen van wachtwoord.\n"
+
+#: src/gpasswd.c:484
+#, c-format
+msgid "Password removed.\n"
+msgstr "Het wachtwoord is verwijderd.\n"
+
+#: src/gpasswd.c:490 src/passwd.c:978
+#, c-format
+msgid "Password changed.\n"
+msgstr "Het wachtwoord is gewijzigd.\n"
+
+#: src/groupadd.c:54
+#, c-format
+msgid ""
+"Usage: %s [-D binddn] [-g gid [-o]] [-r] [-P path] [-p password] group\n"
+msgstr ""
+"Gebruik:  %s [-D bindnaam] [-g GID [-o]] [-r] [-P pad] [-p wachtwoord]  "
+"groep\n"
+
+#: src/groupadd.c:62
+#, c-format
+msgid ""
+"%s - create a new group\n"
+"\n"
+msgstr ""
+"%s  -  een nieuwe groep aanmaken\n"
+"\n"
+
+#: src/groupadd.c:65
+msgid "  -g gid         Force the new groupid to be the given number\n"
+msgstr "  -g GID          dit nummer gebruiken als nieuw groeps-ID\n"
+
+#: src/groupadd.c:67 src/groupmod.c:70 src/useradd.c:80 src/usermod.c:79
+msgid "  -o             Allow duplicate (non-unique) UID\n"
+msgstr "  -o              dubbele (niet-unieke) UID toestaan\n"
+
+#: src/groupadd.c:68 src/groupdel.c:67 src/groupmod.c:71 src/grpck.c:61
+#: src/pwck.c:61 src/useradd.c:81 src/userdel.c:71 src/usermod.c:84
+msgid "  -P path        Search passwd, shadow and group file in \"path\"\n"
+msgstr ""
+"  -P pad          'passwd'-, 'shadow'- en 'group'-bestanden in dit pad "
+"zoeken\n"
+
+#: src/groupadd.c:70 src/groupmod.c:73 src/useradd.c:83 src/usermod.c:86
+msgid "  -p password    Encrypted password as returned by crypt(3)\n"
+msgstr "  -p code         versleuteld wachtwoord (als met crypt(3))\n"
+
+#: src/groupadd.c:72 src/useradd.c:89
+msgid "  -r, --system   Create a system account\n"
+msgstr "  -r, --system    een systeem-account aanmaken\n"
+
+#: src/groupadd.c:73 src/groupdel.c:69 src/useradd.c:91 src/userdel.c:73
+msgid " --service srv   Add account to nameservice 'srv'\n"
+msgstr " --service NS     account aan deze naamservice toevoegen\n"
+
+#: src/groupadd.c:75 src/groupmod.c:79 src/useradd.c:93 src/usermod.c:97
+msgid "      --usage    Give a short usage message\n"
+msgstr "      --usage     een korte gebruikssamenvatting tonen\n"
+
+#: src/groupadd.c:77 src/groupdel.c:73 src/useradd.c:95 src/userdel.c:77
+msgid "Valid services for --service are: files, ldap\n"
+msgstr "Geldige diensten voor '--service' zijn: files, ldap\n"
+
+#: src/groupadd.c:257
+#, c-format
+msgid "%s: Can't get unique gid in range %u - %u.\n"
+msgstr "%s: Kan geen unieke GID verkrijgen in het bereik %u - %u.\n"
+
+#: src/groupadd.c:312
+#, c-format
+msgid "%s: You are using an undocumented option (-f)!\n"
+msgstr "%s: U gebruikt een ongedocumenteerde optie (-f)!\n"
+
+#: src/groupadd.c:320 src/groupadd.c:330
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for Group ID.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor groeps-ID.\n"
+
+#: src/groupadd.c:352 src/useradd.c:1328 src/usermod.c:925
+#, c-format
+msgid "%s: Invalid characters in password `%s'.\n"
+msgstr "%s: Ongeldige tekens in wachtwoord '%s'.\n"
+
+#: src/groupadd.c:398
+#, c-format
+msgid "%s: You cannot use --gid and --preferred-gid at the same time.\n"
+msgstr "%s: Opties '--gid' en '--preferred-gid' gaan niet samen.\n"
+
+#: src/groupadd.c:419 src/groupdel.c:255 src/groupmod.c:339 src/useradd.c:1517
+#: src/userdel.c:485 src/usermod.c:1020
+#, c-format
+msgid "%s: Too few arguments.\n"
+msgstr "%s: Te weinig argumenten.\n"
+
+#: src/groupadd.c:425
+#, c-format
+msgid "%s: You cannot use -f with -o.\n"
+msgstr "%s: Opties '-f' en '-o' gaan niet samen.\n"
+
+#: src/groupadd.c:474
+#, c-format
+msgid "%s: GID %u is not unique, using another one.\n"
+msgstr "%s: GID %u is niet uniek; een andere wordt gebruikt.\n"
+
+#: src/groupadd.c:484 src/groupmod.c:398
+#, c-format
+msgid "%s: GID %u is not unique.\n"
+msgstr "%s: GID %u is niet uniek.\n"
+
+#: src/groupadd.c:495 src/groupmod.c:411
+#, c-format
+msgid "%s: Invalid group name `%s'.\n"
+msgstr "%s: Ongeldige groepsnaam '%s'.\n"
+
+#: src/groupadd.c:513 src/groupmod.c:421
+#, c-format
+msgid "%s: Group `%s' already exists.\n"
+msgstr "%s: Groep '%s' bestaat al.\n"
+
+#: src/groupadd.c:555
+#, c-format
+msgid "%s: Cannot add group to LDAP database without DN.\n"
+msgstr "%s: Kan zonder DN geen groep aan LDAP-databank toevoegen.\n"
+
+#: src/groupadd.c:572
+#, c-format
+msgid "%s: Group not added to LDAP database.\n"
+msgstr "%s: Groep is niet aan LDAP-databank toegevoegd.\n"
+
+#: src/groupadd.c:604
+#, c-format
+msgid "%s: GROUPADD_CMD fails with exit code %d.\n"
+msgstr "%s: GROUPADD_CMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/groupdel.c:54
+#, c-format
+msgid "Usage: %s [-D binddn] [-P path] group\n"
+msgstr "Gebruik:  %s [-D bindnaam] [-P pad]  groep\n"
+
+#: src/groupdel.c:61
+#, c-format
+msgid ""
+"%s - delete a group\n"
+"\n"
+msgstr ""
+"%s  -  een groep verwijderen\n"
+"\n"
+
+#: src/groupdel.c:130 src/groupdel.c:147
+#, c-format
+msgid "%s: GID `%u' is primary group of `%s'.\n"
+msgstr "%s: GID '%u' is primaire groep van '%s'.\n"
+
+#: src/groupdel.c:297 src/groupmod.c:381 src/useradd.c:214 src/usermod.c:179
+#, c-format
+msgid "%s: Group `%s' not found in service `%s'.\n"
+msgstr "%s: Groep '%s' niet gevonden in dienst '%s'.\n"
+
+#: src/groupdel.c:310
+#, c-format
+msgid "%s: Cannot remove user's primary group.\n"
+msgstr "%s: Kan de primaire groep van een gebruiker niet verwijderen.\n"
+
+#: src/groupdel.c:325
+#, c-format
+msgid "%s: Cannot delete group from LDAP database without DN.\n"
+msgstr "%s: Kan zonder DN geen groep uit LDAP-databank verwijderen.\n"
+
+#: src/groupdel.c:342
+#, c-format
+msgid "%s: Group not deleted from LDAP database.\n"
+msgstr "%s: Groep is niet uit LDAP-databank verwijderd.\n"
+
+#: src/groupdel.c:355
+#, c-format
+msgid "%s: GROUPDEL_PRECMD fails with exit code %d.\n"
+msgstr "%s: GROUPDEL_PRECMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/groupdel.c:373
+#, c-format
+msgid "%s: Error deleting group `%s'.\n"
+msgstr "%s: Fout tijdens verwijderen van groep '%s'.\n"
+
+#: src/groupdel.c:397
+#, c-format
+msgid "%s: GROUPDEL_POSTCMD fails with exit code %d.\n"
+msgstr "%s: GROUPDEL_POSTCMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/groupmod.c:54
+#, c-format
+msgid "Usage: %s [-g gid [-o]] [-n new_name] group\n"
+msgstr "Gebruik:  %s [-g GID [-o]] [-n nieuwe_naam]  groep\n"
+
+#: src/groupmod.c:61
+#, c-format
+msgid ""
+"%s - modify a group entry\n"
+"\n"
+msgstr ""
+"%s  -  een bestaande groep aanpassen\n"
+"\n"
+
+#: src/groupmod.c:65
+msgid "  -g gid         Change the groupid to the given number\n"
+msgstr "  -g GID          dit nummer gebruiken als nieuw groeps-ID\n"
+
+#: src/groupmod.c:67 src/useradd.c:76
+msgid "  -k skeldir     Specify an alternative skel directory\n"
+msgstr "  -k raammap      deze map als voorbeeldgeraamte gebruiken\n"
+
+#: src/groupmod.c:69
+msgid "  -n name        Change group name.\n"
+msgstr "  -n naam         nieuwe naam voor de groep\n"
+
+#: src/groupmod.c:75
+msgid "  -A user        Add the user to the group entry\n"
+msgstr "  -A gebruiker    deze gebruiker aan de groep toevoegen\n"
+
+#: src/groupmod.c:76
+msgid "  -R user        Remove the user from the group entry\n"
+msgstr "  -R gebruiker    deze gebruiker uit de groep verwijderen\n"
+
+#: src/groupmod.c:81 src/usermod.c:99
+msgid "Valid services are: files, ldap\n"
+msgstr "Geldige diensten zijn: files, ldap\n"
+
+#: src/groupmod.c:245
+#, c-format
+msgid "%s: invalid numeric argument `%s' for Group ID.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor groeps-ID.\n"
+
+#: src/groupmod.c:271
+#, c-format
+msgid "%s: invalid characters in password `%s'.\n"
+msgstr "%s: Ongeldige tekens in wachtwoord '%s'.\n"
+
+#: src/groupmod.c:467
+#, c-format
+msgid "%s: Cannot modify group in LDAP database without DN.\n"
+msgstr "%s: Kan zonder DN geen groep in LDAP-databank aanpassen.\n"
+
+#: src/groupmod.c:485
+#, c-format
+msgid "%s: Group not modified in LDAP database.\n"
+msgstr "%s: Groep is in LDAP-databank niet aangepast.\n"
+
+#: src/grpck.c:51
+#, c-format
+msgid "Usage: %s [-P path] [-q|-r]\n"
+msgstr "Gebruik: %s [-P pad] [-q|-r]\n"
+
+#: src/grpck.c:59
+#, c-format
+msgid ""
+"%s - check integrity of group file\n"
+"\n"
+msgstr ""
+"%s  -  integriteit van groepsbestand controleren\n"
+"\n"
+
+#: src/grpck.c:63 src/pwck.c:63
+msgid "  -q, --quiet    Don't print warnings, only errors\n"
+msgstr "  -q, --quiet     geen waarschuwingen, alleen fouten tonen\n"
+
+#: src/grpck.c:64 src/pwck.c:64
+msgid "  -r, --read-only Run in read-only mode, don't make changes\n"
+msgstr "  -r, --read-only   bestand enkel lezen, niet wijzigen\n"
+
+#: src/grpck.c:66
+msgid "  -s, --sort     Sort the group file, no checks are done\n"
+msgstr "  -s, --sort      groepsbestand sorteren, zonder controles\n"
+
+#: src/grpck.c:78 src/pwck.c:78
+#, c-format
+msgid "No\n"
+msgstr "Nee\n"
+
+#: src/grpck.c:222 src/pwck.c:229
+#, c-format
+msgid "Checking `%s'\n"
+msgstr "Controleren van '%s'\n"
+
+#: src/grpck.c:337 src/grpck.c:384
+#, c-format
+msgid "Invalid group entry.\n"
+msgstr "Ongeldig groepsitem.\n"
+
+#: src/grpck.c:338 src/pwck.c:346 src/pwck.c:616
+#, c-format
+msgid "Delete empty line? "
+msgstr "Lege regel verwijderen? "
+
+#: src/grpck.c:356
+#, c-format
+msgid "Invalid group entry with comment.\n"
+msgstr "Ongeldig groepsitem met commentaar.\n"
+
+#: src/grpck.c:357 src/grpck.c:385 src/grpck.c:402 src/grpck.c:418
+#: src/pwck.c:365 src/pwck.c:381 src/pwck.c:397 src/pwck.c:413 src/pwck.c:635
+#: src/pwck.c:650 src/pwck.c:666 src/pwck.c:682 src/pwck.c:700
+#, c-format
+msgid "Delete line `%s'? "
+msgstr "Regel '%s' verwijderen? "
+
+#: src/grpck.c:401
+#, c-format
+msgid "Invalid group name `%s'.\n"
+msgstr "Ongeldige groepsnaam '%s'.\n"
+
+#: src/grpck.c:417
+#, c-format
+msgid "Duplicate group entry\n"
+msgstr "Duplicaat groepsitem\n"
+
+#: src/grpck.c:445
+#, c-format
+msgid "Group `%s': unknown user `%s'\n"
+msgstr "Groep '%s': onbekende gebruiker '%s'\n"
+
+#: src/grpck.c:451
+#, c-format
+msgid "Group `%s': Duplicate user entry `%s', already primary group.\n"
+msgstr "Groep '%s': duplicaat gebruikersitem '%s'; is al de primaire groep.\n"
+
+#: src/grpck.c:812 src/pwck.c:1074
+#, c-format
+msgid "%s: -s and -r are incompatibile.\n"
+msgstr "%s: Opties '-s' en '-r' gaan niet samen.\n"
+
+#: src/grpconv.c:33 src/grpunconv.c:51 src/pwconv.c:44 src/pwunconv.c:44
+#, c-format
+msgid "Usage: %s\n"
+msgstr "Gebruik: %s\n"
+
+#: src/grpconv.c:40
+#, c-format
+msgid ""
+"%s - convert to shadow group\n"
+"\n"
+msgstr ""
+"%s  -  omzetten naar schaduwgroep\n"
+"\n"
+
+#: src/grpconv.c:105
+#, c-format
+msgid "%s: /etc/gshadow is not supported by this system.\n"
+msgstr "%s: Bestand /etc/gshadow wordt niet ondersteund op dit systeem.\n"
+
+#: src/grpunconv.c:58
+#, c-format
+msgid ""
+"%s - convert from shadow groups\n"
+"\n"
+msgstr ""
+"%s  -  omzetten uit schaduwgroep\n"
+"\n"
+
+#: src/grpunconv.c:61
+msgid "  -P path        Search group and gshadow file in \"path\"\n"
+msgstr "  -P pad          'group'- en 'gshadow'-bestanden in dit pad zoeken\n"
+
+#: src/grpunconv.c:219
+#, c-format
+msgid "%s: No gshadow file found.\n"
+msgstr "%s: Geen 'gshadow'-bestand gevonden.\n"
+
+#: src/grpunconv.c:243 src/pwconv.c:243 src/pwconv.c:267 src/pwunconv.c:190
+#, c-format
+msgid "Cannot create backup file `%s': %m\n"
+msgstr "Kan geen reservekopiebestand '%s' aanmaken: %m\n"
+
+#: src/grpunconv.c:266 src/pwunconv.c:214
+#, c-format
+msgid "Error while moving password for `%s'.\n"
+msgstr "Fout tijdens verplaatsen van wachtwoord voor '%s'.\n"
+
+#: src/newgrp.c:52
+#, c-format
+msgid "Usage: %s [-l|-c command] [group]\n"
+msgstr "Gebruik:  %s [-l|-c opdracht]  [groep]\n"
+
+#: src/newgrp.c:60
+#, c-format
+msgid ""
+"%s - change the effective group id\n"
+"\n"
+msgstr ""
+"%s  -  het effectieve groeps-ID wijzigen\n"
+"\n"
+
+#: src/newgrp.c:63
+msgid "  -l, --login    reinitialize environment as if logged in\n"
+msgstr "  -l, --login     omgeving herinitialiseren als bij aanmelden\n"
+
+#: src/newgrp.c:65
+msgid "  -c  command    Execute `command' with new group\n"
+msgstr "  -c opdracht     deze opdracht met nieuwe groep uitvoeren\n"
+
+#: src/newgrp.c:161
+#, c-format
+msgid "%s: -l and -c are exclusive\n"
+msgstr "%s: opties '-l' en '-c' sluiten elkaar uit\n"
+
+#: src/newgrp.c:167
+#, c-format
+msgid "%s: -c requires a group argument\n"
+msgstr "%s: optie '-c' vereist een groepsargument\n"
+
+#: src/newgrp.c:174
+#, c-format
+msgid "%s: Unknown user.\n"
+msgstr "%s: Onbekende gebruiker.\n"
+
+#: src/newgrp.c:195
+#, c-format
+msgid "%s: bad group `%s'.\n"
+msgstr "%s: Ongeldige groep '%s'.\n"
+
+#: src/newgrp.c:218 src/newgrp.c:313
+#, c-format
+msgid "%s: calling getgroups failed: %s\n"
+msgstr "%s: aanroepen van getgroups() is mislukt: %s\n"
+
+#: src/newgrp.c:271
+#, c-format
+msgid "%s: failure to get group entry for %d.\n"
+msgstr "%s: Kan geen groepsitem voor %d verkrijgen.\n"
+
+#: src/newgrp.c:281
+msgid "Password: "
+msgstr "Wachtwoord: "
+
+#: src/newgrp.c:284
+#, c-format
+msgid "%s: password incorrect.\n"
+msgstr "%s: Wachtwoord is onjuist.\n"
+
+#: src/newgrp.c:351
+#, c-format
+msgid "%s: too many groups, not added.\n"
+msgstr "%s: Te veel groepen; er is geen toegevoegd.\n"
+
+#: src/newgrp.c:358
+#, c-format
+msgid "%s: calling setgroups failed: %s\n"
+msgstr "%s: aanroepen van setgroups() is mislukt: %s\n"
+
+#: src/newgrp.c:365 src/newgrp.c:380
+#, c-format
+msgid "%s: calling setgid failed: %s\n"
+msgstr "%s: aanroepen van setgid() is mislukt: %s\n"
+
+#: src/newgrp.c:374
+#, c-format
+msgid "%s: calling initgroups failed: %s\n"
+msgstr "%s: aanroepen van initgroups() is mislukt: %s\n"
+
+#: src/newgrp.c:389
+#, c-format
+msgid "%s: calling setuid failed: %s\n"
+msgstr "%s: aanroepen van setuid() is mislukt: %s\n"
+
+#: src/newgrp.c:401
+#, c-format
+msgid "Cannot change to directory %s: %s\n"
+msgstr "Kan niet naar map %s gaan: %s\n"
+
+#: src/newgrp.c:439
+#, c-format
+msgid "%s: execl failed: %s\n"
+msgstr "%s: execl() is mislukt: %s\n"
+
+#: src/pam_rpasswd.c:219 src/pam_rpasswd.c:223 src/pam_rpasswd.c:330
+#: src/pam_rpasswd.c:334 src/rpasswd.c:211 src/rpasswd.c:214 src/rpasswd.c:297
+#: src/rpasswd.c:300
+#, c-format
+msgid "error while reading request: %s"
+msgstr "fout tijdens lezen van verzoek: %s"
+
+#: src/pam_rpasswd.c:220 src/rpasswd.c:212 src/rpasswd-client.c:58
+#: src/rpasswd-client.c:71 src/rpasswd-client.c:82 src/rpasswd-client.c:108
+#: src/rpasswd-client.c:121
+msgid "Peer has closed the TLS connection"
+msgstr "Andere computer heeft TLS-verbinding gesloten"
+
+#: src/pam_rpasswd.c:235 src/pam_rpasswd.c:344
+#, c-format
+msgid "error while allocating memory: %m"
+msgstr "fout bij reserveren van geheugen: %m"
+
+#: src/pam_rpasswd.c:242 src/rpasswd.c:223 src/rpasswd.c:312
+#, c-format
+msgid "error while reading request data: %s"
+msgstr "fout tijdens lezen van verzoeksgegevens: %s"
+
+#: src/pam_rpasswd.c:296 src/rpasswd.c:269 src/rpasswd.c:358
+#, c-format
+msgid "Cannot send input back to server: %s\n"
+msgstr "Kan invoer niet terugzenden naar server: %s\n"
+
+#: src/pam_rpasswd.c:331 src/rpasswd.c:298
+msgid "wrong data received"
+msgstr "onjuiste gegevens ontvangen"
+
+#: src/pam_rpasswd.c:352
+#, c-format
+msgid "error while reading request data: %m"
+msgstr "fout tijdens lezen van verzoeksgegevens: %m"
+
+#: src/pam_rpasswd.c:403
+#, c-format
+msgid "Cannot send input back to server: %m\n"
+msgstr "Kan invoer niet terugzenden naar server: %m\n"
+
+#: src/pam_rpasswd.c:565
+#, c-format
+msgid "SLP: Found Server on %s, port %s (%s)\n"
+msgstr "SLP: Server gevonden op %s, poort %s (%s)\n"
+
+#: src/pam_rpasswd.c:568
+#, c-format
+msgid "SLP: Found Server on %s, port %s\n"
+msgstr "SLP: Server gevonden op %s, poort %s\n"
+
+#: src/pam_rpasswd.c:574
+#, c-format
+msgid "SLP: Found Server on %s (%s)\n"
+msgstr "SLP: Server gevonden op %s (%s)\n"
+
+#: src/pam_rpasswd.c:577
+#, c-format
+msgid "SLP: Found Server on %s\n"
+msgstr "SLP: Server gevonden op %s\n"
+
+#: src/passwd.c:210
+#, c-format
+msgid "Unable to initialize BioAPI framework, BioAPI error #:%x.\n"
+msgstr "Kan BioAPI-systeem niet initialiseren (BioAPI-fout %x).\n"
+
+#: src/passwd.c:220
+#, c-format
+msgid "Unable to parse UUID (BioAPI error #:%x) : %s\n"
+msgstr "Kan UUID niet ontleden (BioAPI-fout %x): %s\n"
+
+#: src/passwd.c:241
+#, c-format
+msgid "Unable to load BioAPI BSP with UUID of %s, BioAPI error #%x.\n"
+msgstr "Kan BioAPI-BSP met UUID %s niet laden (BioAPI-fout %x).\n"
+
+#: src/passwd.c:252
+#, c-format
+msgid ""
+"Unable to attach default device to BioAPI BSP with UUID of %s, BioAPI error #"
+"%x.\n"
+msgstr ""
+"Kan standaardapparaat niet aanhechten aan BioAPI-BSP met UUID %s (BioAPI-"
+"fout %x).\n"
+
+#: src/passwd.c:278
+#, c-format
+msgid "Unable to create BIR database directory, \"%s\"\n"
+msgstr "Kan BIR-databankmap '%s' niet aanmaken.\n"
+
+#: src/passwd.c:291
+#, c-format
+msgid ""
+"Unable to create BSP-specific subdirectory in BIR database directory, \"%s"
+"\"\n"
+msgstr "Kan geen BSP-specifieke submap in BIR-databankmap '%s' aanmaken.\n"
+
+#: src/passwd.c:306
+#, c-format
+msgid ""
+"Unable to write biometric identification record, \"%s\": BioAPI error #%x\n"
+msgstr ""
+"Kan biometrisch identificatierecord '%s' niet schrijven (BioAPI-fout %x).\n"
+
+#: src/passwd.c:318
+#, c-format
+msgid "Unable to open BIR for writing, \"%s\"\n"
+msgstr "Kan BIR '%s' niet openen om te schrijven.\n"
+
+#: src/passwd.c:349
+#, c-format
+msgid "Unable to enroll user %s using BSP with UUID of %s, BioAPI error #%x.\n"
+msgstr ""
+"Kan gebruiker '%s' niet aannemen via BSP met UUID %s (BioAPI-fout %x).\n"
+
+#: src/passwd.c:367
+#, c-format
+msgid "Usage: %s [-f|-g|-s|-k[-q]] [account]\n"
+msgstr "Gebruik:  %s [-f|-g|-s|-k[-q]] [account]\n"
+
+#: src/passwd.c:368
+#, c-format
+msgid "       %s [-D binddn] [-n min] [-x max] [-w warn] [-i inact] account\n"
+msgstr ""
+"          %s [-D bindnaam] [-n minimum] [-x maximum] [-w waarschuwtijd]\n"
+"                 [-i inactiviteit]  account\n"
+
+#: src/passwd.c:369
+#, c-format
+msgid "       %s {-l|-u|-d|-S[-a]|-e} account\n"
+msgstr "          %s {-l|-u|-d|-S[-a]|-e}  account\n"
+
+#: src/passwd.c:371
+#, c-format
+msgid "       %s --bioapi [account]\n"
+msgstr "          %s --bioapi  [account]\n"
+
+#: src/passwd.c:373
+#, c-format
+msgid "       %s --stdin [account]\n"
+msgstr "          %s --stdin  [account]\n"
+
+#: src/passwd.c:380 src/rpasswd.c:93 src/rpasswdd.c:114
+#, c-format
+msgid ""
+"%s - change password information\n"
+"\n"
+msgstr ""
+"%s  -  wachtwoordinformatie wijzigen\n"
+"\n"
+
+#: src/passwd.c:382
+msgid "  -f             Change the finger (GECOS) information\n"
+msgstr "  -f              finger-informatie wijzigen (GECOS-veld)\n"
+
+#: src/passwd.c:384
+msgid "  -s             Change the login shell\n"
+msgstr "  -s              aanmeld-shell wijzigen\n"
+
+#: src/passwd.c:385
+msgid "  -g             Change the group password\n"
+msgstr "  -g              groepswachtwoord wijzigen\n"
+
+#: src/passwd.c:386
+msgid "  -k             Change the password only if expired\n"
+msgstr "  -k              wachtwoord alleen wijzigen indien verlopen\n"
+
+#: src/passwd.c:387
+msgid "  -q             Try to be quiet\n"
+msgstr "  -q              proberen stil te zijn (geen uitvoer produceren)\n"
+
+#: src/passwd.c:388
+msgid "  -S             Show the password attributes\n"
+msgstr "  -S              wachtwoordeigenschappen tonen\n"
+
+#: src/passwd.c:389
+msgid "  -a             Only with -S, show for all accounts\n"
+msgstr "  -a              alle accounts tonen (alleen samen met '-S')\n"
+
+#: src/passwd.c:390
+msgid "  -d             Delete the password for the named account\n"
+msgstr "  -d              wachtwoord van genoemd account verwijderen\n"
+
+#: src/passwd.c:391
+msgid "  -l             Locks the password entry for \"account\"\n"
+msgstr "  -l              wachtwoorditem van genoemd account vergrendelen\n"
+
+#: src/passwd.c:392
+msgid "  -u             Try to unlock the password entry for \"account\"\n"
+msgstr "  -u              wachtwoorditem van genoemd account ontgrendelen\n"
+
+#: src/passwd.c:393
+msgid "  -e             Force the user to change password at next login\n"
+msgstr ""
+"  -e              wachtwoordwijziging afdwingen bij volgende aanmelding\n"
+
+#: src/passwd.c:394
+msgid "  -n min         Set minimum field for \"account\"\n"
+msgstr "  -n min-tal      minimum aantal dagen tussen wachtwoordswijzigingen\n"
+
+#: src/passwd.c:395
+msgid "  -x max         Set maximum field for \"account\"\n"
+msgstr "  -x max-tal      maximum aantal dagen tussen wachtwoordswijzigingen\n"
+
+#: src/passwd.c:396
+msgid "  -w warn        Set warn field for \"account\"\n"
+msgstr "  -w opletdagen   aantal waarschuwingsdagen voor wachtwoordverloop\n"
+
+#: src/passwd.c:398
+msgid "  --bioapi       Authentication token is handled via BioAPI\n"
+msgstr "  --bioapi        authenticatie-token wordt afgehandeld via BioAPI\n"
+
+#: src/passwd.c:405
+msgid "  --stdin        Read new password from stdin (root only)\n"
+msgstr ""
+"  --stdin         nieuw wachtwoord van standaardinvoer lezen (alleen voor "
+"root)\n"
+
+#: src/passwd.c:597
+#, c-format
+msgid "%s: User argument missing\n"
+msgstr "%s: Gebruikersargument ontbreekt\n"
+
+#: src/passwd.c:690
+#, c-format
+msgid "%s: User `%s' is not known to service `%s'\n"
+msgstr "%s: Gebruiker '%s' is niet bekend bij dienst '%s'.\n"
+
+#: src/passwd.c:715
+#, c-format
+msgid "%s: %s is not authorized to change the password of %s\n"
+msgstr "%s: %s is niet gerechtigd om het wachtwoord van %s te wijzigen.\n"
+
+#: src/passwd.c:744
+#, c-format
+msgid "%s: Permission denied\n"
+msgstr "%s: Toegang geweigerd.\n"
+
+#: src/passwd.c:753
+#, c-format
+msgid "You cannot change the shadow data for `%s'.\n"
+msgstr "U kunt de schaduwgegevens voor '%s' niet wijzigen.\n"
+
+#: src/passwd.c:781
+#, c-format
+msgid "%s: -P flag not supported in this mode!\n"
+msgstr "%s: Optie '-P' is in deze modus niet mogelijk!\n"
+
+#: src/passwd.c:811
+#, c-format
+msgid "Changing password for %s.\n"
+msgstr "Aanpassen van het wachtwoord voor '%s'.\n"
+
+#: src/passwd.c:960
+#, c-format
+msgid "Error while changing password expiry information.\n"
+msgstr "Fout tijdens aanpassen van gegevens over wachtwoordverloop.\n"
+
+#: src/passwd.c:962
+#, c-format
+msgid "Error while changing password.\n"
+msgstr "Fout tijdens aanpassen van wachtwoord.\n"
+
+#: src/passwd.c:974
+#, c-format
+msgid "Password expiry information changed.\n"
+msgstr "Gegevens over wachtwoordverloop zijn aangepast.\n"
+
+#: src/passwd.c:976
+#, c-format
+msgid "Password deleted.\n"
+msgstr "Wachtwoord is verwijderd.\n"
+
+#: src/passwd.c:1038
+#, c-format
+msgid "passwd: Cannot execute %s"
+msgstr "passwd: Kan %s niet uitvoeren"
+
+#: src/pwck.c:51
+#, c-format
+msgid "Usage: %s [-P path] [-q|-r|-s]\n"
+msgstr "Gebruik:  %s [-P pad] [-q|-r|-s]\n"
+
+#: src/pwck.c:59
+#, c-format
+msgid ""
+"%s - check integrity of password files\n"
+"\n"
+msgstr ""
+"%s  -  integriteit van wachtwoordbestanden controleren\n"
+"\n"
+
+#: src/pwck.c:66
+msgid "  -s, --sort     Sort the password file, no checks are done\n"
+msgstr "  -s, --sort      wachtwoordbestand sorteren, zonder controles\n"
+
+#: src/pwck.c:345 src/pwck.c:380
+#, c-format
+msgid "Invalid password entry.\n"
+msgstr "Ongeldig wachtwoorditem.\n"
+
+#: src/pwck.c:364
+#, c-format
+msgid "Invalid password entry with comment.\n"
+msgstr "Ongeldig wachtwoorditem met commentaar.\n"
+
+#: src/pwck.c:396 src/pwck.c:665
+#, c-format
+msgid "Invalid account name `%s'.\n"
+msgstr "Ongeldige accountnaam '%s'.\n"
+
+#: src/pwck.c:412
+#, c-format
+msgid "Duplicate password entry\n"
+msgstr "Duplicaat wachtwoorditem\n"
+
+#: src/pwck.c:431
+#, c-format
+msgid "User `%s': unknown group `%u'\n"
+msgstr "Gebruiker '%s': onbekende groep '%u'.\n"
+
+#: src/pwck.c:440
+#, c-format
+msgid "User `%s': directory `%s' does not exist.\n"
+msgstr "Gebruiker '%s': map '%s' bestaat niet.\n"
+
+#: src/pwck.c:449
+#, c-format
+msgid "User `%s': shell `%s' is not executable.\n"
+msgstr "Gebruiker '%s': shell '%s' is niet uitvoerbaar.\n"
+
+#: src/pwck.c:506
+#, c-format
+msgid "Checking `%s'.\n"
+msgstr "Controleren van '%s'.\n"
+
+#: src/pwck.c:615 src/pwck.c:649
+#, c-format
+msgid "Invalid shadow entry.\n"
+msgstr "Ongeldig item in schaduwbestand.\n"
+
+#: src/pwck.c:634
+#, c-format
+msgid "Invalid shadow entry with comment.\n"
+msgstr "Ongeldig item met commentaar in schaduwbestand.\n"
+
+#: src/pwck.c:681
+#, c-format
+msgid "Duplicate shadow entry\n"
+msgstr "Duplicaat item in schaduwbestand\n"
+
+#: src/pwck.c:699
+#, c-format
+msgid "No matching password file entry.\n"
+msgstr "Geen overeenkomend item in wachtwoordbestand.\n"
+
+#: src/pwck.c:714
+#, c-format
+msgid "User `%s': last password change in the future.\n"
+msgstr "Gebruiker '%s': laatste wachtwoordwijziging is in de toekomst.\n"
+
+#: src/pwconv.c:51
+#, c-format
+msgid ""
+"%s - convert to shadow account\n"
+"\n"
+msgstr ""
+"%s  -  omzetten naar een schaduw-account\n"
+"\n"
+
+#: src/pwconv.c:307
+#, c-format
+msgid "Orphaned entry '%s' removed from shadow database.\n"
+msgstr "Verweesd item '%s' is verwijderd uit schaduwbestand.\n"
+
+#: src/pwconv.c:316
+#, c-format
+msgid "Error while deleting `%s' shadow account.\n"
+msgstr "Fout tijdens verwijderen van schaduw-account '%s'.\n"
+
+#: src/pwconv.c:343
+#, c-format
+msgid "%s: Error trying to get data for `%s'\n"
+msgstr "%s: Fout tijdens verkrijgen van gegevens over '%s'.\n"
+
+#: src/pwconv.c:365 src/pwconv.c:388 src/pwconv.c:419 src/pwconv.c:435
+#, c-format
+msgid "Error while converting `%s' to shadow account.\n"
+msgstr "Fout tijdens omzetten van '%s' naar schaduw-account.\n"
+
+#: src/pwconv.c:466
+#, c-format
+msgid "Error while renaming temporary shadow file: %m\n"
+msgstr "Fout tijdens hernoemen van tijdelijk schaduwbestand: %m\n"
+
+#: src/pwconv.c:491
+#, c-format
+msgid "Error while renaming temporary password file: %m\n"
+msgstr "Fout tijdens hernoemen van tijdelijk wachtwoordbestand: %m\n"
+
+#: src/pwunconv.c:51
+#, c-format
+msgid ""
+"%s - convert from shadow account\n"
+"\n"
+msgstr ""
+"%s  -  omzetten uit een schaduw-account\n"
+"\n"
+
+#: src/pwunconv.c:166
+#, c-format
+msgid "%s: No shadow file found.\n"
+msgstr "%s: Geen schaduwbestand gevonden.\n"
+
+#: src/rpasswd.c:85
+#, c-format
+msgid "Usage: %s [-4|-6][-a][-f config-file][-h hostname][-p port][-v][name]\n"
+msgstr ""
+"Gebruik:  %s [-4|-6] [-a] [-f configuratiebestand] [-h hostnaam]\n"
+"                  [-p poort] [-v]  [naam]\n"
+
+#: src/rpasswd.c:95
+msgid "  -4             Use IPv4 only\n"
+msgstr "  -4              alleen IPv4 gebruiken\n"
+
+#: src/rpasswd.c:96
+msgid "  -6             Use IPv6 only\n"
+msgstr "  -6              alleen IPv6 gebruiken\n"
+
+#: src/rpasswd.c:98
+msgid "  -a             Admin mode, special admin password is required\n"
+msgstr ""
+"  -a              beheerdersmodus; speciaal beheerderswachtwoord is vereist\n"
+
+#: src/rpasswd.c:100
+msgid "  -f config-file Specify a different config file\n"
+msgstr "  -f bestand      te gebruiken configuratiebestand\n"
+
+#: src/rpasswd.c:101
+msgid "  -h hostname    Specify the remote server\n"
+msgstr "  -h hostnaam     te gebruiken server\n"
+
+#: src/rpasswd.c:102
+msgid "  -p port        Specify port remote server is listening on\n"
+msgstr "  -p poort        de poort waar de server op luistert\n"
+
+#: src/rpasswd.c:104
+msgid "  -r level       Specify level of SSL certificate checks\n"
+msgstr "  -r niveau       het niveau van SSL-certificaatcontroles\n"
+
+#: src/rpasswd.c:107
+msgid "  --no-slp       Don't use SLP to find a server\n"
+msgstr "  --no-slp        geen SLP gebruiken om een server te vinden\n"
+
+#: src/rpasswd.c:109
+msgid "  -v, --verbose  Be verbose, print SSL connection data\n"
+msgstr ""
+"  -v, --verbose   meer uitvoer produceren, SSL-verbindingsgegevens tonen\n"
+
+#: src/rpasswd.c:150
+#, c-format
+msgid "Warning: cannot turn echo off\n"
+msgstr "Waarschuwing: kan echo niet uitschakelen\n"
+
+#: src/rpasswd.c:515
+#, c-format
+msgid "SLP: Found Server on %s, port %s"
+msgstr "SLP: Server gevonden op %s, poort %s"
+
+#: src/rpasswd.c:518
+#, c-format
+msgid "SLP: Found Server on %s"
+msgstr "SLP: Server gevonden op %s"
+
+#: src/rpasswd.c:554
+#, c-format
+msgid "Go away, you do not exist!"
+msgstr "Ga weg, u bestaat niet!"
+
+# This error message is issued if no size was specified on the command
+# line.  Exactly two are required.
+#: src/rpasswd.c:568
+#, c-format
+msgid "No server specified\n"
+msgstr "geen server opgegeven\n"
+
+#: src/rpasswd-client.c:57 src/rpasswd-client.c:60
+#, c-format
+msgid "error while sending start request: %s\n"
+msgstr "fout tijdens verzenden van startverzoek: %s\n"
+
+#: src/rpasswd-client.c:70 src/rpasswd-client.c:73
+#, c-format
+msgid "error while sending locale data: %s\n"
+msgstr "fout tijdens verzenden van taalregionaam: %s\n"
+
+#: src/rpasswd-client.c:81 src/rpasswd-client.c:84
+#, c-format
+msgid "error while sending username: %s\n"
+msgstr "fout tijdens verzenden van gebruikersnaam: %s\n"
+
+#: src/rpasswd-client.c:107 src/rpasswd-client.c:110 src/rpasswd-client.c:120
+#: src/rpasswd-client.c:123
+#, c-format
+msgid "error while sending string: %s\n"
+msgstr "fout tijdens verzenden van tekenreeks: '%s'\n"
+
+#: src/rpasswd-client.c:318
+msgid "Searching a server...\n"
+msgstr "Zoeken van een server...\n"
+
+#: src/rpasswd-client.c:323
+#, c-format
+msgid "Error opening SLP handle: %i.\n"
+msgstr "Fout bij openen van SLP-descriptor: %i.\n"
+
+#: src/rpasswd-client.c:334
+msgid "No service found with SLP.\n"
+msgstr "Geen dienst gevonden met SLP.\n"
+
+#: src/rpasswd-client.c:353
+msgid "Error while searching for SLP description.\n"
+msgstr "Fout tijdens zoeken naar SLP-omschrijving.\n"
+
+#: src/rpasswd-client.c:372
+#, c-format
+msgid ""
+"\n"
+"Please select a server:\n"
+msgstr ""
+"\n"
+"Kies een server:\n"
+
+#: src/rpasswd-client.c:378
+#, c-format
+msgid " (port %s)"
+msgstr " (poort %s)"
+
+#: src/rpasswd-client.c:388
+#, c-format
+msgid "Enter number of choice [1-%d]: "
+msgstr "Voer het gewenste nummer in [1-%d]: "
+
+#: src/rpasswd-client.c:458
+msgid "parsing config file"
+msgstr "ontleden van configuratiebestand"
+
+#: src/rpasswd-client.c:501 src/rpasswd-client.c:504
+msgid "Trying entry:"
+msgstr "Proberen van item:"
+
+#: src/rpasswd-client.c:543
+#, c-format
+msgid "Entry \"%s\" is not valid!\n"
+msgstr "Item \"%s\" is ongeldig!\n"
+
+#: src/rpasswd-client.c:547
+#, c-format
+msgid "Entry \"%s\" is not valid, ignored!\n"
+msgstr "Item \"%s\" is ongeldig -- genegeerd!\n"
+
+#: src/rpasswd-client.c:560
+msgid "Bad entries found.\n"
+msgstr "Ongeldige items gevonden.\n"
+
+#: src/rpasswd-client.c:565
+msgid "No entry found.\n"
+msgstr "Geen items gevonden.\n"
+
+#: src/rpasswd-client.c:575
+msgid "No entry found."
+msgstr "Geen items gevonden."
+
+#: src/rpasswd-client.c:609
+msgid "Hostname or service not known for specified protocol\n"
+msgstr "Hostaam of dienst is niet bekend voor opgegeven protocol\n"
+
+#: src/rpasswd-client.c:623
+#, c-format
+msgid "bad port: %s\n"
+msgstr "ongeldige poort: %s\n"
+
+#: src/rpasswd-client.c:648 src/rpasswd-client.c:657
+#, c-format
+msgid "Trying %s port %d...\n"
+msgstr "Proberen van %s poort %d...\n"
+
+#: src/rpasswd-client.c:663
+#, c-format
+msgid "Trying %s...\n"
+msgstr "Proberen van %s...\n"
+
+#: src/rpasswd-client.c:677
+#, c-format
+msgid "connect to address %s: %s\n"
+msgstr "verbinden met adres %s: %s\n"
+
+#: src/rpasswd-client.c:732 src/rpasswd-client.c:1028
+msgid "Server certificate info:\n"
+msgstr "Servercertificaatinfo:\n"
+
+#: src/rpasswd-client.c:742
+#, c-format
+msgid "  Certificate is valid since: %s"
+msgstr "  Certificaat is geldig sinds: %s"
+
+#: src/rpasswd-client.c:744
+#, c-format
+msgid "  Certificate expires: %s"
+msgstr "  Certificaat verloopt op: %s"
+
+#: src/rpasswd-client.c:750
+#, c-format
+msgid "  Certificate public key: %s"
+msgstr "  Openbare sleutel: %s"
+
+#: src/rpasswd-client.c:756
+#, c-format
+msgid "  Certificate version: #%d\n"
+msgstr " Certificaatversie: #%d\n"
+
+#: src/rpasswd-client.c:761 src/rpasswd-client.c:1034
+#, c-format
+msgid "  DN: %s\n"
+msgstr "  DN: %s\n"
+
+#: src/rpasswd-client.c:765 src/rpasswd-client.c:1041
+#, c-format
+msgid "  Issuer's DN: %s\n"
+msgstr "  DN van certificaatuitgever: %s\n"
+
+#: src/rpasswd-client.c:846
+#, c-format
+msgid "Handshake failed: %s\n"
+msgstr "Handshake is mislukt: %s\n"
+
+#: src/rpasswd-client.c:869
+#, c-format
+msgid "TLS certificate error: %s\n"
+msgstr "TLS-certificaatfout: %s\n"
+
+#: src/rpasswd-client.c:880
+#, c-format
+msgid ""
+"%s connection using %s-%s (%s)\n"
+"\n"
+msgstr ""
+"%s-verbinding met gebruik van %s-%s (%s)\n"
+"\n"
+
+#: src/rpasswd-client.c:898
+msgid "TLS authentication error: server certificate issuer is unknown.\n"
+msgstr "TLS-authenticatiefout: uitgever van servercertificaat is onbekend.\n"
+
+#: src/rpasswd-client.c:906
+msgid "TLS authentication error: server certificate is NOT trusted.\n"
+msgstr "TLS-authenticatiefout: servercertificaat wordt NIET vertrouwd.\n"
+
+#: src/rpasswd-client.c:917
+msgid "TLS authentication error: server certificate not yet activated.\n"
+msgstr "TLS-authenticatiefout: servercertificaat is nog niet geactiveerd.\n"
+
+#: src/rpasswd-client.c:925
+msgid "TLS authentication error: server certificate expired.\n"
+msgstr "TLS-authenticatiefout: servercertificaat is verlopen.\n"
+
+#: src/rpasswd-client.c:960
+#, c-format
+msgid "error loading default verify locations: %s\n"
+msgstr "fout tijdens laden van standaard controlelocaties: %s\n"
+
+#: src/rpasswd-client.c:968
+#, c-format
+msgid "error setting default verify path: %s\n"
+msgstr "fout tijdens instellen van standaard controlepad: %s\n"
+
+#: src/rpasswd-client.c:1003
+#, fuzzy
+msgid "Unable to get certificate from peer.\n"
+msgstr "Kan geen entropie verkrijgen uit %s\n"
+
+#: src/rpasswd-client.c:1017
+#, c-format
+msgid ""
+"SSL connection using %s\n"
+"\n"
+msgstr ""
+"SSL-verbinding met gebruik van %s\n"
+"\n"
+
+#: src/rpasswd-client.c:1022
+msgid "Server does not have a certificate?\n"
+msgstr "Server heeft geen certificaat?\n"
+
+#: src/rpasswdd.c:102
+#, c-format
+msgid ""
+"Usage: %s [-4] [-6] [-d] [-c certificate] [-k privatekey] [-p port]\n"
+"       [--slp [--slp-timeout timeout] [--slp-descr description]]\n"
+msgstr ""
+"Gebruik:  %s [-4] [-6] [-d] [-c certificaat] [-k privésleutel] [-p poort]\n"
+"             [--slp [--slp-timeout wachttijd] [--slp-descr omschrijving]]\n"
+
+#: src/rpasswdd.c:105
+#, c-format
+msgid "Usage: %s [-4] [-6] [-d] [-c certificate] [-k privatekey] [-p port]\n"
+msgstr ""
+"Gebruik:  %s [-4] [-6] [-d] [-c certificaat] [-k privésleutel] [-p poort]\n"
+
+#: src/rpasswdd.c:116
+msgid "  -4             Use IPv4\n"
+msgstr "  -4              IPv4 gebruiken\n"
+
+#: src/rpasswdd.c:117
+msgid "  -6             Use IPv6\n"
+msgstr "  -6              IPv6 gebruiken\n"
+
+#: src/rpasswdd.c:118
+msgid "  -c certificate Specify alternate certificate file\n"
+msgstr "  -c bestand      bestand dat certificaten bevat\n"
+
+#: src/rpasswdd.c:119
+msgid "  -k privatekey  Specify alternate file with private key\n"
+msgstr "  -k bestand      bestand dat privé-sleutel bevat\n"
+
+#: src/rpasswdd.c:121
+msgid "  -d             Run in debug mode\n"
+msgstr "  -d              debug-informatie tonen\n"
+
+#: src/rpasswdd.c:122
+msgid "  -p port        Port on which the server should listen\n"
+msgstr "  -p poort        de poort waar de server op luistert\n"
+
+#: src/rpasswdd.c:125
+msgid "  --slp          Register at local SLP server\n"
+msgstr "  --slp           bij lokale SLP-server registreren\n"
+
+#: src/rpasswdd.c:126
+msgid "  --slp-timeout  Set timeout for re-registration\n"
+msgstr "  --slp-timeout   wachtduur voor herregistratie instellen\n"
+
+#: src/rpasswdd.c:127
+msgid "  --slp-descr    Set a description shown to SLP clients\n"
+msgstr ""
+"  --slp-descr     omschrijving instellen die aan SLP-cliënten getoond wordt\n"
+
+#: src/rpasswdd.c:710
+#, c-format
+msgid "Please authenticate as %s on %s"
+msgstr "Meld u aan als %s op %s"
+
+#: src/rpasswdd.c:749
+#, c-format
+msgid ""
+"\n"
+"Now enter the new password for %s"
+msgstr ""
+"\n"
+"Geef het nieuwe wachtwoord voor %s"
+
+#: src/rpasswdd.c:770
+#, c-format
+msgid "setresuid failed on server: %s"
+msgstr "setresuid() is mislukt op server: %s"
+
+#: src/rpasswdd.c:813
+msgid "Password not changed"
+msgstr "Wachtwoord is niet gewijzigd."
+
+#: src/rpasswdd.c:816
+msgid "Password changed"
+msgstr "Wachtwoord is gewijzigd."
+
+#: src/rpasswdd.c:1349
+msgid "already running"
+msgstr "wordt al uitgevoerd"
+
+#: src/useradd.c:54 src/usermod.c:55
+#, c-format
+msgid "Usage: %s ...\n"
+msgstr "Gebruik:  %s ...\n"
+
+#: src/useradd.c:61
+#, c-format
+msgid ""
+"%s - create a new user\n"
+"\n"
+msgstr ""
+"%s  -  een nieuwe gebruiker aanmaken\n"
+"\n"
+
+#: src/useradd.c:63 src/usermod.c:64
+msgid "  -c comment     Set the GECOS field for the new account\n"
+msgstr "  -c opmerking    het GECOS-veld van het account instellen\n"
+
+#: src/useradd.c:65
+msgid " --show-defaults Print default values\n"
+msgstr " --show-defaults  huidige standaardwaarden tonen\n"
+
+#: src/useradd.c:66
+msgid " --save-defaults Save modified default values\n"
+msgstr " --save-defaults  de gegeven waarden als standaardwaarden opslaan\n"
+
+#: src/useradd.c:68 src/usermod.c:69
+msgid "  -d homedir     Home directory for the new user\n"
+msgstr "  -d thuismap     de thuismap van de nieuwe gebruiker\n"
+
+#: src/useradd.c:69 src/usermod.c:70
+msgid "  -e expire      Date on which the new account will be disabled\n"
+msgstr "  -e vervaldag    de datum waarop het account vervalt\n"
+
+#: src/useradd.c:71 src/usermod.c:72
+msgid ""
+"  -f inactive    Days after a password expires until account is disabled\n"
+msgstr ""
+"  -f inactief     aantal dagen na wachtwoordverloop voordat account vervalt\n"
+
+#: src/useradd.c:73 src/usermod.c:74
+msgid "  -G group,...   List of supplementary groups\n"
+msgstr ""
+"  -G groep,...    lijst van andere groepen waar gebruiker lid van moet zijn\n"
+
+#: src/useradd.c:74 src/usermod.c:75
+msgid "  -g gid         Name/number of the users primary group\n"
+msgstr "  -g GID          naam/nummer van de primaire groep van de gebruiker\n"
+
+#: src/useradd.c:78
+msgid "  -m             Create home directory for the new user\n"
+msgstr "  -m              een thuismap voor de nieuwe gebruiker aanmaken\n"
+
+#: src/useradd.c:85
+msgid "  -u uid         Force the new userid to be the given number\n"
+msgstr "  -u UID          dit nummer gebruiken als gebruikers-ID\n"
+
+#: src/useradd.c:87
+msgid "  -U umask       Umask value used for creating home directory\n"
+msgstr "  -U umask        waarde van 'umask' bij aanmaken van thuismap\n"
+
+#: src/useradd.c:90 src/usermod.c:88
+msgid "  -s shell       Name of the user's login shell\n"
+msgstr "  -s shell        naam van de aanmeld-shell\n"
+
+#: src/useradd.c:186
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for group ID.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor groeps-ID.\n"
+
+#: src/useradd.c:196 src/usermod.c:160
+#, c-format
+msgid "%s: Group `%u' not found in service `%s'.\n"
+msgstr "%s: Groep '%u' niet gevonden in dienst '%s'.\n"
+
+#: src/useradd.c:202 src/usermod.c:166
+#, c-format
+msgid "%s: Unknown group `%u'.\n"
+msgstr "%s: Onbekende groep '%u'.\n"
+
+#: src/useradd.c:301
+#, c-format
+msgid "%s: Unknown group `%s' in %s.\n"
+msgstr "%s: Onbekende groep '%s' in %s.\n"
+
+#: src/useradd.c:316
+#, c-format
+msgid "%s: Invalid home directory `%s' in %s.\n"
+msgstr "%s: Ongeldige thuismap '%s' in %s.\n"
+
+#: src/useradd.c:335
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for `INACTIVE' in %s.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor \"INACTIVE\" in %s.\n"
+
+#: src/useradd.c:358
+#, c-format
+msgid "%s: Expiredate `%s' is no date and no integer value >= -1 in %s.\n"
+msgstr "%s: Verloopdag '%s' is geen datum en geen geheel getal >= -1 in %s.\n"
+
+#: src/useradd.c:374
+#, c-format
+msgid "%s: Invalid shell `%s' in %s.\n"
+msgstr "%s: Ongeldige shell '%s' in %s.\n"
+
+#: src/useradd.c:388
+#, c-format
+msgid "%s: Skel directory \"%s\" in %s does not exist.\n"
+msgstr "%s: Geraamtemap '%s' in %s bestaat niet.\n"
+
+#: src/useradd.c:449
+#, c-format
+msgid "%s: Invalid value `%s' for option CREATE_MAIL_SPOOL in %s.\n"
+msgstr "%s: Ongeldige waarde '%s' voor optie CREATE_MAIL_SPOOL in %s.\n"
+
+#: src/useradd.c:465
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for `UMASK' in %s.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor \"UMASK\" in %s.\n"
+
+#: src/useradd.c:913
+#, c-format
+msgid "%s: Can't get unique uid in range %u - %u.\n"
+msgstr "%s: Kan geen unieke UID verkrijgen in het bereik %u - %u.\n"
+
+#: src/useradd.c:987
+#, c-format
+msgid "%s: Can't stat `%s': %m\n"
+msgstr "%s: Kan status van '%s' niet opvragen: %m\n"
+
+#: src/useradd.c:1018
+#, c-format
+msgid ""
+"%s: No group named \"mail\" exists, creating mail spool with mode 0600.\n"
+msgstr ""
+"%s: Er bestaat geen groep \"mail\"; mailopslag wordt aangemaakt met modus "
+"0600.\n"
+
+#: src/useradd.c:1026
+#, c-format
+msgid "%s: Can't create mail spool for user %s.\n"
+msgstr "%s: Kan mailopslag voor gebruiker '%s' niet aanmaken.\n"
+
+#: src/useradd.c:1095 src/usermod.c:520
+#, c-format
+msgid "%s: Cannot create directory `%s'.\n"
+msgstr "%s: Kan map '%s' niet aanmaken.\n"
+
+#: src/useradd.c:1100 src/usermod.c:525 src/usermod.c:549
+#, c-format
+msgid "%s: Warning: chown on `%s' failed: %m\n"
+msgstr "%s: Waarschuwing: 'chown %s' is mislukt: %m\n"
+
+#: src/useradd.c:1103 src/usermod.c:528
+#, c-format
+msgid "%s: Warning: chmod on `%s' failed: %m\n"
+msgstr "%s: Waarschuwing: 'chmod %s' is mislukt: %m\n"
+
+#: src/useradd.c:1126
+#, c-format
+msgid "%s: Copying of skel directory failed.\n"
+msgstr "%s: Kopiëren van geraamtemap is mislukt.\n"
+
+#: src/useradd.c:1136
+#, c-format
+msgid "%s: Warning: home directory already exists, not modifying it.\n"
+msgstr "%s: Waarschuwing: de thuismap bestaat al; wordt niet veranderd.\n"
+
+#: src/useradd.c:1197
+#, c-format
+msgid "%s: Reading of `%s' was not successful.\n"
+msgstr "%s: Lezen van '%s' was niet succesvol.\n"
+
+#: src/useradd.c:1226 src/usermod.c:798
+#, c-format
+msgid "%s: Invalid comment `%s'.\n"
+msgstr "%s: Ongeldig commentaar '%s'.\n"
+
+#: src/useradd.c:1243 src/usermod.c:812
+#, c-format
+msgid "%s: Invalid home directory `%s'.\n"
+msgstr "%s: Ongeldige thuismap '%s'.\n"
+
+#: src/useradd.c:1264 src/usermod.c:836
+#, c-format
+msgid "%s: Expiredate `%s' is no date and no integer value >= -1.\n"
+msgstr "%s: Verloopdag '%s' is geen datum en geen geheel getal >= -1.\n"
+
+#: src/useradd.c:1280
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for `-f'.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor '-f'.\n"
+
+#: src/useradd.c:1299
+#, c-format
+msgid "%s: Skel directory `%s' does not exist.\n"
+msgstr "%s: Geraamtemap '%s' bestaat niet.\n"
+
+#: src/useradd.c:1341 src/usermod.c:935
+#, c-format
+msgid "%s: Invalid shell `%s'.\n"
+msgstr "%s: Ongeldige shell '%s'.\n"
+
+#: src/useradd.c:1350 src/useradd.c:1374
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for User ID.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor gebruikers-ID.\n"
+
+#: src/useradd.c:1364
+#, c-format
+msgid "%s: Invalid numeric argument `%s' for `-U'.\n"
+msgstr "%s: Ongeldig numeriek argument '%s' voor '-U'.\n"
+
+#: src/useradd.c:1425
+#, c-format
+msgid "%s: You cannot use --uid and --preferred-uid at the same time.\n"
+msgstr "%s: Opties '--uid' en '--preferred-uid' gaan niet samen.\n"
+
+#: src/useradd.c:1576
+#, c-format
+msgid "%s: Writing of `%s' was not successful.\n"
+msgstr "%s: Schrijven van '%s' was niet succesvol.\n"
+
+#: src/useradd.c:1604 src/usermod.c:1335
+#, c-format
+msgid "%s: UID %u is not unique.\n"
+msgstr "%s: UID %u is niet uniek.\n"
+
+#: src/useradd.c:1616 src/usermod.c:1349
+#, c-format
+msgid "%s: Invalid account name `%s'.\n"
+msgstr "%s: Ongeldige account-naam '%s'.\n"
+
+#: src/useradd.c:1637 src/usermod.c:1360
+#, c-format
+msgid "%s: Account `%s' already exists.\n"
+msgstr "%s: Account '%s' bestaat al.\n"
+
+#: src/useradd.c:1721
+#, c-format
+msgid "%s: Error: Cannot clear old faillog entry: %s\n"
+msgstr "%s: Fout: kan oud 'faillog'-item niet wissen: %s\n"
+
+#: src/useradd.c:1734
+#, c-format
+msgid "%s: Error: Cannot clear old lastlog entry: %s\n"
+msgstr "%s: Fout: kan oud 'lastlog'-item niet wissen: %s\n"
+
+#: src/useradd.c:1748
+#, c-format
+msgid "%s: Cannot add user to LDAP database without DN.\n"
+msgstr "%s: Kan zonder DN geen gebruiker aan LDAP-databank toevoegen.\n"
+
+#: src/useradd.c:1765
+#, c-format
+msgid "%s: User not added to LDAP database.\n"
+msgstr "%s: Gebruiker is niet aan LDAP-databank toegevoegd.\n"
+
+#: src/useradd.c:1793 src/usermod.c:397 src/usermod.c:635 src/usermod.c:1563
+#, c-format
+msgid "%s: ERROR: Cannot find group `%s' anymore!\n"
+msgstr "%s: FOUT: Kan groep '%s' niet meer vinden!\n"
+
+#: src/useradd.c:1797 src/usermod.c:1567 src/usermod.c:1667
+#, c-format
+msgid "%s: Cannot find group `%s' in service `%s', ignored.\n"
+msgstr "%s: Kan groep '%s' niet vinden in dienst '%s -- genegeerd.\n"
+
+#: src/useradd.c:1813 src/usermod.c:1583
+#, c-format
+msgid "%s: Cannot add user to groups stored in LDAP database without DN.\n"
+msgstr ""
+"%s: Kan zonder DN geen gebruiker aan groepen in LDAP-databank toevoegen.\n"
+
+#: src/useradd.c:1821 src/useradd.c:1839 src/useradd.c:1856 src/usermod.c:1591
+#: src/usermod.c:1610 src/usermod.c:1628
+#, c-format
+msgid "%s: User not added to LDAP group `%s'.\n"
+msgstr "%s: Gebruiker is niet toegevoegd aan LDAP-groep '%s'.\n"
+
+#: src/useradd.c:1908
+#, c-format
+msgid "%s: USERADD_CMD fails with exit code %d.\n"
+msgstr "%s: USERADD_CMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/userdel.c:54
+#, c-format
+msgid "Usage: %s [-D binddn] [-P path] [-r [-f]] user\n"
+msgstr "Gebruik:  %s [-D bindnaam] [-P pad] [-r [-f]]  gebruiker\n"
+
+#: src/userdel.c:61
+#, c-format
+msgid ""
+"%s - delete a user and related files\n"
+"\n"
+msgstr ""
+"%s  -  een gebruiker en bijbehorende bestanden verwijderen\n"
+"\n"
+
+#: src/userdel.c:63
+msgid "  -r             Remove home directory and mail spool\n"
+msgstr "  -r              thuismap en mailopslag verwijderen\n"
+
+#: src/userdel.c:65
+msgid "  -f             Force removal of files, even if not owned by user\n"
+msgstr ""
+"  -f              bestanden ook verwijderen als ze niet van gebruiker zijn\n"
+
+#: src/userdel.c:175 src/userdel.c:194
+#, c-format
+msgid "%s: directory `%s' is in use by `%s'.\n"
+msgstr "%s: Map '%s' is in gebruik door '%s'.\n"
+
+#: src/userdel.c:262 src/usermod.c:1663
+#, c-format
+msgid "%s: ERROR: cannot find group `%s' anymore!\n"
+msgstr "%s: FOUT: Kan groep '%s' niet meer vinden!\n"
+
+#: src/userdel.c:279 src/usermod.c:652 src/usermod.c:1683
+#, c-format
+msgid ""
+"%s: Cannot remove user from groups stored in LDAP database without DN.\n"
+msgstr ""
+"%s: Kan zonder DN geen gebruiker uit groepen in LDAP-databank verwijderen.\n"
+
+#: src/userdel.c:287 src/userdel.c:306 src/usermod.c:664 src/usermod.c:687
+#: src/usermod.c:1691 src/usermod.c:1710 src/usermod.c:1728
+#, c-format
+msgid "%s: User not removed from LDAP group `%s'.\n"
+msgstr "%s: Gebruiker is niet verwijderd uit LDAP-groep '%s'.\n"
+
+#: src/userdel.c:327 src/usermod.c:709
+#, c-format
+msgid "%s: User not removed from group `%s'.\n"
+msgstr "%s: Gebruiker is niet verwijderd uit groep '%s'.\n"
+
+#: src/userdel.c:537
+#, c-format
+msgid "%s: account `%s' is currently in use.\n"
+msgstr "%s: Account '%s' is op dit moment in gebruik.\n"
+
+#: src/userdel.c:559
+#, c-format
+msgid "%s: USERDEL_PRECMD fails with exit code %d.\n"
+msgstr "%s: USERDEL_PRECMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/userdel.c:587 src/userdel.c:605
+#, c-format
+msgid "%s: `%s' is not owned by `%s', not removed.\n"
+msgstr "%s: '%s' is niet van '%s'; wordt niet verwijderd\n"
+
+#: src/userdel.c:593 src/userdel.c:615
+#, c-format
+msgid "%s: warning: can't remove `%s': %s"
+msgstr "%s: Waarschuwing: kan '%s' niet verwijderen: %s"
+
+#: src/userdel.c:625
+#, c-format
+msgid "%s: directory `%s' not removed.\n"
+msgstr "%s: Map '%s' is niet verwijderd.\n"
+
+#: src/userdel.c:637
+#, c-format
+msgid "%s: error deleting user `%s'.\n"
+msgstr "%s: Fout tijdens verwijderen van gebruiker '%s'.\n"
+
+#: src/userdel.c:659
+#, c-format
+msgid "%s: USERDEL_POSTCMD fails with exit code %d.\n"
+msgstr "%s: USERDEL_POSTCMD is mislukt met afsluitwaarde %d.\n"
+
+#: src/usermod.c:62
+#, c-format
+msgid ""
+"%s - modify a user account\n"
+"\n"
+msgstr ""
+"%s  -  een gebruikers-account aanpassen\n"
+"\n"
+
+#: src/usermod.c:77
+msgid "  -l login       Change login name.\n"
+msgstr "  -l naam         de nieuwe aanmeldnaam\n"
+
+#: src/usermod.c:78
+msgid "  -m             Move home directory to the new path\n"
+msgstr "  -m              de thuismap naar nieuwe locatie verplaatsen\n"
+
+#: src/usermod.c:80
+msgid "  -A group,...   List of groups the user should be added to\n"
+msgstr ""
+"  -A groep,...    lijst van groepen waaraan gebruiker toegevoegd moet "
+"worden\n"
+
+#: src/usermod.c:82
+msgid "  -R group,...   List of groups the user should be removed from\n"
+msgstr ""
+"  -A groep,...    lijst van groepen waaruit gebruiker verwijderd moet "
+"worden\n"
+
+#: src/usermod.c:89
+msgid "  -u uid         Change the userid to the given number\n"
+msgstr "  -u UID          dit nummer gebruiken als nieuw gebruikers-ID\n"
+
+#: src/usermod.c:92
+msgid "  -L             Locks the password entry for \"user\"\n"
+msgstr "  -L              het wachtwoorditem van de gebruiker vergrendelen\n"
+
+#: src/usermod.c:94
+msgid "  -U             Try to unlock the password entry for \"user\"\n"
+msgstr "  -U              het wachtwoorditem van de gebruiker ontgrendelen\n"
+
+#: src/usermod.c:149 src/usermod.c:853 src/usermod.c:948
+#, c-format
+msgid "%s: Invalid numeric argument `%s'.\n"
+msgstr "%s: Ongeldig numeriek argument '%s'.\n"
+
+#: src/usermod.c:416
+#, c-format
+msgid "%s: User not renamed in LDAP group `%s'.\n"
+msgstr "%s: Gebruiker is niet hernoemd in LDAP-groep '%s'.\n"
+
+#: src/usermod.c:433
+#, c-format
+msgid "%s: User not renamed from LDAP group `%s'.\n"
+msgstr "%s: Gebruiker is niet hernoemd uit LDAP-groep '%s'.\n"
+
+#: src/usermod.c:455
+#, c-format
+msgid "%s: User not renamed in group `%s'.\n"
+msgstr "%s: Gebruiker is niet hernoemd in groep '%s'.\n"
+
+#: src/usermod.c:558
+#, c-format
+msgid "%s: Cannot copy directory %s to %s.\n"
+msgstr "%s: Kan map %s niet kopiëren naar %s.\n"
+
+#: src/usermod.c:565
+#, c-format
+msgid "%s: Cannot rename directory %s to %s.\n"
+msgstr "%s: Kan map %s niet hernoemen naar %s.\n"
+
+#: src/usermod.c:1067
+#, c-format
+msgid "%s: Account `%s' does not exist.\n"
+msgstr "%s: Account '%s' bestaat niet.\n"
+
+#: src/usermod.c:1175 src/usermod.c:1240
+#, c-format
+msgid "%s: `%s' is primary group name.\n"
+msgstr "%s: '%s' is de primaire groepsnaam.\n"
+
+#: src/usermod.c:1323
+#, c-format
+msgid "%s: Account `%s' is currently in use.\n"
+msgstr "%s: Account '%s' is op dit moment in gebruik.\n"
+
+#: src/usermod.c:1418
+#, c-format
+msgid "%s: Shadow passwords required for -e and -f.\n"
+msgstr "%s: Voor opties '-e' en '-f' zijn schaduwwachtwoorden vereist.\n"
+
+#: src/usermod.c:1443
+#, c-format
+msgid "%s: Cannot modify user in LDAP database without DN.\n"
+msgstr "%s: Kan zonder DN geen gebruiker in LDAP-databank aanpassen.\n"
+
+#: src/usermod.c:1461
+#, c-format
+msgid "%s: User not modified in LDAP database.\n"
+msgstr "%s: Gebruiker is in LDAP-databank niet aangepast.\n"
+
+#: src/usermod.c:1780 src/usermod.c:1791 src/usermod.c:1817
+#, c-format
+msgid "%s: Error: Cannot copy faillog entry: %s\n"
+msgstr "%s: Fout: kan 'faillog'-item niet kopiëren: %s\n"
+
+#: src/usermod.c:1806
+#, c-format
+msgid "%s: Error: Cannot copy lastlog entry: %s\n"
+msgstr "%s: Fout: kan 'lastlog'-item niet kopiëren: %s\n"
+
+#: src/vipw.c:58
+#, c-format
+msgid "Usage: %s [-g|-p|-s]\n"
+msgstr "Gebruik:  %s [-g|-p|-s]\n"
+
+#: src/vipw.c:66
+#, c-format
+msgid ""
+"%s - edit the password, group or shadow file\n"
+"\n"
+msgstr ""
+"%s  -  'passwd'-, 'group'- of 'shadow'-bestand bewerken\n"
+"\n"
+
+#: src/vipw.c:69
+msgid "  -g, --group    Edit the /etc/group file\n"
+msgstr "  -g, --group     het bestand /etc/group bewerken\n"
+
+#: src/vipw.c:70
+msgid "  -p, --passwd   Edit the /etc/passwd file\n"
+msgstr "  -p, --passwd    het bestand /etc/passwd bewerken\n"
+
+#: src/vipw.c:71
+msgid "  -s, --shadow   Edit the /etc/shadow file\n"
+msgstr "  -s, --shadow    het bestand /etc/shadow bewerken\n"
+
+#: src/vipw.c:164
+#, c-format
+msgid "Cannot lock `%s': already locked.\n"
+msgstr "Kan '%s' niet vergrendelen: het is al vergrendeld.\n"
+
+#: src/vipw.c:278
+#, c-format
+msgid "%s: no changes made\n"
+msgstr "%s: geen wijzigingen gemaakt\n"
+
+#: src/vipw.c:318
+#, c-format
+msgid "Warning: cannot create backup file: %m\n"
+msgstr "Waarschuwing: kan geen reservekopiebestand aanmaken: %m\n"
+
+#~ msgid "cannot open socket: %s"
+#~ msgstr "### kan socket niet openen: %s"
+
+#~ msgid "cannot enable socket to accept connections: %s"
+#~ msgstr "### kan socket geen verbindingen laten accepteren: %s"
+
+#~ msgid "handle_request: request received (Version = %d)"
+#~ msgstr "### handle_request(): verzoek ontvangen (versie = %d)"
+
+#~ msgid "cannot handle request version %d; current version is %d"
+#~ msgstr ""
+#~ "### kan verzoek voor oude versie %d niet behandelen; huidige versie is %d"
+
+#~ msgid "User %s: %s"
+#~ msgstr "### Gebruiker %s: %s"
+
+#~ msgid "handle_request: exit (%d)"
+#~ msgstr "### handle_request(): exit (%d)"
+
+#~ msgid "while accepting connection: %s"
+#~ msgstr "### tijdens accepteren van verbinding: %s"
+
+#~ msgid "Handshake has failed (%s)"
+#~ msgstr "### handshake is mislukt (%s)"
+
+#~ msgid "client has closed the GNUTLS connection"
+#~ msgstr "### cliënt heeft GNUTLS-verbinding gesloten"
+
+#~ msgid "cannot enable SSL encryption"
+#~ msgstr "### kan SSL-versleuteling niet inschakelen"
+
+#~ msgid "locale length in request too long: %d"
+#~ msgstr "### taalregiolengte in verzoek is te lang: %d"
+
+#~ msgid "error while reading request locale: %s"
+#~ msgstr "### fout tijdens lezen van taalregioverzoek: %s"
+
+#~ msgid "data length in request too long: %d"
+#~ msgstr "### gegevenslengte in verzoek is te lang: %d"
+
+#~ msgid "error while reading request username: %s"
+#~ msgstr "### fout tijdens lezen van gebruikersnaamverzoek: %s"
+
+# This error message is issued when a command which requires a list
+# of user names is not given any name on the command line.
+#~ msgid "No username supplied"
+#~ msgstr "### geen gebruikersnaam opgegeven"

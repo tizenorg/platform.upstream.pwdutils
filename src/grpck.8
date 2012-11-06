@@ -1,0 +1,53 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH grpck 8 "March 2004" "pwdutils"
+.SH NAME
+grpck \- check integrity of group file
+.SH SYNOPSIS
+.B grpck
+[\fI-P path\fR] [\fI-q|-r\fR]
+.SH DESCRIPTION
+grpck verifies the the integrity of \fI/etc/group\fR or another
+specified group file.
+.SH OPTIONS
+.TP
+\fB\-P\fR path
+Search group file in "path".
+.TP
+\fB\-q\fR, \fB\-\-quiet\fR
+Don't print warnings, only errors.
+.HP
+\fB\-r\fR, \fB\-\-read\-only\fR Run in read-only mode, don't make changes.
+.TP
+\fB\-s\fR, \fB\-\-sort\fR
+Sort the group file, no checks are done.
+.TP
+\fB\-\-help\fR
+Give this help list.
+.TP
+\fB\-u\fR, \fB\-\-usage\fR
+Give a short usage message.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Print program version.
+.SH FILES
+/etc/group \- group account information
+.SH SEE ALSO
+.BR group (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

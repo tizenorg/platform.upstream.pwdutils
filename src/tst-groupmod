@@ -1,0 +1,118 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+cat << EOT > $TEMPDIR/group
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:14:
+dialout:x:16:
+audio:x:17:
+floppy:x:19:
+utmp:x:22:
+video:x:33:
+EOT
+./groupmod -P $TEMPDIR -g 45 utmp
+RET1=$?
+./groupmod -P $TEMPDIR -g 55 -n video2 video
+RET2=$?
+./groupmod -P $TEMPDIR -g 55 floppy > tst-groupmod.out3 2>&1
+RET3=$?
+./groupmod -P $TEMPDIR -g 55 -o uucp
+RET4=$?
+./groupmod -P $TEMPDIR -n root dialout > tst-groupmod.out5 2>&1
+RET5=$?
+cat << EOT > tst-groupmod.expect
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:55:
+dialout:x:16:
+audio:x:17:
+floppy:x:19:
+utmp:x:45:
+video2:x:55:
+EOT
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET6=$?
+./groupmod -P $TEMPDIR -A root audio
+RET7=$?
+cat << EOT > tst-groupmod.expect
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:55:
+dialout:x:16:
+audio:x:17:root
+floppy:x:19:
+utmp:x:45:
+video2:x:55:
+EOT
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET8=$?
+./groupmod -P $TEMPDIR -A bin audio
+RET9=$?
+cat << EOT > tst-groupmod.expect
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:55:
+dialout:x:16:
+audio:x:17:root,bin
+floppy:x:19:
+utmp:x:45:
+video2:x:55:
+EOT
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET10=$?
+./groupmod -P $TEMPDIR -R root audio
+RET11=$?
+cat << EOT > tst-groupmod.expect
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:55:
+dialout:x:16:
+audio:x:17:bin
+floppy:x:19:
+utmp:x:45:
+video2:x:55:
+EOT
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET12=$?
+./groupmod -P $TEMPDIR -R bin audio
+RET13=$?
+cat << EOT > tst-groupmod.expect
+root:x:0:bigsister
+bin:x:1:daemon
+uucp:x:55:
+dialout:x:16:
+audio:x:17:
+floppy:x:19:
+utmp:x:45:
+video2:x:55:
+EOT
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET14=$?
+./groupmod -P $TEMPDIR -R bin audio
+RET15=$?
+# Check, if resulting group file is the one we would expect
+diff -q -u $TEMPDIR/group tst-groupmod.expect
+RET16=$?
+
+cp $TEMPDIR/group tst-groupmod.group
+
+rm -f tst-groupmod.expect
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 == 0 -o $RET4 != 0 -o \
+     $RET5 == 0 -o $RET6 != 0 -o $RET7 != 0 -o $RET8 != 0 -o \
+     $RET9 != 0 -o $RET10 != 0 -o $RET11 != 0 -o $RET12 != 0 -o \
+     $RET13 != 0 -o $RET14 != 0 -o $RET15 != 0 -o $RET16 != 0 ]
+then
+  exit 1
+else
+  exit 0
+fi

@@ -1,0 +1,63 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2004, 2007 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH pwconv 8 "January 2004" "pwdutils"
+.SH NAME
+pwconv \- convert to shadow account
+.SH SYNOPSIS
+.TP 5
+\fBpwconv\fR [\fB-P \fIpath\fR]
+.SH DESCRIPTION
+\fBpwconv\fR installs and updates \fI/etc/shadow\fR with information
+from \fI/etc/passwd\fR. It relies on the special password 'x' in the
+password field of the account. This value indicates that the password
+for the user is already in \fI/etc/shadow\fR and should not be modified.
+
+If \fI/etc/shadow\fR does not exist, \fBpwconv\fR creates this file,
+moves the user password to it and creates default aging informations
+with the help of the values of \fBPASS_MIN_DAYS\fR, \fBPASS_MAX_DAYS\fR
+and \fBPASS_WARN_AGE\fR from \fI/etc/login.defs\fR. The password field
+in \fI/etc/passwd\fR is replaced with the special character 'x'.
+
+If the \fI/etc/shadow\fR does exist, entries that are in the
+\fI/etc/passwd\fR file and not in the \fI/etc/shadow\fR file are
+added to the \fI/etc/shadow\fR file. Accounts, which only exist in
+\fI/etc/passwd\fR, are added to \fI/etc/shadow\fR. Entries that
+are in \fI/etc/shadow\fR and not in \fI/etc/passwd\fR are removed
+from \fI/etc/shadow\fR. All passwords from \fI/etc/passwd\fR are
+moved to \fI/etc/shadow\fR and replaced with the special character 'x'.
+
+\fBpwconv\fR can be used for initial conversion and for updates later.
+.SH OPTIONS
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBpwconv\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+.SH FILES
+passwd \- user account information
+.br
+shadow \- shadow user account information
+.SH SEE ALSO
+.BR passwd (1),
+.BR login.defs (5),
+.BR passwd (5),
+.BR shadow (5),
+.BR pwck (8),
+.BR pwunconv (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

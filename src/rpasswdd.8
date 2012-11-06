@@ -1,0 +1,72 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2002, 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH rpasswdd 8 "January 2004" "pwdutils"
+.SH NAME
+rpasswdd \- remote password update daemon
+.SH SYNOPSIS
+.TP 5
+\fBrpasswdd\fR [\fB-4\fR|\fB-6\fR] [\fB-d\fR] [\fB-c \fIcertificate\fR] [\fB-k \fIprivatekey\fR] [\fB-p \fIport\fR] [\fB--slp\fR] [\fB--slp-timeout \fItimeout\fR] [\fB--slp-descr \fIdescription\fR]
+.SH DESCRIPTION
+\fBrpasswdd\fR is a daemon that lets users change their passwords in the
+presence of a directory service like NIS, NIS+ or LDAP over a secure SSL
+connection. \fBrpasswdd\fR behaves like the normal
+.BR passwd (1)
+program and uses PAM for authentification and changing the password, so
+it can be configured very flexibel for the local requirements.
+.PP
+A normal user may only change the password for their own account, if the
+user knows the password of the administrator account (in the moment this
+is the root password on the server), he may change the password for any
+account if he calls \fBrpasswd\fR with the \fB-a\fR option.
+.SH OPTIONS
+.TP
+.B "\-d, \-\-debug"
+Causes the server to run in debugging mode. Normally, \fBrpasswdd\fR
+reports only errors using the syslog(3) facility. In debug mode, the
+server does not background itself and prints extra status messages to
+stderr for each request that it revceives.
+.TP
+.BI "\-c, \-\-certificate" " certificate"
+Specify another file which contains the certificate than
+\fI/etc/rpasswdd.pem\fR.
+.TP
+.BI "\-k, \-\-privatekey" " privatekey"
+Specify another file which contains the private key than
+\fI/etc/rpasswdd.pem\fR.
+.TP
+.BI "\-p, \-\-port" " port number"
+Specify another port where the daemon will listen on for requests.
+.TP
+.B "-4"
+\fBrpasswdd\fR will only accept IPv4 connections.
+.TP
+.B "-6"
+\fBrpasswd\fR will accept IPv4 and IPv6 connections.
+.TP
+.B "\-\-slp"
+Register rpasswd service at local SLP server.
+.SH FILES
+/etc/pam.d/rpasswd \- the PAM configuration file
+.br
+/etc/rpasswdd.pem \- contains the certificate and private key
+.SH SEE ALSO
+.BR passwd (1),
+.BR passwd (5),
+.BR rpasswd (1)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

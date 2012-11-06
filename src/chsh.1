@@ -1,0 +1,86 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2002, 2003, 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH chsh 1 "February 2004" "pwdutils"
+.SH NAME
+chsh \- change login shell
+.SH SYNOPSIS
+.TP 5
+\fBchsh\fR
+[\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-s \fIshell\fR] [\fB-l\fR] [\fB-q\fR] [\fB-u\fR] [\fB-v\fR] [\fIuser\fR]
+.SH DESCRIPTION
+\fBchsh\fR is used to change the user login shell.
+A normal user may only change the login shell for their own account,
+the super user may change the login shell for any account.
+.PP
+If a shell is not given on the command line, \fBchsh\fR operates in
+an interactive fashion, prompting the user with the current login shell.
+Enter the new value to change the field, or leave the line blank to use
+the current value. Enter \fInone\fR to remove the current value.
+The current value is displayed between a pair of \fB[ ]\fR marks.
+.PP
+The only restrictions placed on the login shell is that the
+command name must be listed in \fI/etc/shells\fR, unless the
+invoker is the super-user, and then any value may be added.
+An account with a restricted login shell may not change
+their login shell.
+.PP
+This version of \fBchsh\fR is able to change the shell of
+local, NIS, NIS+ and LDAP accounts , if the permissions allow
+it.
+.SH OPTIONS
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR file is located below the specified directory
+path. \fBchsh\fR will use this files, not \fI/etc/passwd\fR.
+This is useful for example on NIS master servers, where you do
+not want to give all users in the NIS database automatic access
+to your NIS server and the NIS map is build from special files.
+.TP
+.B "\-s, \-\-shell"
+Specify your login shell.
+.TP
+.B "\-l, \-\-list-shells"
+Print the list of shells listed in
+.I /etc/shells
+and exit.
+.TP
+.B "\-q, \-\-quite"
+Don't be verbose.
+.TP
+.B "\-u, \-\-usage"
+Print a usage message and exit.
+.TP
+.B "    \-\-help"
+Print a more verbose help text and exit.
+.TP
+.B "-v, \-\-version"
+Print version information and exit.
+.SH FILES
+/etc/passwd \- user account information
+.br
+/etc/shells \- list of valid login shells
+.SH SEE ALSO
+.BR chfn (1),
+.BR passwd (5),
+.BR shells (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

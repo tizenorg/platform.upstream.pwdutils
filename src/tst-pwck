@@ -1,0 +1,73 @@
+#!/bin/bash
+
+export LANG=C
+export LC_ALL=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+cat << EOT > $TEMPDIR/passwd
+bin:x:1:1:bin:/bin:/bin/bash
+daemon:x:2:2:Daemon:/sbin:/bin/bash
+lp:x:4:7:Printing daemon:/var/spool/lpd:/bin/bash
+mail:x:8:12:Mailer daemon:/var/spool/clientmqueue:/bin/false
+games:x:12:100:Games account:/var/games:/bin/bash
+wwwrun:x:30:8:WWW daemon apache:/var/lib/wwwrun:/bin/false
+named:x:44:44:Nameserver daemon:/var/named:/bin/bash
+nobody:x:65534:65533:nobody:/var/lib/nobody:/bin/bash
+at:x:25:25:Batch jobs daemon:/var/spool/atjobs:/bin/bash
+ldap:x:76:70:User for OpenLDAP:/var/lib/ldap:/bin/bash
+sshd:x:71:65:SSH daemon:/var/lib/sshd:/bin/false
+postfix:x:51:51:Postfix Daemon:/var/spool/postfix:/bin/false
+ntp:x:74:65534:NTP daemon:/var/lib/ntp:/bin/false
+kukuk:x:500:100:Thorsten Kukuk:/home/kukuk:/bin/bash
+ftp:x:40:49:FTP account:/srv/ftp:/bin/bash
+man:x:13:62:Manual pages viewer:/var/cache/man:/bin/bash
+news:x:9:13:News system:/etc/news:/bin/bash
+uucp:x:10:14:Unix-to-Unix CoPy system:/etc/uucp:/bin/bash
+mysql:x:60:2:MySQL database admin:/var/lib/mysql:/bin/false
+root:x:0:0:root:/root:/bin/bash
+EOT
+
+cat << EOT > tst-pwck.passwd-sorted
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/bin/bash
+daemon:x:2:2:Daemon:/sbin:/bin/bash
+lp:x:4:7:Printing daemon:/var/spool/lpd:/bin/bash
+mail:x:8:12:Mailer daemon:/var/spool/clientmqueue:/bin/false
+news:x:9:13:News system:/etc/news:/bin/bash
+uucp:x:10:14:Unix-to-Unix CoPy system:/etc/uucp:/bin/bash
+games:x:12:100:Games account:/var/games:/bin/bash
+man:x:13:62:Manual pages viewer:/var/cache/man:/bin/bash
+at:x:25:25:Batch jobs daemon:/var/spool/atjobs:/bin/bash
+wwwrun:x:30:8:WWW daemon apache:/var/lib/wwwrun:/bin/false
+ftp:x:40:49:FTP account:/srv/ftp:/bin/bash
+named:x:44:44:Nameserver daemon:/var/named:/bin/bash
+postfix:x:51:51:Postfix Daemon:/var/spool/postfix:/bin/false
+mysql:x:60:2:MySQL database admin:/var/lib/mysql:/bin/false
+sshd:x:71:65:SSH daemon:/var/lib/sshd:/bin/false
+ntp:x:74:65534:NTP daemon:/var/lib/ntp:/bin/false
+ldap:x:76:70:User for OpenLDAP:/var/lib/ldap:/bin/bash
+kukuk:x:500:100:Thorsten Kukuk:/home/kukuk:/bin/bash
+nobody:x:65534:65533:nobody:/var/lib/nobody:/bin/bash
+EOT
+
+./pwck -s -P $TEMPDIR > tst-pwck.out1
+RET1=$?
+diff -q -u $TEMPDIR/passwd tst-pwck.passwd-sorted
+RET2=$?
+
+cat << EOT >> $TEMPDIR/passwd
+hometest:x:498:54:Has invalid home:/is/invalid/dir:/bin/bash
+broken:x:499:55:Broken Passwd Entry:
+EOT
+
+./pwck -P $TEMPDIR -r > tst-pwck.out3
+RET3=$?
+
+rm -rf $TEMPDIR
+
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 2 ] ; then
+  exit 1
+else
+  exit 0
+fi

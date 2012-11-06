@@ -1,0 +1,67 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+touch $TEMPDIR/passwd
+touch $TEMPDIR/shadow
+./useradd -G "" -P $TEMPDIR chagetest1 -c "Test account"
+RET1=$?
+./chage -P $TEMPDIR -m 7 -M 92 -d 2000-02-29 -E 2004-02-29 -I 7 -W 14 --service files chagetest1 > tst-chage.out 2>&1
+RET2=$?
+./chage -P $TEMPDIR -l chagetest1 > tst-chage.out1
+RET3=$?
+cat << EOT > tst-chage.expect1
+Minimum:	7
+Maximum:	92
+Warning:	14
+Inactive:	7
+Last Change:		Feb 29, 2000
+Password Expires:	May 31, 2000
+Password Inactive:	Jun 07, 2000
+Account Expires:	Feb 29, 2004
+EOT
+diff -q -u tst-chage.expect1 tst-chage.out1
+RET4=$?
+
+./chage -P $TEMPDIR -m 7 -M 92 -d 2000-02-29 -E 2004-02-29 -I 0 -W 14 --service files chagetest1 > tst-chage.out 2>&1
+RET5=$?
+./chage -P $TEMPDIR -l chagetest1 > tst-chage.out2
+RET6=$?
+cat << EOT > tst-chage.expect2
+Minimum:	7
+Maximum:	92
+Warning:	14
+Inactive:	0
+Last Change:		Feb 29, 2000
+Password Expires:	May 31, 2000
+Password Inactive:	May 31, 2000
+Account Expires:	Feb 29, 2004
+EOT
+diff -q -u tst-chage.expect2 tst-chage.out2
+RET7=$?
+
+./chage -P $TEMPDIR -m 7 -M 92 -d 2000-02-29 -E 2004-02-29 -I -1 -W 14 --service files chagetest1 > tst-chage.out 2>&1
+RET8=$?
+./chage -P $TEMPDIR -l chagetest1 > tst-chage.out3
+RET9=$?
+cat << EOT > tst-chage.expect3
+Minimum:	7
+Maximum:	92
+Warning:	14
+Inactive:	-1
+Last Change:		Feb 29, 2000
+Password Expires:	May 31, 2000
+Password Inactive:	Never
+Account Expires:	Feb 29, 2004
+EOT
+diff -q -u tst-chage.expect3 tst-chage.out3
+RET10=$?
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 -o $RET5 != 0 -o $RET6 != 0 \
+     -o $RET7 != 0 -o $RET8 != 0 -o $RET9 != 0 -o $RET10 != 0 ] ; then
+  exit 1
+else
+  exit 0
+fi

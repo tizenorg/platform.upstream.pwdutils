@@ -1,0 +1,69 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH newgrp 1 "April 2004" "pwdutils"
+.SH NAME
+newgrp \-  change effective group ID
+sg \- execute command with different group ID
+.SH SYNOPSIS
+.B newgrp
+[\fB-l\fR] [\fIgroup\fR]
+.br
+.B sg
+\fIgroup\fR \fB-c \fIcommand\fR
+.SH DESCRIPTION
+The \fBnewgrp\fR command changes the user's real and effetive group ID
+by replacing the current shell with a new shell. A new shell is launched
+even if an error occours.
+.PP
+A password is requested if the group has a password and the user is not
+listed in the group file as being a member of that group. The password
+can be changed with the
+.BR gpasswd (1)
+command.
+.PP
+If the new effective group ID is not in the supplementary group list,
+\fBnewgrp\fR will add the new group ID to the supplementary list, too.
+.PP
+With no operands and options, \fBnewgrp\fR changes the user's group IDs
+(real and effective) back to the group specified in password and group
+file.
+.PP
+The \fBsg\fR command works like the \fBnewgrp\fR command, except that
+it executes the given command with \fB/bin/sh\fR and upon exit the
+group ID of the current shell is not changed.
+.SH OPTIONS
+.TP
+\fB\-l\fR, \fB\-\-login\fR
+reinitialize the environment as if the user logged in.
+.TP
+\fB\-\-help\fR
+Print a help list.
+.TP
+\fB\-u\fR, \fB\-\-usage\fR
+Print a short usage message.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Print program version.
+.SH "SEE ALSO"
+.BR gpasswd (1),
+.BR group (5),
+.BR passwd (1),
+.BR passwd (5),
+.BR su (1)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

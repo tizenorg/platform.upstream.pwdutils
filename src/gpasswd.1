@@ -1,0 +1,50 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2004, 2006 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH gpasswd 1 "July 2006" "pwdutils"
+.SH NAME
+gpasswd \- change group password
+.SH SYNOPSIS
+\fBgpasswd\fR [\fB-r\fR|\fB-l\fR|\fB-u\fR] [\fIgroup\fR]
+.SH DESCRIPTION
+\fBgpasswd\fR changes passwords for group accounts. Only an
+administrator may change the password for any group. The used
+hash algorithmus is defined by the value of \fIGROUP_CRYPT\fR
+or, if not specified, \fICRYPT\fR from \fI/etc/default/passwd\fR.
+If not configured, the traditinal \fIdes\fR algorithmus is used.
+.SH OPTIONS
+.TP
+.B "\-r"
+Remove group password.
+.TP
+.B "\-l"
+A system administrator can lock the password of the specified group.
+.TP
+.B "\-u"
+A system administrator can unlock the password of the specified group,
+if the group is not passwordless afterwards (it will not unlock a group
+that has only  "!" as a password).
+.SH FILES
+/etc/group \- group account information
+/etc/default/passwd \- default values for password hash
+.SH SEE ALSO
+.BR group (5),
+.BR groupadd (8),
+.BR groupdel (8),
+.BR groupmod (8)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

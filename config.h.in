@@ -1,0 +1,269 @@
+/* config.h.in.  Generated from configure.in by autoheader.  */
+
+/* Define to 1 if translation of program messages to the user's native
+   language is requested. */
+#undef ENABLE_NLS
+
+/* Define to 1 if you have the <attr/xattr.h> header file. */
+#undef HAVE_ATTR_XATTR_H
+
+/* Define to 1 if you have the <bioapi.h> header file. */
+#undef HAVE_BIOAPI_H
+
+/* Define to 1 if you have the <bioapi_util.h> header file. */
+#undef HAVE_BIOAPI_UTIL_H
+
+/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+   CoreFoundation framework. */
+#undef HAVE_CFLOCALECOPYCURRENT
+
+/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+   the CoreFoundation framework. */
+#undef HAVE_CFPREFERENCESCOPYAPPVALUE
+
+/* Define to 1 if you have the `crypt' function. */
+#undef HAVE_CRYPT
+
+/* Define to 1 if you have the <crypt.h> header file. */
+#undef HAVE_CRYPT_H
+
+/* Define to 1 if you have the `crypt_r' function. */
+#undef HAVE_CRYPT_R
+
+/* Define if the GNU dcgettext() function is already present or preinstalled.
+   */
+#undef HAVE_DCGETTEXT
+
+/* Define to 1 if you have the <dirent.h> header file. */
+#undef HAVE_DIRENT_H
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#undef HAVE_DLFCN_H
+
+/* Define to 1 if you have the `getdelim' function. */
+#undef HAVE_GETDELIM
+
+/* Define to 1 if you have the `getline' function. */
+#undef HAVE_GETLINE
+
+/* Define if the GNU gettext() function is already present or preinstalled. */
+#undef HAVE_GETTEXT
+
+/* Define to 1 if you have the `getusershell' function. */
+#undef HAVE_GETUSERSHELL
+
+/* Define to 1 if you have the `gnutls_certificate_verify_peers2' function. */
+#undef HAVE_GNUTLS_CERTIFICATE_VERIFY_PEERS2
+
+/* Define to 1 if you have the `gnutls_pk_algorithm_get_name' function. */
+#undef HAVE_GNUTLS_PK_ALGORITHM_GET_NAME
+
+/* Define if you have the iconv() function. */
+#undef HAVE_ICONV
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#undef HAVE_INTTYPES_H
+
+/* Define to 1 if you have the <lber.h> header file. */
+#undef HAVE_LBER_H
+
+/* Define to 1 if you have the `ldapssl_init' function. */
+#undef HAVE_LDAPSSL_INIT
+
+/* Define to 1 if you have the `ldap_controls_free' function. */
+#undef HAVE_LDAP_CONTROLS_FREE
+
+/* Define to 1 if you have the `ldap_get_lderrno' function. */
+#undef HAVE_LDAP_GET_LDERRNO
+
+/* Define to 1 if you have the `ldap_get_option' function. */
+#undef HAVE_LDAP_GET_OPTION
+
+/* Define to 1 if you have the <ldap.h> header file. */
+#undef HAVE_LDAP_H
+
+/* Define to 1 if you have the `ldap_init' function. */
+#undef HAVE_LDAP_INIT
+
+/* Define to 1 if you have the `ldap_initialize' function. */
+#undef HAVE_LDAP_INITIALIZE
+
+/* Define to 1 if you have the `ldap_memfree' function. */
+#undef HAVE_LDAP_MEMFREE
+
+/* Define to 1 if you have the `ldap_parse_result' function. */
+#undef HAVE_LDAP_PARSE_RESULT
+
+/* Define to 1 if you have the `ldap_pvt_tls_set_option' function. */
+#undef HAVE_LDAP_PVT_TLS_SET_OPTION
+
+/* Define to 1 if you have the `ldap_set_option' function. */
+#undef HAVE_LDAP_SET_OPTION
+
+/* Define to 1 if you have the `ldap_set_rebind_proc' function. */
+#undef HAVE_LDAP_SET_REBIND_PROC
+
+/* Define to 1 if you have the <ldap_ssl.h> header file. */
+#undef HAVE_LDAP_SSL_H
+
+/* Define to 1 if you have the `ldap_start_tls_s' function. */
+#undef HAVE_LDAP_START_TLS_S
+
+/* Define to 1 if you have the `lgetxattr' function. */
+#undef HAVE_LGETXATTR
+
+/* "Linux audit Support" */
+#undef HAVE_LIBAUDIT
+
+/* "LAuS Support" */
+#undef HAVE_LIBLAUS
+
+/* Define to 1 if you have the <libnscd.h> header file. */
+#undef HAVE_LIBNSCD_H
+
+/* Define to 1 if you have the `pthread' library (-lpthread). */
+#undef HAVE_LIBPTHREAD
+
+/* Define to 1 if you have the `llistxattr' function. */
+#undef HAVE_LLISTXATTR
+
+/* Define to 1 if you have the `lsetxattr' function. */
+#undef HAVE_LSETXATTR
+
+/* Define to 1 if you have the <memory.h> header file. */
+#undef HAVE_MEMORY_H
+
+/* Define to 1 if you have the `nscd_flush_cache' function. */
+#undef HAVE_NSCD_FLUSH_CACHE
+
+/* Define to 1 if you have the <slp.h> header file. */
+#undef HAVE_SLP_H
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#undef HAVE_STDINT_H
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#undef HAVE_STDLIB_H
+
+/* Define to 1 if you have the `strftime' function. */
+#undef HAVE_STRFTIME
+
+/* Define to 1 if you have the <strings.h> header file. */
+#undef HAVE_STRINGS_H
+
+/* Define to 1 if you have the <string.h> header file. */
+#undef HAVE_STRING_H
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#undef HAVE_SYS_STAT_H
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#undef HAVE_SYS_TYPES_H
+
+/* Define to 1 if you have the <sys/xattr.h> header file. */
+#undef HAVE_SYS_XATTR_H
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#undef HAVE_UNISTD_H
+
+/* Define to 1 if you have the `xcrypt_gensalt_r' function. */
+#undef HAVE_XCRYPT_GENSALT_R
+
+/* Define to 1 if you have the <xcrypt.h> header file. */
+#undef HAVE_XCRYPT_H
+
+/* Path to ldap.conf file */
+#undef LDAP_PATH_CONF
+
+/* Path to ldap.secrets file */
+#undef LDAP_PATH_ROOTPASSWD
+
+/* "Define to the number of arguments to ldap_set_rebindproc" */
+#undef LDAP_SET_REBIND_PROC_ARGS
+
+/* Define to the sub-directory in which libtool stores uninstalled libraries.
+   */
+#undef LT_OBJDIR
+
+/* Define to 1 if your C compiler doesn't accept -c and -o together. */
+#undef NO_MINUS_C_MINUS_O
+
+/* Name of package */
+#undef PACKAGE
+
+/* Define to the address where bug reports for this package should be sent. */
+#undef PACKAGE_BUGREPORT
+
+/* Define to the full name of this package. */
+#undef PACKAGE_NAME
+
+/* Define to the full name and version of this package. */
+#undef PACKAGE_STRING
+
+/* Define to the one symbol short name of this package. */
+#undef PACKAGE_TARNAME
+
+/* Define to the version of this package. */
+#undef PACKAGE_VERSION
+
+/* Define to 1 if you have the ANSI C header files. */
+#undef STDC_HEADERS
+
+/* Define UNIX for BioAPI */
+#undef UNIX
+
+/* Enable GnuTLS support */
+#undef USE_GNUTLS
+
+/* Enable LDAP support */
+#undef USE_LDAP
+
+/* Enable SLP support */
+#undef USE_SLP
+
+/* Enable extensions on AIX 3, Interix.  */
+#ifndef _ALL_SOURCE
+# undef _ALL_SOURCE
+#endif
+/* Enable GNU extensions on systems that have them.  */
+#ifndef _GNU_SOURCE
+# undef _GNU_SOURCE
+#endif
+/* Enable threading extensions on Solaris.  */
+#ifndef _POSIX_PTHREAD_SEMANTICS
+# undef _POSIX_PTHREAD_SEMANTICS
+#endif
+/* Enable extensions on HP NonStop.  */
+#ifndef _TANDEM_SOURCE
+# undef _TANDEM_SOURCE
+#endif
+/* Enable general extensions on Solaris.  */
+#ifndef __EXTENSIONS__
+# undef __EXTENSIONS__
+#endif
+
+
+/* Version number of package */
+#undef VERSION
+
+/* Define if using the dmalloc debugging malloc package */
+#undef WITH_DMALLOC
+
+/* Define if you want to compile in SELinux support */
+#undef WITH_SELINUX
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+#undef _FILE_OFFSET_BITS
+
+/* Define for large files, on AIX-style hosts. */
+#undef _LARGE_FILES
+
+/* Define to 1 if on MINIX. */
+#undef _MINIX
+
+/* Define to 2 if the system does not provide POSIX.1 features except with
+   this defined. */
+#undef _POSIX_1_SOURCE
+
+/* Define to 1 if you need to in order for `stat' and other things to work. */
+#undef _POSIX_SOURCE

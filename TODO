@@ -1,0 +1,14 @@
+
+Adjust README.
+
+check all malloc/realloc return values for out of memory errors.
+
+usermod: LDAP: If login is renamed, rename dn, too.
+
+groupmod: Implement renaming of group entries in LDAP.
+
+userdel, groupdel, grpunconv: write tests.
+
+passwd: Make password locking/unlocking work with LDAP (nss_ldap
+	seems to insert always a "x" as password).
+

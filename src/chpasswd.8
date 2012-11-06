@@ -1,0 +1,61 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2003, 2004 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH chpasswd 8 "Feburary 2004" "pwdutils"
+.SH NAME
+chpasswd \- change user passwords in batch
+.SH SYNOPSIS
+\fBchpasswd\fR [\fB-D \fIbinddn\fR] [\fB-P \fIpath\fR] [\fB-c \fIdes\fR|\fImd5\fR|\fIblowfish\fR | \fB-e\fR] \fI[file]\fR
+.SH DESCRIPTION
+\fBchpasswd\fR changes passwords for user accounts in batch. It
+reads a list of login and password pairs from standard input
+or a file and uses this information to update the passwords of this
+user accounts. The named account must exist and the password age will
+be updated. Each input line is of the format:
+.sp 1
+          \fIuser_name\fR:\fIpassword\fR
+.sp 1
+If the hash algorithmus is not given on the commandline, the value
+of \fIGROUP_CRYPT\fR or, if not specified, \fICRYPT\fR from
+\fI/etc/default/passwd\fR is used as hash algorithmus.
+If not configured, the traditinal \fIdes\fR algorithmus is used.
+.SH OPTIONS
+.TP
+.BI "\-c" " des|md5|blowfish"
+This option specifies the hash algorithmus, which should be used to
+encrypt the passwords.
+.TP
+.B "\-e"
+The passwords are expected to be in encrypted form. Normally the
+passwords are expected to be cleartext.
+.TP
+.BI "\-D, \-\-binddn" " binddn"
+Use the Distinguished Name binddn to bind to the LDAP directory.
+The user will be prompted for a password for simple authentication.
+.TP
+.BI "\-P, \-\-path" " path"
+The \fIpasswd\fR and \fIshadow\fR files are located below
+the specified directory path. \fBchpasswd\fR will use this files,
+not \fI/etc/passwd\fR and \fI/etc/shadow\fR.
+.SH FILES
+/etc/default/passwd \- default values for password hash
+.SH SEE ALSO
+.BR passwd (1),
+.BR passwd (5),
+.BR shadow (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

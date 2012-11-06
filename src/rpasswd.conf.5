@@ -1,0 +1,93 @@
+.\" -*- nroff -*-
+.\" Copyright (C) 2002, 2003 Thorsten Kukuk
+.\" Author: Thorsten Kukuk <kukuk@suse.de>
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License version 2 as
+.\" published by the Free Software Foundation.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program; if not, write to the Free Software Foundation,
+.\" Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+.\"
+.TH rpasswd.conf 5 "January 2003" "pwdutils"
+.SH NAME
+/etc/rpasswd.conf \- configuration file for remote password update client
+.SH DESCRIPTION
+The file
+\fI/etc/rpasswd.conf\fR is read from
+.BR rpasswd (1)
+at startup to determine the name and port number of the server where
+.BR rpasswdd (8)
+is running.
+Valid entries are
+.PP
+.B server
+.I hostname
+.RS
+The
+.BR rpasswdd (8)
+daemon is running on server \fIhostname\fR.
+.RE
+.PP
+.B port
+.I number
+.RS
+The
+.BR rpasswdd (8)
+daemon is listening on port \fInumber\fR. The default port number
+is \fI774\fR, which is defined as \fIrpasswd\fR in \fI/etc/services\fR.
+.RE
+.PP
+.B reqcert
+.I never|allow|try|hard
+.RS
+Specifies what checks to perform on server certificates in
+a SSL session. The default for this option is
+.IR hard .
+.TP
+.B never
+\fIrpasswd\fR will not request or check any server certificate.
+.TP
+.B allow
+The server certificate is requested. If no certificate is provided,
+the session proceeds normally. If a bad certificate is provided, a
+warning will be shown but the session proceeds normally.
+.TP
+.B try
+The server certificate is requested. If no certificate is provided,
+the session proceeds normally. If a bad certificate is provided,
+the session is immediately terminated.
+.TP
+.B hard
+The server certificate is requested. If no or a bad certificate is
+provided, the session is immediately terminated.
+.RE
+.PP
+.SH EXAMPLE
+.RS
+# rpasswdd runs on master.example.com
+.br
+server master.example.com
+.br
+port 774
+.br
+reqcert allow
+.RE
+.SH BUGS
+The service \fIrpasswd\fR on port \fI774\fR in \fI/etc/services\fR
+is not registerd for this program, only misused. It could be that
+there is another daemon already running on this port, but I couldn't
+find any software using this port.
+.SH SEE ALSO
+.BR rpasswd (1),
+.BR passwd (5),
+.BR rpasswdd (8),
+.BR services (5)
+.SH AUTHOR
+Thorsten Kukuk <kukuk@suse.de>

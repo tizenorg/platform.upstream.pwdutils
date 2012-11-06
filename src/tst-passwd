@@ -1,0 +1,46 @@
+#!/bin/bash
+
+export LANG=C
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+echo "root:x:0:0:root:/root:/bin/bash" > tst-passwd.passwd
+echo "root:valid:0:0:root:/root:/bin/bash" > tst-passwd.noshadow
+echo "root:!valid:0:0:root:/root:/bin/bash" > tst-passwd.noshadow.locked
+echo "root::0:0:root:/root:/bin/bash" > tst-passwd.noshadow.deleted
+echo "root:valid:12116:0:10000::::" > tst-passwd.shadow
+echo "root:!valid:12116:0:10000::::" > tst-passwd.locked
+echo "root::12116:0:10000::::" > tst-passwd.deleted
+
+cp -p tst-passwd.noshadow $TEMPDIR/passwd
+./passwd -P $TEMPDIR -l root > tst-passwd.run 2>&1
+diff -q -u tst-passwd.noshadow.locked $TEMPDIR/passwd
+RET1=$?
+./passwd -P $TEMPDIR -u root >> tst-passwd.run 2>&1
+diff -q -u tst-passwd.noshadow $TEMPDIR/passwd
+RET2=$?
+./passwd -P $TEMPDIR -d root >> tst-passwd.run 2>&1
+diff -q -u tst-passwd.noshadow.deleted $TEMPDIR/passwd
+RET3=$?
+
+cp -p tst-passwd.passwd $TEMPDIR/passwd
+cp -p tst-passwd.shadow $TEMPDIR/shadow
+./passwd -P $TEMPDIR -l root >> tst-passwd.run 2>&1
+diff -q -u tst-passwd.locked $TEMPDIR/shadow
+RET4=$?
+./passwd -P $TEMPDIR -u root >> tst-passwd.run 2>&1
+diff -q -u tst-passwd.shadow $TEMPDIR/shadow
+RET5=$?
+./passwd -P $TEMPDIR -d root >> tst-passwd.run 2>&1
+diff -q -u tst-passwd.deleted $TEMPDIR/shadow
+RET6=$?
+
+
+rm -rf $TEMPDIR
+if [ $RET1 != 0 -o $RET2 != 0 -o $RET3 != 0 -o $RET4 != 0 -o $RET5 != 0 -o \
+     $RET6 != 0 ] ; then
+  exit 1
+else
+  exit 0
+fi
+

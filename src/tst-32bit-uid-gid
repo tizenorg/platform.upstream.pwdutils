@@ -1,0 +1,82 @@
+#!/bin/bash
+
+export LANG=C
+
+# Don't enable before we don't know on which filesystem
+# we run. faillog and lastlog can become very, very big.
+# XXX FIX THIS
+exit 77
+
+TEMPDIR=`mktemp -d tests.XXXXXX`
+
+touch $TEMPDIR/passwd
+touch $TEMPDIR/group
+
+# 31bit UID tests (signed int)
+./useradd -P $TEMPDIR -G "" -c "INT_MAX=2147483647" -u 2147483647 intmax
+RET=$?
+if [ $RET != 0 ]; then
+        rm -rf $TEMPDIR
+        exit $RET
+fi
+./groupadd -P $TEMPDIR -g 2147483647 intmax
+RET=$?
+if [ $RET != 0 ]; then
+        rm -rf $TEMPDIR
+        exit $RET
+fi
+
+cat << EOT > tst-32bit-uid-gid.expect-passwd
+intmax:!:2147483647:100:INT_MAX=2147483647:/home/intmax:/bin/bash
+EOT
+diff -q -u tst-32bit-uid-gid.expect-passwd $TEMPDIR/passwd
+RET1=$?
+cat << EOT > tst-32bit-uid-gid.expect-group
+intmax:!:2147483647:
+EOT
+diff -q -u tst-32bit-uid-gid.expect-group $TEMPDIR/group
+RET2=$?
+
+# 32bit UID tests (unsigned int)
+./useradd -P $TEMPDIR -G "" -c "UINT_MAX=4294967295" -u 4294967295 uintmax
+RET=$?
+if [ $RET != 0 ]; then
+        rm -rf $TEMPDIR
+        exit $RET
+fi
+./groupadd -P $TEMPDIR -g 4294967295 uintmax
+RET=$?
+if [ $RET != 0 ]; then
+        rm -rf $TEMPDIR
+        exit $RET
+fi
+
+cat << EOT >> tst-32bit-uid-gid.expect-passwd
+uintmax:!:4294967295:100:UINT_MAX=4294967295:/home/uintmax:/bin/bash
+EOT
+diff -q -u tst-32bit-uid-gid.expect-passwd $TEMPDIR/passwd
+RET3=$?
+cat << EOT >> tst-32bit-uid-gid.expect-group
+uintmax:!:4294967295:
+EOT
+diff -q -u tst-32bit-uid-gid.expect-group $TEMPDIR/group
+RET4=$?
+
+
+cp $TEMPDIR/passwd tst-32bit-uid-gid.passwd
+cp $TEMPDIR/group tst-32bit-uid-gid.group
+
+rm -rf $TEMPDIR
+
+if [ $RET1 != 0 || $RET2 != 0 ] ; then
+  exit 1
+fi
+if [ $RET3 != 0 && $RET4 != 0 ] ; then
+  echo "System supports only 31bit UIDs, not 32bit!"
+  exit 77
+fi
+if [ $RET3 != 0 || $RET4 != 0 ] ; then
+  exit 1
+fi
+exit 0
+

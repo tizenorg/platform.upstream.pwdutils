@@ -1,0 +1,341 @@
+dnl
+dnl Copyright (c) 2001-2012 Thorsten Kukuk, Germany
+dnl
+dnl Author: Thorsten Kukuk <kukuk@thkukuk.de>
+dnl
+AC_INIT(src/passwd.c)
+AM_INIT_AUTOMAKE("pwdutils", 3.2.19)
+AM_CONFIG_HEADER(config.h)
+AC_PREFIX_DEFAULT(/usr)
+AC_CANONICAL_HOST
+
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+
+dnl Some hacks...
+test "${prefix}" = "NONE" && prefix="/usr"
+test "${exec_prefix}" = "NONE" && exec_prefix="/usr"
+
+if test ${prefix} = '/usr'
+then
+dnl If we use /usr as prefix, use /etc for config files
+	if test ${sysconfdir} = '${prefix}/etc'
+	then
+		sysconfdir="/etc"
+	fi
+dnl If we use /usr as prefix, use /usr/share/man for manual pages
+	if test ${mandir} = '${prefix}/man'
+	then
+		mandir='${prefix}/share/man'
+	fi
+fi
+if test ${exec_prefix} = '/usr'
+then
+dnl Choose between lib and lib64
+	if test ${libdir} = '${exec_prefix}/lib'
+        then
+                case "`uname -m`" in
+                    x86_64|ppc64|s390x|sparc64)
+                        libdir="${exec_prefix}/lib64" ;;
+                    *)
+                        libdir="${exec_prefix}/lib" ;;
+                esac
+        fi
+
+fi
+
+dnl Checks for programs.
+AC_PROG_CC
+AM_PROG_CC_C_O
+AC_GNU_SOURCE
+AC_ISC_POSIX
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PROG_LIBTOOL
+AC_SYS_LARGEFILE
+
+EXTRA_CFLAGS=""
+if eval "test x$GCC = xyes"; then
+  for flag in \
+-W -Wall -Wbad-function-cast -Wcast-align -Wcast-qual -Winline -Wmissing-declarations -Wmissing-prototypes -Wnested-externs -Wshadow -Wstrict-prototypes -Wundef -Wpointer-arith
+  do
+    JAPHAR_GREP_CFLAGS($flag, [ EXTRA_CFLAGS="$EXTRA_CFLAGS $flag" ])
+  done
+fi
+AC_SUBST(EXTRA_CFLAGS)
+
+AC_ENABLE_STATIC([no])
+AC_ENABLE_SHARED([yes])
+
+AC_CACHE_CHECK(for -fpie, libc_cv_fpie, [dnl
+  cat > conftest.c <<EOF
+int foo;
+main () { return 0;}
+EOF
+  if AC_TRY_COMMAND([${CC-cc} $CFLAGS $CPPFLAGS $LDFLAGS -pie -fpie
+                              -o conftest conftest.c 1>&AS_MESSAGE_LOG_FD])
+  then
+    libc_cv_fpie=yes
+    PIE_CFLAGS="-fpie"
+    PIE_LDFLAGS="-pie"
+  else
+    libc_cv_fpie=no
+    PIE_CFLAGS=""
+    PIE_LDFLAGS=""
+  fi
+  rm -f conftest*])
+AC_SUBST(libc_cv_fpie)
+AC_SUBST(PIE_CFLAGS)
+AC_SUBST(PIE_LDFLAGS)
+
+dnl allow linking against some debugging libraries
+AM_WITH_DMALLOC
+
+dnl Should we build pam_rpasswd?
+AC_ARG_ENABLE([pam_rpasswd],
+   AC_HELP_STRING([--enable-pam_rpasswd],[Enable build of pam_rpasswd]))
+AM_CONDITIONAL(build_PAM_RPASSWD, test "$enable_pam_rpasswd" = "yes")
+
+dnl Should we compile with SELinux support? default: no
+AC_ARG_ENABLE([selinux],
+   AC_HELP_STRING([--disable-selinux],[Disable SELinux support]))
+AC_ARG_ENABLE([static-selinux],
+   AC_HELP_STRING([--enable-static-selinux],
+                  [Compile in SELinux support static]))
+if test "$enable_selinux" \!= "no" -a "$enable_static_selinux" = "yes" ; then
+   AC_CHECK_LIB(selinux,is_selinux_enabled,
+	[AC_DEFINE(WITH_SELINUX,1,
+	           [Define if you want to compile in SELinux support])
+		    SELINUX_LIB="-Wl,-Bstatic -lselinux -Wl,-dy"],
+	[SELINUX_LIB=""])
+elif test "$enable_selinux" \!= "no" ; then
+   AC_CHECK_LIB(selinux,is_selinux_enabled,
+	[AC_DEFINE(WITH_SELINUX,1,
+		[Define if you want to compile in SELinux support])
+	 SELINUX_LIB="-lselinux"],[SELINUX_LIB=""])
+else
+   SELINUX_LIB=""
+fi
+AC_SUBST(SELINUX_LIB)
+
+dnl Check for SLP support for rpasswd/rpasswdd
+AC_ARG_ENABLE([slp],
+   AC_HELP_STRING([--disable-slp],[Disable SLP support]))
+
+AC_CHECK_HEADERS([slp.h])
+
+SLP_LIBS=""
+if test "$enable_slp" \!= "no"
+then
+  AC_CHECK_LIB(slp,SLPReg,SLP_LIBS="-lslp",SLP_LIBS="")
+  if test -n "$SLP_LIBS" -a x$ac_cv_header_slp_h != xno
+  then
+    AC_DEFINE(USE_SLP, 1, [Enable SLP support])
+  fi
+fi
+AC_SUBST(SLP_LIBS)
+
+LAUS_LIBS=""
+AC_ARG_ENABLE([laus-plugin],
+   AC_HELP_STRING([--disable-laus-plugin],[Disable build of LAuS plugin]))
+if test "$enable_laus_plugin" \!= "no"
+then
+  AC_CHECK_HEADER([laus.h], [ laus_header="yes" ], [ laus_header="no" ])
+  if test "$laus_header" = "yes"; then
+    AC_CHECK_LIB(laus, laus_open,
+		 AC_DEFINE(HAVE_LIBLAUS, 1, ["LAuS Support"]) [LAUS_LIBS="-llaus"])
+  fi
+fi
+AC_SUBST(LAUS_LIBS)
+AM_CONDITIONAL(build_LAUS_PLUGIN, test -n "$LAUS_LIBS")
+
+AUDIT_LIBS=""
+AC_ARG_ENABLE([audit-plugin],
+   AC_HELP_STRING([--disable-audit-plugin],[Disable build of Linux audit plugin]))
+if test "$enable_audit_plugin" \!= "no"
+then
+  AC_CHECK_HEADER([libaudit.h], [audit_header="yes"], [audit_header="no"])
+  if test "$audit_header" = "yes"; then
+    AC_CHECK_LIB(audit, audit_open,
+                 AC_DEFINE(HAVE_LIBAUDIT, 1, ["Linux audit Support"]) [AUDIT_LIBS="-laudit"])
+  fi
+fi
+AC_SUBST(AUDIT_LIBS)
+AM_CONDITIONAL(build_AUDIT_PLUGIN, test -n "$AUDIT_LIBS")
+
+dnl Checks for libraries.
+dnl BACKUP_LIBS, we wish to have -ldl extra.
+BACKUP_LIBS=$LIBS
+AC_CHECK_LIB(dl, dlopen, DL_LIBS="-ldl", DL_LIBS="")
+AC_SUBST(DL_LIBS)
+LIBS=$BACKUP_LIBS
+
+dnl BACKUP_LIBS, we wish to have PAM extra.
+BACKUP_LIBS=$LIBS
+AC_CHECK_LIB(pam, pam_start, PAM_LIBS="-lpam", PAM_LIBS="")
+AC_CHECK_LIB(pam_misc, main, PAM_LIBS="-lpam_misc $PAM_LIBS", PAM_LIBS="$PAM_LIBS", $PAM_LIBS)
+if test -z "$PAM_LIBS"; then
+  echo PAM libraries are required for compiling this package!
+  exit 1
+fi
+AC_SUBST(PAM_LIBS)
+LIBS=$BACKUP_LIBS
+AC_CHECK_LIB(nsl, yp_get_default_domain, NSL_LIB="-lnsl", NSL_LIB="")
+AC_SUBST(NSL_LIB)
+dnl Backup LIBS, AC_SEARCH_LIBS will append the library always to LIBS.
+BACKUP_LIBS=$LIBS
+AC_SEARCH_LIBS([crypt],[xcrypt crypt], CRYPT_LIB="-l$ac_lib", CRYPT_LIB="")
+LIBS=$BACKUP_LIBS
+AC_SUBST(CRYPT_LIB)
+AC_CHECK_HEADERS([xcrypt.h crypt.h],[break])
+dnl Save old LIBS variable and add crypt library
+BACKUP_LIBS=$LIBS
+LIBS="$LIBS $CRYPT_LIB"
+dnl Function check for blowfish crypt
+AC_CHECK_FUNCS(crypt crypt_r xcrypt_gensalt_r)
+dnl restore old LIBS variable
+LIBS=$BACKUP_LIBS
+
+AC_CHECK_HEADERS([sys/xattr.h attr/xattr.h],[break])
+if test x$ac_cv_header_attr_xattr_h = xyes
+then
+  AC_CHECK_LIB(attr, main, ATTR_LIB="-lattr", ATTR_LIB="")
+else
+  ATTR_LIB=""
+fi
+AC_SUBST(ATTR_LIB)
+BACKUP_LIBS=$LIBS
+LIBS="$LIBS $ATTR_LIB"
+AC_CHECK_FUNCS(llistxattr lgetxattr lsetxattr)
+LIBS=$BACKUP_LIBS
+
+AM_FUNC_GETLINE
+if test $am_cv_func_working_getline != yes; then
+  AC_CHECK_FUNCS(getdelim)
+else
+  AC_CHECK_FUNCS(getline)
+fi
+
+# Check if we should build with GnuSSL support.
+TLS_LIBS=""
+AC_ARG_ENABLE(ssl, [  --disable-gnutls         disable GnuTLS support])
+if test "$enable_gnutls" \!= "no" ; then
+  AC_CHECK_LIB(gnutls, gnutls_init, TLS_LIBS="-lgnutls", TLS_LIBS="")
+fi
+
+if test -z "$TLS_LIBS" ; then
+  # Check if we should build with OpenSSL support.
+  SSL_LIBS=""
+  AC_ARG_ENABLE(ssl, [  --disable-ssl           disable SSL/TSL support])
+  if test "$enable_ssl" \!= "no"; then
+    AC_CHECK_LIB(ssl, SSL_connect, SSL_LIBS="-lssl -lcrypto", AC_MSG_ERROR([OpenSSL or GnuTLS are required]))
+    AC_SUBST(SSL_LIBS)
+  fi
+  TLS_LIBS=$SSL_LIBS
+else
+  AC_DEFINE(USE_GNUTLS, 1, [Enable GnuTLS support])
+  BACKUP_LIBS=$LIBS
+  LIBS="$LIBS $TLS_LIBS"
+  AC_CHECK_FUNCS(gnutls_certificate_verify_peers2 gnutls_pk_algorithm_get_name)
+  LIBS="$BACKUP_LIBS"
+fi
+AC_SUBST(TLS_LIBS)
+
+
+AC_ARG_ENABLE(ldap, [  --disable-ldap          disable LDAP support])
+AC_ARG_WITH(ldap-lib, [  --with-ldap-lib=type    select ldap library [auto|netscape5|netscape4|netscape3|umich|openldap]])
+AC_ARG_WITH(ldap-dir, [  --with-ldap-dir=DIR     base directory of ldap SDK])
+AC_ARG_WITH(ldap-conf-file, [  --with-ldap-conf-file     path to LDAP configuration file], [AC_DEFINE_UNQUOTED(LDAP_PATH_CONF, "$with_ldap_conf_file", [Path to ldap.conf file])], [AC_DEFINE_UNQUOTED(LDAP_PATH_CONF, "/etc/ldap.conf")])
+AC_ARG_WITH(ldap-secret-file, [  --with-ldap-secret-file   path to LDAP root secret file], [AC_DEFINE_UNQUOTED(LDAP_PATH_ROOTPASSWD, "$with_ldap_secret_file",[Path to ldap.secrets file])], [AC_DEFINE_UNQUOTED(LDAP_PATH_ROOTPASSWD, "/etc/ldap.secret")])
+
+if test "$enable_ldap" \!= "no"; then
+  AC_DEFINE(USE_LDAP, 1, [Enable LDAP support])
+
+  AC_CHECK_HEADERS(lber.h)
+  AC_CHECK_HEADERS(ldap.h, , AC_MSG_ERROR(could not locate <ldap.h>))
+  AC_CHECK_HEADERS(ldap_ssl.h)
+
+  dnl check which ldap library we have
+  if test -z "$with_ldap_lib"; then
+    with_ldap_lib=auto
+  fi
+
+  dnl from the pam_ldap configure script
+  if test -z "$found_ldap_lib" -a \( $with_ldap_lib = auto -o $with_ldap_lib = umich -o $with_ldap_lib = openldap \); then
+    AC_CHECK_LIB(lber, main, LDAP_LIBS="-llber")
+    AC_CHECK_LIB(ldap, main, LDAP_LIBS="-lldap $LDAP_LIBS" found_ldap_lib=yes,,$LDAP_LIBS)
+  fi
+
+  if test -z "$found_ldap_lib" -a \( $with_ldap_lib = auto -o $with_ldap_lib = netscape5 \); then
+    AC_CHECK_LIB(ldap50, main, LDAP_LIBS="-lldap50 -lssldap50 -lssl3 -lnss3 -lnspr4 -lprldap50 -lplc4 -lplds4" found_ldap_lib=yes need_pthread=true,, -lpthread)
+  fi
+  if test -z "$found_ldap_lib" -a \( $with_ldap_lib = auto -o $with_ldap_lib = netscape4 \); then
+    AC_CHECK_LIB(ldapssl41, main, LDAP_LIBS="-lldapssl41 -lplc3 -lplds3 -lnspr3" found_ldap_lib=yes need_pthread=true,, -lpthread)
+    if test -z "$found_ldap_lib"; then
+      AC_CHECK_LIB(ldapssl40, main, LDAP_LIBS="-lldapssl40" found_ldap_lib=yes need_pthread=true,, -lpthread)
+    fi
+  fi
+  if test -z "$found_ldap_lib" -a \( $with_ldap_lib = auto -o $with_ldap_lib = netscape3 \); then
+    AC_CHECK_LIB(ldapssl30, main, LDAP_LIBS="-lldapssl30" found_ldap_lib=yes need_pthread=true,, -lpthread)
+  fi
+  if test -z "$found_ldap_lib"; then
+    AC_MSG_ERROR(could not locate a valid LDAP library)
+  fi
+  AC_SUBST(LDAP_LIBS)
+  if test "$need_pthread" = "true"; then
+    AC_CHECK_LIB(pthread, main)
+  fi
+
+  dnl Save old LIBS variable and add LDAP libraries
+  BACKUP_LIBS=$LIBS
+  LIBS="$LDAP_LIBS $LIBS"
+
+  AC_CHECK_FUNCS(ldap_init ldap_get_lderrno ldap_parse_result ldap_memfree ldap_controls_free ldap_set_option ldap_get_option)
+  if test "$enable_ssl" \!= "no"; then
+    AC_CHECK_FUNCS(ldapssl_init ldap_start_tls_s ldap_pvt_tls_set_option)
+  fi
+  AC_CHECK_FUNCS(ldap_initialize)
+
+  AC_CHECK_FUNCS(ldap_set_rebind_proc)
+  AC_CACHE_CHECK(whether ldap_set_rebind_proc takes 3 arguments, pam_ldap_cv_ldap_set_rebind_proc, [
+  AC_TRY_COMPILE([
+#include <lber.h>
+#include <ldap.h>], [ldap_set_rebind_proc(0, 0, 0);], [pam_ldap_cv_ldap_set_rebind_proc=3], [pam_ldap_cv_ldap_set_rebind_proc=2]) ])
+  AC_DEFINE_UNQUOTED(LDAP_SET_REBIND_PROC_ARGS, $pam_ldap_cv_ldap_set_rebind_proc, ["Define to the number of arguments to ldap_set_rebindproc"])
+
+  dnl restore old LIBS variable
+  LIBS=$BACKUP_LIBS
+else
+  AC_CHECK_LIB(dl,dlopen,
+        [LDAP_LIBS="-ldl"],
+        [LDAP_LIBS=""])
+  AC_SUBST(LDAP_LIBS)
+fi
+
+AC_CHECK_HEADERS(libnscd.h)
+AC_CHECK_LIB(nscd,nscd_flush_cache, NSCD_LIB="-lnscd", NSCD_LIB="")
+AC_SUBST(NSCD_LIB)
+BACKUP_LIBS=$LIBS
+LIBS="$LIBS $NSCD_LIB"
+AC_CHECK_FUNCS(nscd_flush_cache)
+LIBS=$BACKUP_LIBS
+
+dnl internationalization macros
+AM_GNU_GETTEXT_VERSION
+AM_GNU_GETTEXT([external])
+
+AC_CHECK_HEADERS(dirent.h)
+
+AC_CHECK_FUNCS(getusershell strftime)
+
+dnl Check for BioAPI interface
+AC_DEFINE([UNIX], [], [Define UNIX for BioAPI])
+AC_CHECK_HEADERS(bioapi.h bioapi_util.h)
+AC_CHECK_LIB([bioapi100], [BioAPI_Init], BIOAPI_LIB="-lbioapi100", BIOAPI_LIB="")
+AC_SUBST(BIOAPI_LIB)
+
+AC_OUTPUT(Makefile etc/Makefile lib/Makefile src/Makefile plugins/Makefile po/Makefile.in m4/Makefile )
+
+if test "$NSCD_LIB" == "" ; then
+   AC_MSG_WARN([libnscd not found, cannot flush nscd tables!])
+fi
