@@ -11,9 +11,6 @@ License:        GPL-2.0
 Group:          System/Base
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
-Patch0:         pam.patch
-Patch1:         pwdutils-no-add-needed.patch
-Patch2:		pwdutils-glibc216.patch
 
 %description
 This package includes the necessary programs for converting plain
@@ -22,9 +19,6 @@ group accounts in both local files and in an LDAP database.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1
-%patch2 -p1
 
 %build
 %reconfigure --disable-ldap --libdir=%{_libdir} --disable-nls --disable-pam_rpasswd
