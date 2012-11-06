@@ -1,8 +1,8 @@
 #%PAM-1.0
 # For chsh command
 auth     sufficient	pam_rootok.so
-auth     include        common-auth
-account  include        common-account
-password include        common-password
-session  include        common-session
+auth     include        system-auth
+account  include        system-auth
+password include        system-auth
+session  include        system-auth
 
