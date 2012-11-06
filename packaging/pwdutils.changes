@@ -1,6 +1,0 @@
-* Thu Jul 05 2012 Anas Nashif <anas.nashif@intel.com> 12699eb
-- add option -m for backward compatibility and to keep mic working
-  this will encrypt using md5
-
-* Sat Jun 30 2012 Anas Nashif <anas.nashif@intel.com> dc8d94d
-- use pwdutils to replace original shadow utils
