@@ -8,7 +8,7 @@ Version:        3.2.19
 Release:        0
 Summary:        Utilities to Manage User and Group Accounts
 License:        GPL-2.0
-Group:          System/Base
+Group:          Security/Accounts
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
 
