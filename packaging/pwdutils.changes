@@ -1,3 +1,6 @@
+* Sat May 11 2013 Anas Nashif <anas.nashif@intel.com> submit/tizen/20130509.183554@474f8e4
+- Set license using %license
+
 * Fri Mar 22 2013 Anas Nashif <anas.nashif@intel.com> upstream/3.2.19@0636ca7
 - Fixed package groups
 
