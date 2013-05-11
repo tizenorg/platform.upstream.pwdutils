@@ -45,6 +45,7 @@ echo ".so man8/useradd.8" > $RPM_BUILD_ROOT%{_mandir}/man8/adduser.8
 %docs_package
 
 %files 
+%license COPYING
 %defattr(-,root,root,755)
 %config /etc/login.defs
 %config /etc/pam.d/chage
