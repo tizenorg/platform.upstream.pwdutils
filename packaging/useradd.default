@@ -6,4 +6,4 @@ SHELL=/bin/bash
 SKEL=/etc/skel
 GROUPS=video
 CREATE_MAIL_SPOOL=no
-UMASK=022
+UMASK=077
