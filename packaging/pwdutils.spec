@@ -11,6 +11,7 @@ License:        GPL-2.0
 Group:          Security/Accounts
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
+Source1001: 	pwdutils.manifest
 
 %description
 This package includes the necessary programs for converting plain
@@ -19,6 +20,7 @@ group accounts in both local files and in an LDAP database.
 
 %prep
 %setup -q
+cp %{SOURCE1001} .
 
 %build
 %reconfigure --disable-ldap --libdir=%{_libdir} --disable-nls --disable-pam_rpasswd
@@ -45,6 +47,7 @@ echo ".so man8/useradd.8" > $RPM_BUILD_ROOT%{_mandir}/man8/adduser.8
 %docs_package
 
 %files 
+%manifest %{name}.manifest
 %license COPYING
 %defattr(-,root,root,755)
 %config /etc/login.defs
