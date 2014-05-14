@@ -11,7 +11,7 @@ License:        GPL-2.0
 Group:          Security/Accounts
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
-Source1001: 	pwdutils.manifest
+Source1001:     pwdutils.manifest
 
 %description
 This package includes the necessary programs for converting plain
@@ -27,22 +27,21 @@ cp %{SOURCE1001} .
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
-rm -f $RPM_BUILD_ROOT%{_libdir}/pwdutils/lib*.so
-#mkdir $RPM_BUILD_ROOT/%{_lib}
-#mv $RPM_BUILD_ROOT%{_libdir}/security $RPM_BUILD_ROOT/%{_lib}
+make install DESTDIR=%{buildroot}
+rm -f %{buildroot}%{_libdir}/pwdutils/lib*.so
 /sbin/ldconfig -n %{_libdir}/pwdutils
-rm -f $RPM_BUILD_ROOT%{_libdir}/pwdutils/*a
-rm -f $RPM_BUILD_ROOT/%{_lib}/security/*a
 
-rm -f %{buildroot}/etc/init.d/rpasswdd
-rm -f %{buildroot}/etc/pam.d/rpasswd
-rm -f %{buildroot}/etc/rpasswd.conf
-rm -f %{buildroot}/usr/bin/rpasswd
-rm -f %{buildroot}/usr/sbin/rpasswdd
-ln -sf newgrp $RPM_BUILD_ROOT%{_bindir}/sg
-install -m 644 $RPM_SOURCE_DIR/useradd.default $RPM_BUILD_ROOT/etc/default/useradd
-echo ".so man8/useradd.8" > $RPM_BUILD_ROOT%{_mandir}/man8/adduser.8
+rm -f %{buildroot}%{_libdir}/pwdutils/*a
+rm -f %{buildroot}%{_lib}/security/*a
+rm -f %{buildroot}%{_sysconfdir}/init.d/rpasswdd
+rm -f %{buildroot}%{_sysconfdir}/pam.d/rpasswd
+rm -f %{buildroot}%{_sysconfdir}/rpasswd.conf
+rm -f %{buildroot}%{_bindir}/rpasswd
+rm -f %{buildroot}%{_sbindir}/rpasswdd
+
+ln -sf newgrp %{buildroot}%{_bindir}/sg
+install -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/default/useradd
+echo ".so man8/useradd.8" > %{buildroot}%{_mandir}/man8/adduser.8
 
 %docs_package
 
@@ -50,17 +49,17 @@ echo ".so man8/useradd.8" > $RPM_BUILD_ROOT%{_mandir}/man8/adduser.8
 %manifest %{name}.manifest
 %license COPYING
 %defattr(-,root,root,755)
-%config /etc/login.defs
-%config /etc/pam.d/chage
-%config /etc/pam.d/chfn
-%config /etc/pam.d/chsh
-%config /etc/pam.d/passwd
-%config /etc/pam.d/shadow
-%config /etc/pam.d/useradd
-%config(noreplace) /etc/default/useradd
-%config(noreplace) /etc/default/passwd
-%dir /etc/pwdutils
-%config(noreplace) /etc/pwdutils/logging
+%config %{_sysconfdir}/login.defs
+%config %{_sysconfdir}/pam.d/chage
+%config %{_sysconfdir}/pam.d/chfn
+%config %{_sysconfdir}/pam.d/chsh
+%config %{_sysconfdir}/pam.d/passwd
+%config %{_sysconfdir}/pam.d/shadow
+%config %{_sysconfdir}/pam.d/useradd
+%config(noreplace) %{_sysconfdir}/default/useradd
+%config(noreplace) %{_sysconfdir}/default/passwd
+%dir %{_sysconfdir}/pwdutils
+%config(noreplace) %{_sysconfdir}/pwdutils/logging
 %attr (4755,root,shadow) %{_bindir}/chage
 %attr (4755,root,shadow) %{_bindir}/chfn
 %attr (4755,root,shadow) %{_bindir}/chsh
