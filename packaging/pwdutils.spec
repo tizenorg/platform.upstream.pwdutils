@@ -3,6 +3,7 @@ BuildRequires:  libtool
 BuildRequires:  openssl-devel
 BuildRequires:  pam-devel
 BuildRequires:  gettext-tools
+Requires:       smack
 Url:            http://www.thkukuk.de/pam/pwdutils/
 Version:        3.2.19
 Release:        0
@@ -11,6 +12,7 @@ License:        GPL-2.0
 Group:          Security/Accounts
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
+Source4:        useradd.local
 Source1001: 	pwdutils.manifest
 
 %description
@@ -42,6 +44,7 @@ rm -f %{buildroot}/usr/bin/rpasswd
 rm -f %{buildroot}/usr/sbin/rpasswdd
 ln -sf newgrp $RPM_BUILD_ROOT%{_bindir}/sg
 install -m 644 $RPM_SOURCE_DIR/useradd.default $RPM_BUILD_ROOT/etc/default/useradd
+install -m 755 $RPM_SOURCE_DIR/useradd.local $RPM_BUILD_ROOT/%{_sbindir}/useradd.local
 echo ".so man8/useradd.8" > $RPM_BUILD_ROOT%{_mandir}/man8/adduser.8
 
 %docs_package

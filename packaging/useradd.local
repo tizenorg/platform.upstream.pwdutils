@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# Here you can add your own stuff, that should be done for every user who
+# was new created.
+#
+# When you create a user with useradd, this script will be called
+# with the login name as parameter. Optional, UID, GID and the HOME
+# directory are added.
+#
+
+case "$1" in
+   --help|--version)
+     echo Usage: $0 username [uid gid home]
+     exit 0
+     ;;
+esac
+
+# Check for the required argument.
+if [ $# -lt 1 -o $# -gt 4 ]; then
+  echo Usage: $0 username [uid gid home]
+  exit 1
+fi
+
+# Update NIS database
+# make -C /var/yp
+
+# If chsmack is here
+if [ -x /usr/bin/chsmack -a -n "$4" -a -d "$4" ] ; then
+  /usr/bin/chsmack -a "User::Home" -t "$4"
+fi
+
+# All done.
+exit 0
