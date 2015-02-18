@@ -1121,7 +1121,8 @@ create_home_directory (const char *home, uid_t uid, gid_t gid,
 
       if (skeldir != NULL && *skeldir != '\0' && access (skeldir, F_OK) == 0)
 	{
-	  if (copy_dir_rec (skeldir, home, 0, uid, gid) != 0)
+	  if (copy_xattr (skeldir, home) != 0 ||
+	      copy_dir_rec (skeldir, home, 0, uid, gid) != 0)
 	    {
 	      fprintf (stderr, _("%s: Copying of skel directory failed.\n"),
 		       program);
