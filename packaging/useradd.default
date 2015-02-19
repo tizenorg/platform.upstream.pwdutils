@@ -4,6 +4,6 @@ INACTIVE=-1
 EXPIRE=
 SHELL=/bin/bash
 SKEL=/etc/skel
-GROUPS=video
+GROUPS=display,audio,video
 CREATE_MAIL_SPOOL=no
 UMASK=077
