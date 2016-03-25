@@ -117,13 +117,19 @@ files_getpwent (void)
 static int
 is_primary_group (gid_t gid, int have_extrapath)
 {
-  struct passwd *pw;
+  struct passwd *pw, pw_buf;
   int retval = 0;
+  char buf[BUF_POOL_LEN];
 
   setpwent ();
 
-  while ((pw = getpwent ()))
+  while (1)
     {
+      getpwent_r(&pw_buf, buf, BUF_POOL_LEN, &pw);
+      if(pw == NULL)
+    {
+          break;
+      }
       if (pw->pw_gid == gid)
 	{
 	  fprintf (stderr,

@@ -148,7 +148,8 @@ find_group_data (const char *name, gid_t gid, const char *use_service)
 		  else
 		    {
 		      char *cp = alloca (strlen (nswp2->orders[0]) + 1);
-		      strcpy (cp, nswp2->orders[0]);
+              memset(cp, 0, strlen (nswp2->orders[0]) + 1);
+		      strncpy (cp, nswp2->orders[0], strlen (nswp2->orders[0]));
 		      cmpptr = cp;
 		      nsw_free (nswp2);
 		    }
@@ -297,6 +298,7 @@ int
 write_group_data (group_t *data, int is_locked)
 {
   int retval = 0;
+  char err_buf[ERR_BUF_LEN];
 
   if (data->service == S_LOCAL)
     {
@@ -322,12 +324,16 @@ write_group_data (group_t *data, int is_locked)
 	  int gotit, newgf_fd;
 	  char *cp;
 
+      memset(group_tmp, 0, strlen (files_etc_dir) + strlen (file_tmp) + 1);
+      memset(group_orig, 0, strlen (files_etc_dir) + 8);
+      memset(group_old, 0, strlen (files_etc_dir) + 12);
+
 	  cp = stpcpy (group_tmp, files_etc_dir);
-	  strcpy (cp, file_tmp);
+	  strncpy (cp, file_tmp, strlen(file_tmp));
 	  cp = stpcpy (group_orig, files_etc_dir);
-	  strcpy (cp, "/group");
+	  strncpy (cp, "/group", strlen("/group"));
 	  cp = stpcpy (group_old, group_orig);
-	  strcpy (cp, ".old");
+	  strncpy (cp, ".old", strlen(".old"));
 
 	  if ((oldgf = fopen (group_orig, "r")) == NULL)
 	    {
@@ -376,7 +382,7 @@ write_group_data (group_t *data, int is_locked)
             {
               fprintf (stderr,
                        _("Cannot change permissions for `%s': %s\n"),
-                       group_tmp, strerror (errno));
+                       group_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
               fclose (oldgf);
               close (newgf_fd);
               unlink (group_tmp);
@@ -387,7 +393,7 @@ write_group_data (group_t *data, int is_locked)
 	                {
               fprintf (stderr,
                        _("Cannot change owner/group for `%s': %s\n"),
-                       group_tmp, strerror (errno));
+                       group_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
               fclose (oldgf);
               close (newgf_fd);
               unlink (group_tmp);

@@ -71,8 +71,9 @@ static int
 setsgent (void)
 {
   char *filename = alloca (strlen (files_etc_dir) + 10);
-  strcpy (filename, files_etc_dir);
-  strcat (filename, "/gshadow");
+  memset(filename, 0, strlen (files_etc_dir) + 10);
+  strncpy (filename, files_etc_dir, strlen(files_etc_dir));
+  strncat (filename, "/gshadow", strlen("/gshadow"));
 
   sg_stream = fopen (filename, "r");
 

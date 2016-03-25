@@ -344,6 +344,8 @@ rename_in_secondary_groups (user_t *pw_data, int have_extrapath)
   } *list = NULL, *item;
   struct group *gr;
   int retval = E_SUCCESS;
+  struct group grp;
+  char buf[BUF_POOL_LEN];
 
   if (have_extrapath)
     {
@@ -365,10 +367,12 @@ rename_in_secondary_groups (user_t *pw_data, int have_extrapath)
     }
   else
     {
-      setgrent ();
-
-      while ((gr = getgrent ()))
-        {
+	  setgrent ();
+	  
+	  while(1)
+		{
+		   getgrent_r(&grp, buf, BUF_POOL_LEN, &gr);		
+		   if(gr == NULL) break;
           unsigned int i;
 
           for (i = 0; gr->gr_mem[i]; i++)
@@ -478,6 +482,7 @@ static int
 move_home_directory (const char *oldhome, const char *newhome)
 {
   struct stat st;
+  char *lasts = NULL;
 
   if (oldhome == NULL || *oldhome == '\0' ||
       newhome == NULL || *newhome == '\0')
@@ -507,11 +512,12 @@ move_home_directory (const char *oldhome, const char *newhome)
       /* Check for every part of the path, if the directory
          exists. If not, create it with permissions 755 and
          owner root:root.  */
-      cp = strtok (bhome, "/");
+ 	  cp = strtok_r(bhome, "/", &lasts);
+	  memset( path, 0, sizeof(path));
       while (cp)
 	{
-	  strcat (path, "/");
-	  strcat (path, cp);
+	  strncat (path, "/", strlen("/"));
+	  strncat (path, cp, strlen(cp));
 	  if (access (path, F_OK) != 0)
 	    {
 	      if (mkdir (path, 0) != 0)
@@ -528,7 +534,7 @@ move_home_directory (const char *oldhome, const char *newhome)
                 fprintf (stderr, _("%s: Warning: chmod on `%s' failed: %m\n"),
                          program, path);
 	    }
-	  cp = strtok (NULL, "/");
+	  cp = strtok_r(NULL, "/", &lasts);
 	}
       /* we have this created to much, remove it again.  */
       rmdir (newhome);
@@ -582,6 +588,8 @@ remove_from_secondary_groups (user_t *pw_data, int have_extrapath,
   } *list = NULL, *item;
   struct group *gr;
   int retval = E_SUCCESS;
+  struct group grp;
+  char buf[BUF_POOL_LEN];
 
   if (have_extrapath)
     {
@@ -603,10 +611,12 @@ remove_from_secondary_groups (user_t *pw_data, int have_extrapath,
     }
   else
     {
-      setgrent ();
+	  setgrent ();
 
-      while ((gr = getgrent ()))
-        {
+	  while(1)
+	  {
+          getgrent_r(&grp, buf, BUF_POOL_LEN, &gr);	  
+          if(gr == NULL) break;
           unsigned int i;
 
           for (i = 0; gr->gr_mem[i]; i++)

@@ -99,9 +99,9 @@ static char *
 date_to_str (time_t t)
 {
   static char buf[80];
-  struct tm *tm;
+  struct tm *tm, tm_buf;
 
-  tm = gmtime (&t);
+  tm = gmtime_r(&t, &tm_buf);
   strftime (buf, sizeof buf, "%m/%d/%Y", tm);
   return buf;
 }
@@ -416,6 +416,7 @@ passwd_main (const char *program, int argc, char **argv)
   char *buffer = alloca (buflen);
   struct passwd resultbuf;
   struct passwd *pw = NULL;
+  char buf_pw[BUF_PW_LEN];
   int admin_only = 0;
   int silent = 0;
   uid_t uid = getuid ();
@@ -617,7 +618,7 @@ passwd_main (const char *program, int argc, char **argv)
         }
       sec_log (program, MSG_DISPLAY_PASSWORD_STATUS_FOR_ALL, uid);
       setpwent ();
-      while ((pw = getpwent ()))
+      while (getpwent_r(&resultbuf, buf_pw, BUF_PW_LEN, &pw) == 0 && pw != NULL)
         display_pw (pw);
       endpwent ();
       return E_SUCCESS;
@@ -928,7 +929,8 @@ passwd_main (const char *program, int argc, char **argv)
 	  pw_data->newpassword = malloc (strlen (pwdp) + 2);
 	  if (pw_data->newpassword == NULL)
 	    return E_FAILURE;
-	  strcpy (&pw_data->newpassword[1], pwdp);
+      memset(pw_data->newpassword, 0, strlen (pwdp) + 2);
+	  strncpy (&pw_data->newpassword[1], pwdp, strlen(pwdp));
 	  pw_data->newpassword[0] = '!';
 	}
       else
@@ -1015,9 +1017,10 @@ main (int argc, char **argv)
 
       if (setuid (getuid ()) != 0)
 	{
+      char err_buf[ERR_BUF_LEN];
 	  sec_log (prog, MSG_DROP_PRIVILEGE_FAILED, errno, getuid());
           fprintf (stderr, _("%s: Failed to drop privileges: %s\n"),
-                   prog, strerror (errno));
+                   prog, strerror_r (errno, err_buf, ERR_BUF_LEN));
           return E_FAILURE;
 	}
       switch (argv[1][1])

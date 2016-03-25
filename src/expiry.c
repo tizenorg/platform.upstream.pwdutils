@@ -291,6 +291,7 @@ main (int argc, char *argv[])
   if (force && result == 1)
     {
       int i;
+      char err_buf[ERR_BUF_LEN];
 
       /* close all filehandles.  */
       for (i = 3; i < getdtablesize(); ++i)
@@ -304,7 +305,7 @@ main (int argc, char *argv[])
         {
 	  sec_log (program, MSG_DROP_PRIVILEGE_FAILED, errno, uid);
           fprintf (stderr, _("%s: Failed to drop privileges: %s\n"),
-                   program, strerror (errno));
+                   program, strerror_r (errno, err_buf, ERR_BUF_LEN));
           return E_FAILURE;
         }
 

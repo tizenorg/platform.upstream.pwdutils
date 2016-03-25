@@ -177,8 +177,9 @@ files_getgrgid (gid_t gid)
 static gid_t
 find_free_gid (int is_system_account, int have_extrapath)
 {
-  const struct group *grp;
+  struct group *grp, grp_buf;
   gid_t groupid, gid_min, gid_max;
+  char buf[BUF_POOL_LEN];
 
   if (is_system_account)
     {
@@ -202,11 +203,16 @@ find_free_gid (int is_system_account, int have_extrapath)
   /* Search the entire group file, looking for the
      largest unused value. If gid_max does already exists,
      skip this.  */
-  if (getgrgid (gid_max) == NULL)
+     getgrgid_r(gid_max, &grp_buf, buf, BUF_POOL_LEN, &grp);
+  if (grp == NULL)
     {
       setgrent ();
-      while ((grp = getgrent ()))
+      while (1)
 	{
+        if(getgrent_r(&grp_buf, buf, BUF_POOL_LEN, &grp) != 0 || grp == NULL)
+	{
+            break;
+        }
 	  if (grp->gr_gid >= groupid)
 	    {
 	      if (grp->gr_gid > gid_max)
@@ -239,7 +245,7 @@ find_free_gid (int is_system_account, int have_extrapath)
   if (groupid == gid_max + 1)
     {
       for (groupid = gid_min; groupid < gid_max; groupid++)
-	if (getgrgid (groupid) == NULL)
+	if (getgrgid_r(groupid, &grp_buf, buf, BUF_POOL_LEN, &grp) != 0 || grp == NULL)
 	  {
 	    if (have_extrapath)
 	      {
@@ -285,6 +291,8 @@ main (int argc, char **argv)
   bindtextdomain (PACKAGE, LOCALEDIR);
   textdomain (PACKAGE);
 #endif
+  struct group *grp, grp_buf;
+  char buf[BUF_POOL_LEN];
 
   /* Before going any further, raise the ulimit and ignore
      signals.  */
@@ -464,7 +472,7 @@ main (int argc, char **argv)
   /* After this, we can start creating the new group.  */
   if (know_gid && !non_unique)
     {
-      if (getgrgid (new_gid) != NULL ||
+      if ((getgrgid_r(new_gid, &grp_buf, buf, BUF_POOL_LEN, &grp) == 0 && grp != NULL) ||
 	  (have_extrapath && files_getgrgid (new_gid) != NULL))
 	{
 	  if (force_add)
@@ -507,7 +515,7 @@ main (int argc, char **argv)
       sec_log (program, MSG_GROUP_FILE_ALREADY_LOCKED);
       return E_PWDBUSY;
     }
-  else if (getgrnam (new_group) != NULL ||
+  else if ((getgrnam_r(new_group, &grp_buf, buf, BUF_POOL_LEN, &grp) == 0 && grp != NULL) ||
 	   (have_extrapath && files_getgrnam (new_group) != NULL))
     {				/* Group does already exists.  */
       fprintf (stderr, _("%s: Group `%s' already exists.\n"),

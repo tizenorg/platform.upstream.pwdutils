@@ -31,6 +31,8 @@
 #include <slp.h>
 #endif
 
+#define ERR_BUF_LEN  256
+#define BUF_POOL_LEN 16384
 
 #ifdef USE_GNUTLS
 static int
@@ -592,6 +594,7 @@ connect_to_server (HANDLE const char *hostp, const char *portp,
   struct addrinfo hints, *res, *res0;
   int error;
   int sock = -1;
+  char err_buf[ERR_BUF_LEN];
 
   memset (&hints, 0, sizeof (hints));
   hints.ai_family = family;
@@ -637,7 +640,10 @@ connect_to_server (HANDLE const char *hostp, const char *portp,
 
       if (getnameinfo (res->ai_addr, res->ai_addrlen,
 		       hbuf, sizeof (hbuf), NULL, 0, niflags) != 0)
-	strcpy (hbuf, "(invalid)");
+      {
+		memset( hbuf, 0, strlen(hbuf));
+		strncpy (hbuf, "(invalid)", strlen("(invalid)"));
+      }
       switch (res->ai_family)
 	{
 	case AF_INET:
@@ -673,9 +679,12 @@ connect_to_server (HANDLE const char *hostp, const char *portp,
 	{
 	  if (getnameinfo (res->ai_addr, res->ai_addrlen,
 			   hbuf, sizeof (hbuf), NULL, 0, niflags) != 0)
-	    strcpy (hbuf, "(invalid)");
+	  {
+	    memset( hbuf, 0, strlen(hbuf));
+	    strncpy (hbuf, "(invalid)", strlen("(invalid)"));
+	  }
 	  PRINTF (ERR_HANDLE, _("connect to address %s: %s\n"), hbuf,
-		  strerror (errno));
+		  strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  close (sock);
 	  sock = -1;
 	  continue;
@@ -778,7 +787,6 @@ start_ssl (HANDLE long sock, int reqcert, int verbose, gnutls_session session,
   DIR *dir = opendir ("/etc/ssl/certs");
   struct dirent *entry;
   int ret;
-
   /* Allow connections to servers that have OpenPGP keys as well. */
   const int cert_type_priority[3] =
     { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
@@ -804,10 +812,11 @@ start_ssl (HANDLE long sock, int reqcert, int verbose, gnutls_session session,
 	      struct stat st;
 	      char *cp;
 
+		  memset( srcfile, 0, sizeof(srcfile));
 	      /* create source and destination filename with full path.  */
 	      cp = stpcpy (srcfile, "/etc/ssl/certs");
 	      *cp++ = '/';
-	      strcpy (cp, entry->d_name);
+		  strncpy (cp, entry->d_name, strlen(entry->d_name));
 
 	      if (lstat (srcfile, &st) != 0)
 		continue;

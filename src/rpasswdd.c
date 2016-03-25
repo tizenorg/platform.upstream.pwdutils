@@ -63,6 +63,9 @@
 #define IPV6_V6ONLY   26
 #endif
 
+#define ERR_BUF_LEN  256
+#define BUF_POOL_LEN 16384
+
 /* Path of the file where the PID of the running system is stored.  */
 #define _PATH_RPASSWDDPID    "/var/run/rpasswdd.pid"
 
@@ -175,7 +178,10 @@ write_pid (const char *file)
 
   fprintf (fp, "%d\n", getpid ());
   if (fflush (fp) || ferror (fp))
+  {
+    fclose (fp);
     return -1;
+  }
 
   fclose (fp);
 
@@ -195,6 +201,7 @@ static void
 server_init (int port, int ipv4, int ipv6)
 {
   int have_usagi = 1; /* Assume we have a USAGI patched kernel.  */
+  char err_buf[ERR_BUF_LEN];
 
   /* The Linux kernel without USAGI patch will handle IPv4 connections
      over an existing IPv6 binding. So we cannot bind explicit a IPv6
@@ -209,7 +216,7 @@ server_init (int port, int ipv4, int ipv6)
       pollfd_conn[pollfd_cnt].fd = socket (AF_INET6, SOCK_STREAM, 0);
       if (pollfd_conn[pollfd_cnt].fd < 0)
 	{
-	  dbg_log ("cannot open socket: %s", strerror (errno));
+      dbg_log ("cannot open socket: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  exit (1);
 	}
 
@@ -235,7 +242,7 @@ server_init (int port, int ipv4, int ipv6)
       if (bind (pollfd_conn[pollfd_cnt].fd, (struct sockaddr *) &sock_addr,
 		sizeof (sock_addr)) < 0)
 	{
-	  dbg_log ("bind: %s", strerror (errno));
+	  dbg_log ("bind: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));	  
 	  exit (1);
 	}
 
@@ -243,7 +250,7 @@ server_init (int port, int ipv4, int ipv6)
       if (listen (pollfd_conn[pollfd_cnt].fd, SOMAXCONN) < 0)
 	{
 	  dbg_log ("cannot enable socket to accept connections: %s",
-		   strerror (errno));
+		   strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  exit (1);
 	}
       ++pollfd_cnt;
@@ -257,7 +264,7 @@ server_init (int port, int ipv4, int ipv6)
       pollfd_conn[pollfd_cnt].fd = socket (AF_INET, SOCK_STREAM, 0);
       if (pollfd_conn[pollfd_cnt].fd < 0)
 	{
-	  dbg_log ("cannot open socket: %s", strerror (errno));
+	  dbg_log ("cannot open socket: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  exit (1);
 	}
 
@@ -269,7 +276,7 @@ server_init (int port, int ipv4, int ipv6)
       if (bind (pollfd_conn[pollfd_cnt].fd, (struct sockaddr *) &sock_addr,
 		sizeof (sock_addr)) < 0)
 	{
-	  dbg_log ("bind: %s", strerror (errno));
+	  dbg_log ("bind: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  exit (1);
 	}
 
@@ -277,7 +284,7 @@ server_init (int port, int ipv4, int ipv6)
       if (listen (pollfd_conn[pollfd_cnt].fd, SOMAXCONN) < 0)
 	{
 	  dbg_log ("cannot enable socket to accept connections: %s",
-		   strerror (errno));
+		   strerror_r (errno, err_buf, ERR_BUF_LEN));
 	  exit (1);
 	}
       ++pollfd_cnt;
@@ -342,7 +349,7 @@ safe_read (gnutls_session ssl, void *data, size_t count, int timeout)
 	  /* Don't print error messages if poll is only interupted
 	     by a signal.  */
 	  if (errno != EINTR)
-	    dbg_log ("poll() failed: %s", strerror (errno));
+		dbg_log ("poll() failed: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
           continue;
         }
       else if (nr == 0)
@@ -394,7 +401,7 @@ static ssize_t
 safe_read (SSL *ssl, void *data, size_t count, int timeout)
 {
   struct pollfd conn;
-
+  char err_buf[ERR_BUF_LEN];
   conn.fd = SSL_get_fd (ssl);
   conn.events = POLLRDNORM;
 
@@ -409,7 +416,7 @@ safe_read (SSL *ssl, void *data, size_t count, int timeout)
 	  /* Don't print error messages if poll is only interupted
 	     by a signal.  */
 	  if (errno != EINTR)
-	    dbg_log ("poll() failed: %s", strerror (errno));
+		  dbg_log ("poll() failed: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
           continue;
         }
       else if (nr == 0)
@@ -630,6 +637,7 @@ handle_request (SSL *ssl, request_header *req, char *locale,
   char *pw_buffer = alloca (pw_buflen);
   struct passwd pw_resultbuf;
   struct passwd *pw = NULL;
+  char err_buf[ERR_BUF_LEN];
 
   if (debug_level > 0)
     dbg_log ("handle_request: request received (Version = %d)",
@@ -763,12 +771,12 @@ handle_request (SSL *ssl, request_header *req, char *locale,
 	 root. With this, most PAM modules thinks they are called from
 	 a setuid root passwd program. Not needed if we run in Admin mode.
 	 In this case, PAM moduls should think passwd is called by root.  */
-      if (setresuid (pw->pw_uid, 0, 0) == -1)
-	{
-	  char *cp;
+	  if (pw != NULL && setresuid (pw->pw_uid, 0, 0) == -1)
+	  {
+		char *cp;
 
 	  if (asprintf (&cp, _("setresuid failed on server: %s"),
-			strerror (errno)) > 0)
+			strerror_r (errno, err_buf, ERR_BUF_LEN)) > 0)	  	
 	    {
 	      dbg_log (cp);
 	      send_string (ssl, ERROR_MSG, cp);
@@ -883,6 +891,7 @@ server_run (const char *program)
 #endif
 {
   int i;
+  char err_buf[ERR_BUF_LEN];
 
   for (i = 0; i < pollfd_cnt; i++)
     pollfd_conn[i].events = POLLRDNORM;
@@ -898,7 +907,7 @@ server_run (const char *program)
 	  /* Don't print error messages if poll is only interupted
 	     by a signal.  */
 	  if (errno != EINTR)
-	    dbg_log ("poll() failed: %s", strerror (errno));
+		dbg_log ("poll() failed: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
           continue;
         }
 
@@ -1048,8 +1057,6 @@ server_run (const char *program)
 		    {
 		      if (debug_level > 0)
 			{
-			  char err_buf[256];
-
 			  if (errno == 0)
 			    dbg_log ("error while reading request locale: %s",
 				     "wrong data received");
@@ -1090,8 +1097,6 @@ server_run (const char *program)
 		    {
 		      if (debug_level > 0)
 			{
-			  char err_buf[256];
-
 			  if (errno == 0)
 			    dbg_log ("error while reading request username: %s",
 				     "wrong data received");
@@ -1141,7 +1146,7 @@ server_run (const char *program)
 		  {
 		    char *cp;
 
-		    if (asprintf (&cp, "fork: %s", strerror (errno)) > 0)
+			if (asprintf (&cp, "fork: %s", strerror_r (errno, err_buf, ERR_BUF_LEN)) > 0)
 		      {
 			dbg_log (cp);
 			send_string (ssl, ERROR_MSG, cp);
@@ -1247,6 +1252,9 @@ main (int argc, char **argv)
   int slp_timeout = 3600;
   char *slp_descr = NULL;
 #endif
+  struct servent *serv, res;
+  char buffer[BUF_POOL_LEN];
+  char err_buf[ERR_BUF_LEN];  
 #ifndef USE_GNUTLS
   SSL_METHOD *meth;
 #endif
@@ -1402,13 +1410,13 @@ main (int argc, char **argv)
 
       setsid ();
 
-      if (chdir ("/") < 0)
-	dbg_log ("chdir(\"/\") failed: %s", strerror (errno));
+      if (chdir ("/") < 0)			  
+			dbg_log ("chdir(\"/\") failed: %s", strerror_r (errno, err_buf, ERR_BUF_LEN));
 
       openlog (program, LOG_CONS | LOG_ODELAY, LOG_DAEMON);
 
       if (write_pid (_PATH_RPASSWDDPID) < 0)
-        dbg_log ("%s: %s", _PATH_RPASSWDDPID, strerror (errno));
+	    dbg_log ("%s: %s", _PATH_RPASSWDDPID, strerror_r (errno, err_buf, ERR_BUF_LEN));
 
       /* Ignore job control signals.  */
       signal (SIGTTOU, SIG_IGN);
@@ -1436,7 +1444,7 @@ main (int argc, char **argv)
      default port.  */
   if (port == -1)
     {
-      struct servent *serv = getservbyname ("rpasswd", "tcp");
+	  getservbyname_r("rpasswd", "tcp", &res, buffer, sizeof(buffer), &serv);
 
       if (serv)
 	port = serv->s_port;

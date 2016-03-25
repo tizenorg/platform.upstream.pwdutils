@@ -39,6 +39,7 @@ remove_dir_rec (const char *tree)
   struct dirent *entry;
   DIR *dir = opendir (tree);
   int retval = 0;
+  char err_buf[ERR_BUF_LEN];
 
   if (dir == NULL)
     return -1;
@@ -55,10 +56,11 @@ remove_dir_rec (const char *tree)
 	  struct stat st;
 	  char *cp;
 
+	  memset(srcfile, 0, sizeof(srcfile));
 	  /* create source and destination filename with full path.  */
 	  cp = stpcpy (srcfile, tree);
 	  *cp++ = '/';
-	  strcpy (cp, entry->d_name);
+	  strncpy (cp, entry->d_name, strlen(entry->d_name));
 
 	  if (lstat (srcfile, &st) != 0)
 	    continue;
@@ -72,7 +74,7 @@ remove_dir_rec (const char *tree)
 	  else if (unlink (srcfile) != 0)
 	    {
 	      fprintf (stderr, _("Cannot remove file `%s': %s\n"),
-		       srcfile, strerror (errno));
+		       srcfile, strerror_r (errno, err_buf, ERR_BUF_LEN));		  
 	      retval = -1;
 	    }
 	}
@@ -81,7 +83,7 @@ remove_dir_rec (const char *tree)
   if (rmdir (tree) != 0)
     {
       fprintf (stderr, _("Cannot remove directory `%s': %s\n"),
-	       tree, strerror (errno));
+      	   tree, strerror_r (errno, err_buf, ERR_BUF_LEN));
       retval = -1;
     }
 

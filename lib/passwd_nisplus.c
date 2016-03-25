@@ -497,6 +497,7 @@ update_npd (nis_object *obj, user_t *data)
 		case NPD_GECOS:
 		  fprintf (stderr, "\tgecos field: %s\n",
 			   npderr2str (err->npd_code));
+          break;
 		case NPD_SHELL:
 		  fprintf (stderr, "\tshell field: %s\n",
 			   npderr2str (err->npd_code));
@@ -550,7 +551,7 @@ update_nisd (nis_object *obj, user_t *data)
       NISENTRYLEN(6,obj) = strlen (NISENTRYVAL(6,obj));
     }
 
-  sprintf (buf, "%s.%s", obj->zo_name, obj->zo_domain);
+  snprintf (buf, strlen (obj->zo_name) + strlen (obj->zo_domain) + 10, "%s.%s", obj->zo_name, obj->zo_domain);
   result = nis_modify_entry (buf, obj, 0);
   if (result->status != NIS_SUCCESS)
     {
@@ -583,7 +584,7 @@ npd_upd_pwd (const char *domainname, user_t *data)
 
   /* Get group of passwd table */
   buf = alloca (strlen (data->pw.pw_name) + strlen (domain) + 30);
-  sprintf (buf, "passwd.org_dir.%s", domain);
+  snprintf (buf, strlen (data->pw.pw_name) + strlen (domain) + 30,"passwd.org_dir.%s", domain);
   result = nis_lookup (buf, 0);
   if (result->status != NIS_SUCCESS)
     {
@@ -593,11 +594,12 @@ npd_upd_pwd (const char *domainname, user_t *data)
     }
 
   group = alloca (strlen (NIS_RES_OBJECT(result)->zo_group) + 1);
-  strcpy (group, NIS_RES_OBJECT(result)->zo_group);
+  memset(group, 0, strlen (NIS_RES_OBJECT(result)->zo_group) + 1);
+  strncpy (group, NIS_RES_OBJECT(result)->zo_group, strlen(NIS_RES_OBJECT(result)->zo_group));
   nis_freeresult (result);
 
   /* Get old NIS+ passwd information for caller or parameter. */
-  sprintf (buf, "[name=%s],passwd.org_dir.%s", data->pw.pw_name, domain);
+  snprintf (buf, strlen (data->pw.pw_name) + strlen (domain) + 30,"[name=%s],passwd.org_dir.%s", data->pw.pw_name, domain);
 
   result = nis_list (buf, 0, NULL, NULL);
 

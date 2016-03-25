@@ -159,7 +159,8 @@ parse_grent (char *line, struct group *result,
       *errnop = ERANGE;
       return -1;
     }
-  strcpy (buffer, line);
+  memset(buffer, 0, buflen);
+  strncpy (buffer, line, buflen);
   line = buffer;
   STRING_FIELD (result->gr_name, ISCOLON, 0);
   if (line[0] == '\0' && !strict
