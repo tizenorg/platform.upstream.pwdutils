@@ -198,8 +198,7 @@ do_getpwnam (const char *user, const char *use_service)
 		  else
 		    {
 		      char *cp = alloca (strlen (nswp2->orders[0]) + 1);
-			  memset(cp, 0, strlen (nswp2->orders[0]) + 1);
-			  strncpy (cp, nswp2->orders[0], strlen(nswp2->orders[0]));
+		      strcpy (cp, nswp2->orders[0]);
 		      cmpptr = cp;
 		      nsw_free (nswp2);
 		    }
@@ -404,7 +403,6 @@ int
 write_user_data (user_t *data, int is_locked)
 {
   int retval = 0;
-  char err_buf[ERR_BUF_LEN];
 
   if (data->service == S_LOCAL)
     {
@@ -430,15 +428,12 @@ write_user_data (user_t *data, int is_locked)
 	  int gotit, newpf_fd;
 	  char *cp;
 
-	  memset(passwd_tmp, 0, strlen (files_etc_dir) + strlen (file_tmp) + 1);
-	  memset(passwd_orig, 0, strlen (files_etc_dir) + 8);
-	  memset(passwd_old, 0, strlen (files_etc_dir) + 12);
 	  cp = stpcpy (passwd_tmp, files_etc_dir);
-	  strncpy (cp, file_tmp, strlen(file_tmp));
+	  strcpy (cp, file_tmp);
 	  cp = stpcpy (passwd_orig, files_etc_dir);
-	  strncpy (cp, "/passwd", strlen("/passwd"));
+	  strcpy (cp, "/passwd");
 	  cp = stpcpy (passwd_old, passwd_orig);
-	  strncpy (cp, ".old", strlen(".old"));
+	  strcpy (cp, ".old");
 
 	  if ((oldpf = fopen (passwd_orig, "r")) == NULL)
 	    {
@@ -485,9 +480,9 @@ write_user_data (user_t *data, int is_locked)
 	    }
           if (fchmod (newpf_fd, passwd_stat.st_mode) < 0)
 	    {
-		  fprintf (stderr,
-			   _("Cannot change permissions for `%s': %s\n"),
-			   passwd_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	      fprintf (stderr,
+		       _("Cannot change permissions for `%s': %s\n"),
+		       passwd_tmp, strerror (errno));
 	      fclose (oldpf);
 	      close (newpf_fd);
 	      unlink (passwd_tmp);
@@ -495,10 +490,10 @@ write_user_data (user_t *data, int is_locked)
 	      goto error_passwd;
 	    }
           if (fchown (newpf_fd, passwd_stat.st_uid, passwd_stat.st_gid) < 0)
-	    { 
+	    {
 	      fprintf (stderr,
 		       _("Cannot change owner/group for `%s': %s\n"),
-		       passwd_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		       passwd_tmp, strerror (errno));
 	      fclose (oldpf);
 	      close (newpf_fd);
 	      unlink (passwd_tmp);
@@ -695,15 +690,12 @@ write_user_data (user_t *data, int is_locked)
           int gotit, newpf_fd;
 	  char *cp;
 
-	  memset(shadow_tmp, 0, strlen(files_etc_dir) + strlen (file_tmp) + 1);
-	  memset(shadow_orig, 0, strlen (files_etc_dir) + 8);
-	  memset(shadow_old, 0 , strlen (files_etc_dir) + 12);
 	  cp = stpcpy (shadow_tmp, files_etc_dir);
-	  strncpy (cp, file_tmp, strlen(file_tmp));
+	  strcpy (cp, file_tmp);
 	  cp = stpcpy (shadow_orig, files_etc_dir);
-	  strncpy (cp, "/shadow", strlen("/shadow"));
+	  strcpy (cp, "/shadow");
 	  cp = stpcpy (shadow_old, shadow_orig);
-	  strncpy (cp, ".old", strlen(".old"));
+	  strcpy (cp, ".old");
 
           /* Open the shadow file for reading. We can't use getspent and
              friends here, because they go through the YP maps, too. */
@@ -752,9 +744,9 @@ write_user_data (user_t *data, int is_locked)
             }
           if (fchmod (newpf_fd, shadow_stat.st_mode) < 0)
 	    {
-		  fprintf (stderr,
-			   _("Cannot change permissions for `%s': %s\n"),
-			   shadow_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	      fprintf (stderr,
+		       _("Cannot change permissions for `%s': %s\n"),
+		       shadow_tmp, strerror (errno));
 	      fclose (oldpf);
 	      close (newpf_fd);
 	      unlink (shadow_tmp);
@@ -765,7 +757,7 @@ write_user_data (user_t *data, int is_locked)
 	    {
 	      fprintf (stderr,
 		       _("Cannot change owner/group for `%s': %s\n"),
-		       shadow_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		       shadow_tmp, strerror (errno));
 	      fclose (oldpf);
 	      close (newpf_fd);
 	      unlink (shadow_tmp);

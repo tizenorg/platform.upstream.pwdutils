@@ -86,10 +86,10 @@ static void
 print_date (time_t date)
 {
 #ifdef HAVE_STRFTIME
-  struct tm *tp, tp_buf;
+  struct tm *tp;
   char buf[80];
 
-  tp = gmtime_r (&date, &tp_buf);
+  tp = gmtime (&date);
   strftime (buf, sizeof buf, "%b %d, %Y", tp);
   puts (buf);
 #else
@@ -474,10 +474,8 @@ main (int argc, char *argv[])
       if (!pw_data->use_shadow)
 	{
 	  char shadowfile[strlen (files_etc_dir) + 8];
-      char *cp;
-      memset(shadowfile, 0, sizeof(shadowfile));
-	  cp = stpcpy (shadowfile, files_etc_dir);
-	  strncpy (cp, "/shadow", strlen("/shadow"));
+	  char *cp = stpcpy (shadowfile, files_etc_dir);
+	  strcpy (cp, "/shadow");
 
 	  if (access (shadowfile, F_OK) != 0)
 	    {
@@ -540,10 +538,9 @@ main (int argc, char *argv[])
 
       if (setgid (getgid ()) || setuid (uid))
 	{
-        char err_buf[ERR_BUF_LEN];
 	  sec_log (program, MSG_DROP_PRIVILEGE_FAILED, errno, uid);
 	  fprintf (stderr, _("%s: Failed to drop privileges: %s\n"),
-		   program, strerror_r (errno,err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
         }
 

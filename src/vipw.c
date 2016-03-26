@@ -79,7 +79,6 @@ call_editor (const char *file)
 {
   char *editor;
   pid_t pid;
-  char err_buf[ERR_BUF_LEN];
 
   if ((editor = getenv("EDITOR")) == NULL)
     editor = strdup(_PATH_VI);
@@ -87,8 +86,7 @@ call_editor (const char *file)
   pid = fork();
   if (pid < 0) /* Error */
     {
-	  fprintf (stderr, _("Cannot fork: %s\n"),
-		   strerror_r (errno, err_buf, ERR_BUF_LEN));
+      fprintf (stderr, _("Cannot fork: %s\n"), strerror (errno));
       return E_FAILURE;
     }
   else if (pid == 0) /* Child */
@@ -154,7 +152,6 @@ edit (const char *file, const char *program, int shadow)
 #ifdef WITH_SELINUX
   security_context_t prev_context;
 #endif
-  char err_buf[ERR_BUF_LEN];
 
   if (asprintf (&tmpname, "%s.%sXXXXXX", file, program) < 0)
     {
@@ -165,7 +162,6 @@ edit (const char *file, const char *program, int shadow)
   if (lock_database () != 0)
     {
       fprintf (stderr, _("Cannot lock `%s': already locked.\n"), file);
-	  free(tmpname);
       return E_PWDBUSY;
     }
 
@@ -206,8 +202,7 @@ edit (const char *file, const char *program, int shadow)
 	 user will create them.  */
       if (errno != ENOENT)
 	{
-	  fprintf (stderr, _("File dose not exist: %s\n"),
-		 strerror_r (errno, err_buf, ERR_BUF_LEN));
+	  fprintf (stderr, "%s: %s\n", file, strerror (errno));
 	  close (new_fd);
 	  unlink (tmpname);
 	  ulckpwdf ();
@@ -232,8 +227,8 @@ edit (const char *file, const char *program, int shadow)
 	{
 	  if (write (new_fd, buffer, cnt) != cnt)
 	    {
-		  fprintf (stderr, _("Cannot copy `%s': %s\n"),
-			   file, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	      fprintf (stderr, _("Cannot copy `%s': %s\n"),
+		       file, strerror (errno));
 	      cnt = -1;
 	      break;
 	    }
@@ -241,7 +236,7 @@ edit (const char *file, const char *program, int shadow)
       if (cnt < 0) /* Remove file if copy failed. */
 	{
 	  fprintf (stderr, _("Cannot copy `%s': %s\n"),
-		   file, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   file, strerror (errno));
 	  close (old_fd);
 	  close (new_fd);
 	  unlink (tmpname);
@@ -252,8 +247,6 @@ edit (const char *file, const char *program, int shadow)
       if (fstat (old_fd, &orig))
 	{
 	  fprintf (stderr, _("Can't stat `%s': %m\n"), file);
-   	  close(old_fd);
-	  free(tmpname);
 	  return E_FAILURE;
 	}
       close (old_fd);
@@ -263,7 +256,6 @@ edit (const char *file, const char *program, int shadow)
   if (stat (tmpname, &before))
     {
       fprintf (stderr, _("Can't stat `%s': %m\n"), tmpname);
-	  free(tmpname);
       return E_FAILURE;
     }
 
@@ -278,7 +270,6 @@ edit (const char *file, const char *program, int shadow)
   if (stat (tmpname, &after))
     {
       fprintf (stderr, _("Can't stat `%s': %m\n"), tmpname);
-	  free (tmpname);
       return E_FAILURE;
     }
 
@@ -292,20 +283,18 @@ edit (const char *file, const char *program, int shadow)
       /* Set modes of temporary file to the from the original one.  */
       if (chmod (tmpname, orig.st_mode) < 0)
 	{
-      fprintf (stderr,
+	  fprintf (stderr,
 		   _("Cannot change permissions for `%s': %s\n"),
-		   tmpname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   tmpname, strerror (errno));
 	  unlink (tmpname);
-	  free (tmpname);
 	  return E_FAILURE;
 	}
       if (chown (tmpname, orig.st_uid, orig.st_gid) < 0)
 	{
 	  fprintf (stderr,
 		   _("Cannot change owner/group for `%s': %s\n"),
-		   tmpname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   tmpname, strerror (errno));
 	  unlink (tmpname);
-	  free (tmpname);
 	  return E_FAILURE;
 	}
 
@@ -329,7 +318,6 @@ edit (const char *file, const char *program, int shadow)
 		     _("Warning: cannot create backup file: %m\n"));
 	  rename (tmpname, file);
 	}
-	 free (old);
     }
 
   ulckpwdf ();

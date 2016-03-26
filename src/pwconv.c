@@ -115,9 +115,8 @@ main (int argc, char *argv[])
   char *cp;
   char *tmpshadow = NULL;
   char *tmppasswd = NULL;
-  char buffer[BUF_POOL_LEN];
-  struct group resultbuf, *shadow_grp;
-  char err_buf[ERR_BUF_LEN];
+
+
 #ifdef ENABLE_NLS
   setlocale(LC_ALL, "");
   bindtextdomain(PACKAGE, LOCALEDIR);
@@ -192,7 +191,7 @@ main (int argc, char *argv[])
 	  if (errno == ENOENT)
 	    {
 	      int fd = creat (path, S_IRUSR|S_IWUSR);
-	      getgrnam_r ("shadow", &resultbuf, buffer, BUF_POOL_LEN, &shadow_grp);
+	      struct group *shadow_grp = getgrnam ("shadow");
 
 	      if (fd < 0)
 		{
@@ -203,9 +202,9 @@ main (int argc, char *argv[])
 
 	      if (chown (path, 0, shadow_grp ? shadow_grp->gr_gid : 0) < 0)
 		{
-          fprintf (stderr,
-          	   _("Cannot change owner/group for `%s': %s\n"),
-          	   path, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		  fprintf (stderr,
+			   _("Cannot change owner/group for `%s': %s\n"),
+			   path, strerror (errno));
 		  unlink (path);
 		  free (path);
 		  return E_FAILURE;
@@ -214,7 +213,7 @@ main (int argc, char *argv[])
 		{
 		  fprintf (stderr,
 			   _("Cannot change permissions for `%s': %s\n"),
-			   path, strerror_r (errno, err_buf, ERR_BUF_LEN));	  
+			   path, strerror (errno));
 		  unlink (path);
 		  free (path);
 		  return E_FAILURE;

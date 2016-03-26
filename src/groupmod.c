@@ -392,9 +392,7 @@ main (int argc, char **argv)
   /* After this, we can start modifying the existing account.  */
   if (know_gid != NULL && !non_unique)
     {
-      struct group *grp, grp_buf;
-      char buf_pool[BUF_POOL_LEN];
-      if ((getgrgid_r(new_gid, &grp_buf, buf_pool, BUF_POOL_LEN, &grp)==0 && grp != NULL) ||
+      if (getgrgid (new_gid) != NULL ||
 	  (have_extrapath && files_getgrgid (new_gid) != NULL))
 	{
 	  fprintf (stderr, _("%s: GID %u is not unique.\n"),
@@ -417,9 +415,7 @@ main (int argc, char **argv)
 	}
       else
 	{
-      struct group *grp, grp_buf;
-      char buf_pool[BUF_POOL_LEN];
-	  if ((getgrnam_r(new_name, &grp_buf, buf_pool, BUF_POOL_LEN, &grp) == 0 && grp != NULL) ||
+	  if (getgrnam (new_name) != NULL ||
 	      (have_extrapath && files_getgrnam (new_name) != NULL))
 	    {
 	      fprintf (stderr, _("%s: Group `%s' already exists.\n"),

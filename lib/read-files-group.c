@@ -54,9 +54,8 @@ internal_setent (FILE **stream, const char *file)
   if (*stream == NULL)
     {
       char *filename = alloca (strlen (files_etc_dir) + strlen (file) + 1);
-	  memset( filename, 0, strlen (files_etc_dir) + strlen (file) + 1);
-	  strncpy (filename, files_etc_dir, strlen(files_etc_dir));
-	  strncat (filename, file, strlen(file));
+      strcpy (filename, files_etc_dir);
+      strcat (filename, file);
 
       *stream = fopen (filename, "r");
 

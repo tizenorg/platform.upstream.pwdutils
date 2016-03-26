@@ -71,8 +71,7 @@ print_help (const char *program)
 int
 main (int argc, char *argv[])
 {
-  struct passwd *pw, pw_buf;
-  char buf_pw[BUF_PW_LEN];
+  struct passwd *pw;
   char *program;
   char *cp, *shell;
   char *c_flag = NULL;
@@ -170,7 +169,7 @@ main (int argc, char *argv[])
       return E_USAGE;
     }
 
-  if (getpwuid_r(getuid(), &pw_buf, buf_pw, BUF_PW_LEN, &pw) != 0 || pw == NULL)
+  if ((pw = getpwuid (getuid())) == NULL)
     {
       fprintf (stderr, _("%s: Unknown user.\n"), program);
       exit (E_FAILURE);
@@ -180,19 +179,18 @@ main (int argc, char *argv[])
 
   if (argc == 1) /* Change primary group to new one.  */
     {
-      struct group *grp, grp_buf;
-      char buf_pool[BUF_POOL_LEN];
+      struct group *grp;
       gid_t gid;
-      //gid_t egid;
+      gid_t egid;
       int is_member = 0;
       int ngroups, ngroups_allocated, i;
       gid_t *grouplist;
       char *utf8_arg = locale_to_utf8 (argv[0]);
 
       /* Try it as a group name, then a group id. */
-      if ((getgrnam_r(utf8_arg, &grp_buf, buf_pool, BUF_POOL_LEN, &grp) != 0 || grp == NULL) &&
+      if ((grp = getgrnam (utf8_arg)) == NULL &&
 	  (strtoid (utf8_arg, &gid) == -1 ||
-	   (getgrgid_r(gid, &grp_buf, buf_pool, BUF_POOL_LEN, &grp) != 0 || grp == NULL)))
+	   (grp = getgrgid (gid)) == NULL))
 	{
 	  fprintf (stderr, _("%s: bad group `%s'.\n"), program, argv[0]);
 	  return E_USAGE;
@@ -217,9 +215,8 @@ main (int argc, char *argv[])
                 }
               if ((count = getgroups(count, groupIDs)) < 0)
                 {
-                  char err_buf[ERR_BUF_LEN];
                   fprintf (stderr, _("%s: calling getgroups failed: %s\n"),
-                        program, strerror_r (errno, err_buf, ERR_BUF_LEN));
+                        program, strerror (errno));
                         return E_FAILURE;
                 }
               for (i = 0; i < count; i++ )
@@ -236,10 +233,9 @@ main (int argc, char *argv[])
           /* check in databases if not already found */
           if (!is_member) 
             { 
-	      struct group *g, g_buf;
+	      struct group *g;
 	      char **gp;
 	      gid_t search_gid;
-          char buf_pool[BUF_POOL_LEN];
 
 	      /* grp will be no longer valid after setgrent() call.  */
 	      search_gid = grp->gr_gid;
@@ -251,7 +247,7 @@ main (int argc, char *argv[])
 		 to step through all group entries and search for the correct
 		 one.  */
 	      setgrent ();
-	      while (!is_member && (getgrent_r(&g_buf, buf_pool, BUF_POOL_LEN, &g) == 0 && g != NULL))
+	      while (!is_member && (g = getgrent ()) != NULL)
 		{
 		  if (g->gr_gid != search_gid)
 		    continue;
@@ -269,7 +265,7 @@ main (int argc, char *argv[])
 	      /* endgrent (); */ /* Don't invalidate grp pointer.  */
 	      if (grp == NULL)
 		{ /* restore grp pointer, user is no member. */
-		  if (getgrgid_r(gid, &grp_buf, buf_pool, BUF_POOL_LEN, &grp) != 0 || grp == NULL )
+		  if ((grp = getgrgid (search_gid)) == NULL)
 		    {
 		      fprintf (stderr,
 			       _("%s: failure to get group entry for %d.\n"),
@@ -292,7 +288,7 @@ main (int argc, char *argv[])
 	    }
 	}
 
-      //egid = getegid();
+      egid = getegid();
 
       /* Find out, how many sumplementary groups exists and allocate
 	 enough memory for one additional group.  */
@@ -314,9 +310,8 @@ main (int argc, char *argv[])
 
       if ((ngroups = getgroups (ngroups, grouplist)) < 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("%s: calling getgroups failed: %s\n"),
-		   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
 	}
 
@@ -360,17 +355,15 @@ main (int argc, char *argv[])
 
       if (setgroups (ngroups, (grouplist)) < 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("%s: calling setgroups failed: %s\n"),
-		   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
 	}
 
       if (setgid (grp->gr_gid) < 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("%s: calling setgid failed: %s\n"),
-		   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
 	}
     }
@@ -378,16 +371,14 @@ main (int argc, char *argv[])
     {
       if (initgroups (pw->pw_name, pw->pw_gid) != 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("%s: calling initgroups failed: %s\n"),
-		   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
 	}
       if (setgid (pw->pw_gid) != 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("%s: calling setgid failed: %s\n"),
-		   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   program, strerror (errno));
 	  return E_FAILURE;
 	}
     }
@@ -395,9 +386,8 @@ main (int argc, char *argv[])
   /* Drop root privilegs.  */
   if (setuid (getuid ()) != 0)
     {
-      char err_buf[ERR_BUF_LEN];
       fprintf (stderr, _("%s: calling setuid failed: %s\n"),
-	       program, strerror_r(errno, err_buf, ERR_BUF_LEN));
+	       program, strerror (errno));
       return E_FAILURE;
     }
 
@@ -408,9 +398,8 @@ main (int argc, char *argv[])
 
       if (chdir (pw->pw_dir) != 0)
 	{
-      char err_buf[ERR_BUF_LEN];
 	  fprintf (stderr, _("Cannot change to directory %s: %s\n"),
-		   pw->pw_dir, strerror_r(errno, err_buf, ERR_BUF_LEN));
+		   pw->pw_dir, strerror (errno));
 	  if (!getlogindefs_bool ("DEFAULT_HOME", 1))
 	    return E_FAILURE;
 	  if (chdir ("/") < 0)
@@ -447,11 +436,8 @@ main (int argc, char *argv[])
     execl (shell, basename (shell), NULL);
 
   /* execv or execl failed.  */
-  {
-  char err_buf[ERR_BUF_LEN];
   fprintf (stderr, _("%s: execl failed: %s\n"),
-	   program, strerror_r(errno, err_buf, ERR_BUF_LEN));
-  }
+	   program, strerror (errno));
 
   /* should never be reached!  */
   return E_FAILURE;

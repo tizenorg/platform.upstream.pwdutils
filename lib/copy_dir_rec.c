@@ -59,15 +59,13 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 	  char *cp;
 
 	  /* create source and destination filename with full path.  */
-      memset(srcfile, 0, sizeof(srcfile));
 	  cp = stpcpy (srcfile, src);
 	  *cp++ = '/';
-	  strncpy (cp, entry->d_name, strlen(entry->d_name));
+	  strcpy (cp, entry->d_name);
 
-      memset(dstfile, 0, sizeof(dstfile));
 	  cp = stpcpy (dstfile, dst);
 	  *cp++ = '/';
-	  strncpy (cp, entry->d_name, strlen(entry->d_name));
+	  strcpy (cp, entry->d_name);
 
 	  if (lstat (srcfile, &st) != 0)
 	    continue;
@@ -98,9 +96,8 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 	    {
 	      if (mkdir (dstfile, 0) != 0)
 		{
-          char err_buf[ERR_BUF_LEN];
 		  fprintf (stderr, _("Cannot create directory `%s': %s\n"),
-			   dstfile, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			   dstfile, strerror (errno));
 		  retval = 1;
 		}
 	      else
@@ -113,9 +110,8 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 			     preserve_id ? st.st_gid : gid) != 0 ||
 		      chmod (dstfile, st.st_mode & 07777) != 0)
 		    {
-              char err_buf[ERR_BUF_LEN];
 		      fprintf (stderr, _("Cannot change permissions for `%s': %s\n"),
-			       dstfile, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			       dstfile, strerror (errno));
 		      /* An error occured, remove the new subtree.  */
 		      remove_dir_rec (dstfile);
 		      retval = 1;
@@ -132,26 +128,24 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 	      char buffer[4096];
 	      int len = readlink (srcfile, buffer, sizeof (buffer));
 
-	      if (len < 0 || len >= 4096)
+	      if (len < 0)
 		retval = 1;
 	      else
 		{
 		  buffer[len] = '\0';
 		  if (symlink (buffer, dstfile) != 0)
 		    {
-              char err_buf[ERR_BUF_LEN];
 		      fprintf (stderr, _("Cannot create symlink `%s': %s\n"),
-			       dstfile, strerror_r(errno, err_buf, ERR_BUF_LEN));
+			       dstfile, strerror (errno));
 		      retval = 1;
 		    }
 		  else if (lchown (dstfile,
 				   preserve_id ? st.st_uid : uid,
 				   preserve_id ? st.st_gid : gid) != 0)
 		    {
-              char err_buf[ERR_BUF_LEN];
 		      fprintf (stderr,
                                _("Cannot change owner/group for `%s': %s\n"),
-			       dstfile, strerror_r(errno, err_buf, ERR_BUF_LEN));
+			       dstfile, strerror (errno));
 		      unlink (dstfile);
 		      retval = 1;
 		    }
@@ -183,14 +177,13 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 		{
 		  char buffer[4096];
 		  int cnt;
-          char err_buf[ERR_BUF_LEN];
 
 		  while ((cnt = read (src_fd, buffer, sizeof (buffer))) > 0)
 		    {
 		      if (write (dst_fd, buffer, cnt) != cnt)
 			{
 			  fprintf (stderr, _("Cannot copy `%s': %s\n"),
-				   srcfile, strerror_r (errno, err_buf, ERR_BUF_LEN));
+				   srcfile, strerror (errno));
 			  cnt = -1;
 			  break;
 			}
@@ -204,7 +197,7 @@ copy_dir_rec (const char *src, const char *dst, int preserve_id,
 		      chmod (dstfile, st.st_mode & 07777))
 		    {
 		      fprintf (stderr, _("Cannot change permissions for `%s': %s\n"),
-			       dstfile, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			       dstfile, strerror (errno));
 		      unlink (dstfile);
 		      retval = 1;
 		    }

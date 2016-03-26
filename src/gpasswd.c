@@ -113,7 +113,7 @@ main (int argc, char **argv)
   int lock_password = 0;
   int unlock_password = 0;
   char *binddn = NULL;
-  //int P_flag = 0;
+  int P_flag = 0;
   group_t *gr_data;
   char *use_service = NULL;
   int stdin_flag = 0;
@@ -199,7 +199,7 @@ main (int argc, char **argv)
             }
           break;
 	case 'P':
-	  //P_flag = 1;
+	  P_flag = 1;
 	  files_etc_dir = strdup (optarg);
 	  break;
 	case '\253':
@@ -305,8 +305,7 @@ main (int argc, char **argv)
 	    malloc (strlen (gr_data->gr.gr_passwd) + 2);
           if (gr_data->newpassword == NULL)
             return E_FAILURE;
-          memset(gr_data->newpassword, 0, strlen (gr_data->gr.gr_passwd) + 2);
-          strncpy (&gr_data->newpassword[1], gr_data->gr.gr_passwd, strlen(gr_data->gr.gr_passwd));
+          strcpy (&gr_data->newpassword[1], gr_data->gr.gr_passwd);
           gr_data->newpassword[0] = '!';
         }
       else

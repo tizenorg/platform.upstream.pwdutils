@@ -35,7 +35,6 @@ chown_entry (const char *entry, struct stat *st,
 {
   uid_t use_uid;
   gid_t use_gid;
-  char err_buf[ERR_BUF_LEN];
 
   if (st->st_uid == old_uid)
     use_uid = new_uid;
@@ -53,7 +52,7 @@ chown_entry (const char *entry, struct stat *st,
 	{
 	  fprintf (stderr,
 		   _("Cannot change owner/group for `%s': %s\n"),
-		   entry, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   entry, strerror (errno));
 	  return -1;
 	}
     }
@@ -84,12 +83,11 @@ chown_dir_rec (const char *src, uid_t old_uid, uid_t new_uid,
         {
           char srcfile[strlen (src) + strlen (entry->d_name) + 2];
 	  char *cp;
-          memset(srcfile, 0, sizeof(srcfile));
 
           /* create source and destination filename with full path.  */
           cp = stpcpy (srcfile, src);
           *cp++ = '/';
-          strncpy (cp, entry->d_name, strlen(entry->d_name));
+          strcpy (cp, entry->d_name);
 
           if (lstat (srcfile, &st) != 0)
             continue;

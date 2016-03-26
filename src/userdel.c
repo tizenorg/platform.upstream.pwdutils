@@ -158,14 +158,11 @@ in_use_by_other_users (const char *dir, const char *user,
   struct passwd *pw;
   size_t dirlen = strlen (dir);
   int retval = 0;
-  struct passwd pwp;
-  char buf[BUF_POOL_LEN];
 
   setpwent ();
-  while(1)
-  	{
-  		getpwent_r(&pwp, buf, BUF_POOL_LEN, &pw);
-		if(pw == NULL) break;
+
+  while ((pw = getpwent ()))
+    {
       /* don't count ourself.  */
       if (strcmp (pw->pw_name, user) == 0)
 	continue;
@@ -212,8 +209,6 @@ remove_from_secondary_groups (user_t *pw_data, int have_extrapath)
   } *list = NULL, *item;
   struct group *gr;
   int retval = E_SUCCESS;
-  struct group grp;
-  char buf[BUF_POOL_LEN];
 
   if (have_extrapath)
     {
@@ -235,12 +230,10 @@ remove_from_secondary_groups (user_t *pw_data, int have_extrapath)
     }
   else
     {
-	  setgrent ();
-	  
-	  while(1)
-	  {
-		  getgrent_r(&grp, buf, BUF_POOL_LEN, &gr);		
-		  if(gr == NULL) break;
+      setgrent ();
+
+      while ((gr = getgrent ()))
+	{
 	  unsigned int i;
 
 	  for (i = 0; gr->gr_mem[i]; i++)
@@ -398,7 +391,6 @@ main (int argc, char **argv)
   user_t *pw_data;
   int retval = E_SUCCESS;
   int i;
-  char err_buf[ERR_BUF_LEN];
 
 #ifdef ENABLE_NLS
   setlocale (LC_ALL, "");
@@ -597,9 +589,9 @@ main (int argc, char **argv)
 	}
       else if (ret == 1 || (ret == 0 && force_removal))
 	{
-		if (unlink (cp) == -1)
+	  if (unlink (cp) == -1)
 	    fprintf (stderr, _("%s: warning: can't remove `%s': %s"),
-		     program, cp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		     program, cp, strerror (errno));
 	}
 
       /* Remove the home directory only, if owned by the user and
@@ -621,7 +613,7 @@ main (int argc, char **argv)
 	    {
 	      if (remove_dir_rec (pw_data->pw.pw_dir) != 0)
 		fprintf (stderr, _("%s: warning: can't remove `%s': %s"),
-			 program, pw_data->pw.pw_dir, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			 program, pw_data->pw.pw_dir, strerror (errno));
 	      else
 		{
 		  sec_log (program, MSG_HOME_DIR_REMOVED,

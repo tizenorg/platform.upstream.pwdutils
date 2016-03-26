@@ -213,12 +213,10 @@ loop_over_group_file (int quiet)
       exit (E_FAILURE);
     }
 
-  memset(inputname, 0, strlen (files_etc_dir) + 8);
-  memset(outputname, 0, strlen (files_etc_dir) + 20);
-  strncpy(inputname, files_etc_dir, strlen(files_etc_dir));
-  strncat (inputname, "/group", strlen("/group"));
-  strncpy (outputname, files_etc_dir, strlen(files_etc_dir));
-  strncat (outputname, "/group.tmpXXXXXX", strlen("/group.tmpXXXXXX"));
+  strcpy (inputname, files_etc_dir);
+  strcat (inputname, "/group");
+  strcpy (outputname, files_etc_dir);
+  strcat (outputname, "/group.tmpXXXXXX");
 
   if (!quiet)
     printf (_("Checking `%s'\n"), inputname);
@@ -227,7 +225,6 @@ loop_over_group_file (int quiet)
   if (input == NULL)
     {
       fprintf (stderr, _("Can't open `%s': %m\n"), inputname);
-      free(buffer);
       return E_NO_FILE;
     }
 
@@ -235,7 +232,6 @@ loop_over_group_file (int quiet)
     {
       fprintf (stderr, _("Can't stat `%s': %m\n"), inputname);
       fclose (input);
-      free(buffer);
       return E_NO_FILE;
     }
 
@@ -244,7 +240,6 @@ loop_over_group_file (int quiet)
   if (set_default_context (inputname, &prev_context) < 0)
     {
       fclose (input);
-      free(buffer);
       return E_NO_FILE;
     }
 #endif
@@ -256,7 +251,6 @@ loop_over_group_file (int quiet)
       if (output_fd >= 0)
 	close (output_fd);
       fclose (input);
-      free(buffer);
       return E_FAILURE;
     }
 #endif
@@ -265,31 +259,26 @@ loop_over_group_file (int quiet)
       fprintf (stderr, _("Can't create `%s': %m\n"),
 	       inputname);
       fclose (input);
-      free(buffer);
       return E_NO_FILE;
     }
   if (fchmod (output_fd, group_stat.st_mode) < 0)
     {
-      char err_buf[ERR_BUF_LEN];
       fprintf (stderr,
 	       _("Cannot change permissions for `%s': %s\n"),
-	       outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
-      free(buffer);
       return E_NO_FILE;
     }
   if (fchown (output_fd, group_stat.st_uid, group_stat.st_gid) < 0)
     {
-      char err_buf[ERR_BUF_LEN];
       fprintf (stderr,
 	       _("Cannot change owner/group for `%s': %s\n"),
-	       outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
-      free(buffer);
       return E_NO_FILE;
     }
   if (copy_xattr (inputname, outputname) != 0)
@@ -297,7 +286,6 @@ loop_over_group_file (int quiet)
       fclose (input);
       close (output_fd);
       unlink (outputname);
-      free(buffer);
       return E_NO_FILE;
     }
   output = fdopen (output_fd, "w+");
@@ -307,7 +295,6 @@ loop_over_group_file (int quiet)
       fclose (input);
       close (output_fd);
       unlink (outputname);
-      free(buffer);
       return E_NO_FILE;
     }
 
@@ -445,10 +432,9 @@ loop_over_group_file (int quiet)
 	 group of the member.  */
       for (i = 0; res.gr_mem[i]; i++)
 	{
-	  struct passwd *pw, pw_buf;
-      char buf_pw[BUF_PW_LEN];
+	  struct passwd *pw;
 
-      getpwnam_r(res.gr_mem[i], &pw_buf, buf_pw, BUF_PW_LEN, &pw);
+	  pw = getpwnam (res.gr_mem[i]);
 	  if (pw == NULL)
 	    pw = files_getpwnam (res.gr_mem[i]);
 
@@ -478,9 +464,8 @@ loop_over_group_file (int quiet)
   if (modified)
     {
       char *oldname = alloca (strlen (files_etc_dir) + 20);
-      memset(oldname, 0, strlen (files_etc_dir) + 20);
-      strncpy (oldname, files_etc_dir, strlen(files_etc_dir));
-      strncat (oldname, "/group.old", strlen("/group.old"));
+      strcpy (oldname, files_etc_dir);
+      strcat (oldname, "/group.old");
       unlink (oldname);
       if (link (inputname, oldname) < 0)
 	fprintf (stderr,
@@ -601,16 +586,13 @@ sort_group_file (void)
   int newgf_fd;
   char *cp;
 
-  memset(group_tmp, 0, strlen (files_etc_dir) + strlen (file_tmp) + 1);
-  memset(group_orig, 0, strlen (files_etc_dir) + 8);
-  memset(group_old, 0, strlen (files_etc_dir) + 12);
 
   cp = stpcpy (group_tmp, files_etc_dir);
-  strncpy(cp, file_tmp, strlen(file_tmp));
+  strcpy (cp, file_tmp);
   cp = stpcpy (group_orig, files_etc_dir);
-  strncpy (cp, "/group", strlen("/group"));
+  strcpy (cp, "/group");
   cp = stpcpy (group_old, group_orig);
-  strncpy (cp, ".old", strlen(".old"));
+  strcpy (cp, ".old");
 
   if ((oldgf = fopen (group_orig, "r")) == NULL)
     {
@@ -657,10 +639,9 @@ sort_group_file (void)
     }
   if (fchmod (newgf_fd, group_stat.st_mode) < 0)
     {
-      char err_buf[ERR_BUF_LEN];
       fprintf (stderr,
 	       _("Cannot change permissions for `%s': %s\n"),
-	       group_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       group_tmp, strerror (errno));
       fclose (oldgf);
       close (newgf_fd);
       unlink (group_tmp);
@@ -669,10 +650,9 @@ sort_group_file (void)
     }
   if (fchown (newgf_fd, group_stat.st_uid, group_stat.st_gid) < 0)
     {
-      char err_buf[ERR_BUF_LEN];
       fprintf (stderr,
 	       _("Cannot change owner/group for `%s': %s\n"),
-	       group_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       group_tmp, strerror (errno));
       fclose (oldgf);
       close (newgf_fd);
       unlink (group_tmp);

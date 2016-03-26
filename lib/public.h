@@ -122,8 +122,4 @@ extern int set_default_context (const char *filename,
 extern int restore_default_context (char *prev_context) __attribute_warn_unused_result__;
 #endif
 
-#define ERR_BUF_LEN  256
-#define BUF_POOL_LEN 16384
-#define BUF_PW_LEN   16384
-
 #endif /* __PUBLIC_H__ */

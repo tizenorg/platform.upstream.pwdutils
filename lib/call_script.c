@@ -40,7 +40,6 @@ call_script (const char *variable, const char *name, uid_t uid,
   const char *script;
   int status;
   pid_t child_pid;
-  char err_buf[ERR_BUF_LEN];
 
   script = getlogindefs_str (variable, NULL);
 
@@ -66,7 +65,7 @@ call_script (const char *variable, const char *name, uid_t uid,
 	_exit (1);
       }
     case -1: /* Error occurs.  */
-      fprintf (stderr, _("Cannot fork: %s\n"), strerror_r(errno, err_buf, ERR_BUF_LEN));
+      fprintf (stderr, _("Cannot fork: %s\n"), strerror (errno));
       return -1;
       break;
     default: /* Parent.  */
@@ -75,7 +74,7 @@ call_script (const char *variable, const char *name, uid_t uid,
           int err = errno;
           if (err != EINTR)
             fprintf (stderr, _("waitpid (%d) failed: %s\n"),
-                     child_pid, strerror_r(err, err_buf, ERR_BUF_LEN));
+                     child_pid, strerror (err));
         }
       break;
     }

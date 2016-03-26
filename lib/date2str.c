@@ -28,10 +28,10 @@
 char *
 date2str (time_t date)
 {
-  struct tm *tp, tp_buf;
+  struct tm *tp;
   char buf[12];
 
-  tp = gmtime_r (&date, &tp_buf);
+  tp = gmtime (&date);
 #ifdef HAVE_STRFTIME
   strftime (buf, sizeof (buf), "%Y-%m-%d", tp);
 #else

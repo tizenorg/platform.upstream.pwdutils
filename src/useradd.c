@@ -239,8 +239,6 @@ load_defaults (const char *configfile, struct default_t *data)
   char *buf = NULL;
   size_t buflen = 0;
   int errors = 0;
-  char buffer[BUF_POOL_LEN];
-  struct group resultbuf;
 
   fp = fopen (configfile, "r");
   if (NULL == fp)
@@ -295,7 +293,7 @@ load_defaults (const char *configfile, struct default_t *data)
 	  if (cp[6] != '\0' && strtoid (&cp[6], &grpid) == 0)
 	    /* GID in numeric form */
 	    data->group = grpid;
-	  else if (getgrnam_r (&cp[6], &resultbuf, buffer, BUF_POOL_LEN, &grp) == 0 && grp != NULL)
+	  else if ((grp = getgrnam (&cp[6])) != NULL)
 	    data->group = grp->gr_gid;
 	  else
 	    {
@@ -527,15 +525,13 @@ write_defaults (const char *configfile, struct default_t *data)
   int group_written = 0, home_written = 0, inactive_written = 0;
   int expire_written = 0, shell_written = 0, groups_written = 0;
   int skel_written = 0, create_mail_spool_written = 0, umask_written = 0;
-  char err_buf[ERR_BUF_LEN];
 
   fp = fopen (configfile, "r");
   if (NULL == fp)
     return -1;
 
-  memset(tmpname, 0, sizeof(tmpname));
   cp = stpcpy (tmpname, configfile);
-  strncpy (cp, tmpsuffix, strlen(tmpsuffix));
+  strcpy (cp, tmpsuffix);
 
   if (fstat (fileno (fp), &oldmode) < 0)
     {
@@ -554,9 +550,9 @@ write_defaults (const char *configfile, struct default_t *data)
     }
   if (fchmod (new_fd, oldmode.st_mode) < 0)
     {
-	  fprintf (stderr,
-		   _("Cannot change permissions for `%s': %s\n"),
-		   tmpname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+      fprintf (stderr,
+	       _("Cannot change permissions for `%s': %s\n"),
+	       tmpname, strerror (errno));
       fclose (fp);
       close (new_fd);
       unlink (tmpname);
@@ -566,7 +562,7 @@ write_defaults (const char *configfile, struct default_t *data)
     {
       fprintf (stderr,
 	       _("Cannot change owner/group for `%s': %s\n"),
-	       tmpname, strerror_r (errno, err_buf, ERR_BUF_LEN));	  
+	       tmpname, strerror (errno));
       fclose (fp);
       close (new_fd);
       unlink (tmpname);
@@ -836,9 +832,8 @@ files_getpwent (void)
 static uid_t
 find_free_uid (int is_system_account, int have_extrapath)
 {
-  struct passwd *pwd, pwd_buf;
-  uid_t userid, uid_min, uid_max;  
-  char buf_pool[BUF_POOL_LEN];
+  const struct passwd *pwd;
+  uid_t userid, uid_min, uid_max;
 
   if (is_system_account)
     {
@@ -862,13 +857,11 @@ find_free_uid (int is_system_account, int have_extrapath)
   /* Search the entire password file, looking for the
      largest unused value. If uid_max does already exists,
      skip this.  */
-  if (getpwuid_r (uid_max, &pwd_buf, buf_pool, BUF_POOL_LEN, &pwd) != 0 || pwd == NULL)
+  if (getpwuid (uid_max) == NULL)
     {
       setpwent ();
-	  while(1)
+      while ((pwd = getpwent ()))
 	{
-	  getpwent_r(&pwd_buf, buf_pool, BUF_POOL_LEN, &pwd);	
-	  if(pwd == NULL) break;
 	  if (pwd->pw_uid >= userid)
 	    {
 	      if (pwd->pw_uid > uid_max)
@@ -901,7 +894,7 @@ find_free_uid (int is_system_account, int have_extrapath)
   if (userid == uid_max + 1)
     {
       for (userid = uid_min; userid < uid_max; userid++)
-	if (getpwuid_r (userid, &pwd_buf, buf_pool, BUF_POOL_LEN, &pwd) != 0 || pwd == NULL)
+	if (getpwuid (userid) == NULL)
 	  {
 	    if (have_extrapath)
 	      {
@@ -975,7 +968,6 @@ create_mail_file (const char *user, uid_t uid, gid_t user_gid)
   char *fname;
   struct stat st;
   char *cp;
-  char err_buf[ERR_BUF_LEN];
 
   if ((fname = malloc (strlen (user) +
 		       strlen (_PATH_MAILDIR) + 2)) == NULL)
@@ -983,16 +975,12 @@ create_mail_file (const char *user, uid_t uid, gid_t user_gid)
       fputs ("running out of memory!\n", stderr);
       return E_MAIL_SPOOL;
     }
-  memset( fname, 0, strlen (user) + strlen (_PATH_MAILDIR) + 2);
   cp = stpcpy (fname, _PATH_MAILDIR);
   *cp++ = '/';
-  strncpy (cp, user, strlen(user));
+  strcpy (cp, user);
 
   if (access (fname, R_OK) == 0)
-  {
-    free (fname);
     return 0;
-  }
 
   if (stat (_PATH_MAILDIR, &st) == -1)
     {
@@ -1046,7 +1034,7 @@ create_mail_file (const char *user, uid_t uid, gid_t user_gid)
 	{
 	  fprintf (stderr,
 		   _("Cannot change owner/group for `%s': %s\n"),
-		   fname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   fname, strerror (errno));
 	  unlink (fname);
 	  free (fname);
 	  close (fd);
@@ -1056,7 +1044,7 @@ create_mail_file (const char *user, uid_t uid, gid_t user_gid)
 	{
 	  fprintf (stderr,
 		   _("Cannot change permissions for `%s': %s\n"),
-		   fname, strerror_r (errno, err_buf, ERR_BUF_LEN));	  
+		   fname, strerror (errno));
 	  unlink (fname);
 	  free (fname);
 	  close (fd);
@@ -1078,8 +1066,6 @@ create_home_directory (const char *home, uid_t uid, gid_t gid,
 		       const char *skeldir, int home_umask)
 {
   int retval = 0;
-  char *lasts = NULL;
-  char err_buf[ERR_BUF_LEN];
 
   if (home == NULL || *home == '\0')
     return E_HOMEDIR;
@@ -1096,12 +1082,11 @@ create_home_directory (const char *home, uid_t uid, gid_t gid,
       /* Check for every part of the path, if the directory
          exists. If not, create it with permissions 755 and
          owner root:root.  */
-	  cp = strtok_r (bhome, "/", &lasts);
-	  memset( path, 0, sizeof(path));
+      cp = strtok (bhome, "/");
       while (cp)
 	{
-	  strncat (path, "/", strlen("/"));
-	  strncat (path, cp, strlen(cp));
+	  strcat (path, "/");
+	  strcat (path, cp);
 	  if (access (path, F_OK) != 0)
 	    {
 	      if (mkdir (path, 0) != 0)
@@ -1118,19 +1103,19 @@ create_home_directory (const char *home, uid_t uid, gid_t gid,
 		fprintf (stderr, _("%s: Warning: chmod on `%s' failed: %m\n"),
 			 program, path);
 	    }
-	  cp = strtok_r (NULL, "/", &lasts);
+	  cp = strtok (NULL, "/");
 	}
       if (chown (home, uid, gid) < 0)
 	{
 	  fprintf (stderr,
 		   _("Cannot change owner/group for `%s': %s\n"),
-		   home, strerror_r (errno, err_buf, ERR_BUF_LEN));	  
+		   home, strerror (errno));
 	  retval = E_HOMEDIR;
 	}
       if (chmod (home, 0777 & ~home_umask) < 0)
 	{
 	  fprintf (stderr, _("Cannot change permissions for `%s': %s\n"),
-		   home, strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   home, strerror (errno));
 	  retval = E_HOMEDIR;
 	}
 
@@ -1186,9 +1171,7 @@ main (int argc, char **argv)
   int create_homedir = 0;
   int modify_defaults = 0;
   int broken_default_useradd = 0;
-  char buf_pool[BUF_POOL_LEN];
-  struct passwd *pwd, pwd_buf;
-  char err_buf[ERR_BUF_LEN];
+
 #ifdef ENABLE_NLS
   setlocale (LC_ALL, "");
   bindtextdomain (PACKAGE, LOCALEDIR);
@@ -1547,7 +1530,7 @@ main (int argc, char **argv)
       char *buffer = alloca (buflen);
       struct passwd resultbuf;
       struct passwd *pw;
-	  
+
       /* Determine our own user name for PAM authentication.  */
       while (getpwuid_r (getuid (), &resultbuf, buffer, buflen, &pw) != 0
 	     && errno == ERANGE)
@@ -1607,7 +1590,7 @@ main (int argc, char **argv)
   /* After this, we can start creating the new account.  */
   if (know_uid && !non_unique)
     {
-	  if ((getpwuid_r (new_uid, &pwd_buf, buf_pool, BUF_POOL_LEN, &pwd) == 0 && pwd != NULL)||
+      if (getpwuid (new_uid) != NULL ||
 	  (have_extrapath && files_getpwuid (new_uid) != NULL))
 	{
 	  if(prefer_uid)
@@ -1648,7 +1631,7 @@ main (int argc, char **argv)
       fputs (_("Cannot lock password file: already locked.\n"), stderr);
       return E_PWDBUSY;
     }
-  else if ((getpwnam_r (new_account, &pwd_buf, buf_pool, BUF_POOL_LEN, &pwd) == 0 && pwd != NULL)||
+  else if (getpwnam (new_account) != NULL ||
 	   (have_extrapath && files_getpwnam (new_account) != NULL))
     {				/* User does already exists.  */
       sec_log (program, MSG_USER_ALREADY_EXISTS, new_account, getuid ());
@@ -1668,9 +1651,8 @@ main (int argc, char **argv)
       memset (&pw_data, 0, sizeof (pw_data));
 
       /* check if we have shadow support.  */
-  	  memset(shadowfile, 0, sizeof(shadowfile));	  
       cp = stpcpy (shadowfile, files_etc_dir);
-	  strncpy (cp, "/shadow", strlen("/shadow"));
+      strcpy (cp, "/shadow");
       pw_data.use_shadow = (access (shadowfile, F_OK) == 0);
       if (use_service)
 	{
@@ -1724,7 +1706,7 @@ main (int argc, char **argv)
 
       /* Clear old log entries, but only if this UID is not shared
          with another account.  */
-	  if ((getpwuid_r (pw_data.pw.pw_uid, &pwd_buf, buf_pool, BUF_POOL_LEN, &pwd) != 0 || pwd == NULL) &&
+      if (getpwuid (pw_data.pw.pw_uid) == NULL &&
 	  (!have_extrapath || files_getpwuid (pw_data.pw.pw_uid) == NULL))
 	{
 	  int fd;
@@ -1738,7 +1720,7 @@ main (int argc, char **argv)
 		   == (off_t)-1) || (write (fd, &fl, sizeof (fl)) == -1))
 		fprintf (stderr,
 			 _("%s: Error: Cannot clear old faillog entry: %s\n"),
-			 program, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			 program, strerror (errno));
 	      close (fd);
 	    }
 
@@ -1751,7 +1733,7 @@ main (int argc, char **argv)
 		   == (off_t)-1) || (write (fd, &ll, sizeof (ll)) == -1))
 		fprintf (stderr,
 			 _("%s: Error: Cannot clear old lastlog entry: %s\n"),
-			 program, strerror_r (errno, err_buf, ERR_BUF_LEN));
+			 program, strerror (errno));
 	      close (fd);
 	    }
 	}

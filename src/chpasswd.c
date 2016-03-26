@@ -94,7 +94,6 @@ main (int argc, char *argv[])
   size_t buflen = 0;
   unsigned long line = 0, errors = 0;
   char *use_service = NULL;
-  char err_buf[ERR_BUF_LEN];
 #ifdef USE_LDAP
   char *oldclearpwd = NULL;
   char *binddn = NULL;
@@ -204,7 +203,7 @@ main (int argc, char *argv[])
       if (input == NULL)
 	{
 	  fprintf (stderr, "%s: %s: %s\n", program, argv[0],
-		   strerror_r (errno, err_buf, ERR_BUF_LEN));
+		   strerror (errno));
 	  return E_BAD_ARG;
 	}
     }

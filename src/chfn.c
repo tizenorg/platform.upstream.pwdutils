@@ -697,7 +697,7 @@ main (int argc, char *argv[])
            strlen (new.work_phone) + strlen (new.home_phone) +
            strlen (new.other) + 4);
     new_gecos = (char *)malloc (len + 1);
-    snprintf (new_gecos, len+1,  "%s,%s,%s,%s,%s", new.fullname, new.roomno,
+    sprintf (new_gecos, "%s,%s,%s,%s,%s", new.fullname, new.roomno,
              new.work_phone, new.home_phone, new.other);
 
     /* remove trailing empty fields (but not subfields of new.other) */

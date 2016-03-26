@@ -219,16 +219,11 @@ loop_over_passwd_file (int quiet)
   int modified = 0;
   char *inputname = alloca (strlen (files_etc_dir) + 8);
   char *outputname = alloca (strlen (files_etc_dir) + 20);
-  struct group grp, *grpresult;
-  char grpBuffer[BUF_POOL_LEN];
-  char err_buf[ERR_BUF_LEN];  
 
-  memset( inputname, 0, strlen (files_etc_dir) + 8);  
-  memset( outputname, 0, strlen (files_etc_dir) + 20);
-  strncpy (inputname, files_etc_dir, strlen(files_etc_dir));
-  strncat (inputname, "/passwd", strlen("/passwd"));
-  strncpy (outputname, files_etc_dir, strlen(files_etc_dir));
-  strncat (outputname, "/passwd.tmpXXXXXX", strlen("/passwd.tmpXXXXXX"));
+  strcpy (inputname, files_etc_dir);
+  strcat (inputname, "/passwd");
+  strcpy (outputname, files_etc_dir);
+  strcat (outputname, "/passwd.tmpXXXXXX");
 
   if (!quiet)
     printf (_("Checking `%s'\n"), inputname);
@@ -276,8 +271,8 @@ loop_over_passwd_file (int quiet)
   if (fchmod (output_fd, passwd_stat.st_mode) < 0)
     {
       fprintf (stderr,
-      	   _("Cannot change permissions for `%s': %s\n"),
-      	   outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       _("Cannot change permissions for `%s': %s\n"),
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
@@ -287,7 +282,7 @@ loop_over_passwd_file (int quiet)
     {
       fprintf (stderr,
 	       _("Cannot change owner/group for `%s': %s\n"),
-	       outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));				
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
@@ -429,9 +424,8 @@ loop_over_passwd_file (int quiet)
       blacklist_store_name (res.pw_name, &blacklist);
 
       /* Check, if primary group exists.  */
-	  getgrgid_r (res.pw_gid, &grp, grpBuffer, BUF_POOL_LEN, &grpresult);
-      if(!quiet && grpresult == NULL &&
-	  files_getgrgid (res.pw_gid) == NULL)	  
+      if (!quiet && getgrgid (res.pw_gid) == NULL &&
+	  files_getgrgid (res.pw_gid) == NULL)
 	{
 	  result = E_BAD_ENTRY;
 	  printf (_("User `%s': unknown group `%u'\n"),
@@ -466,9 +460,8 @@ loop_over_passwd_file (int quiet)
   if (modified)
     {
       char *oldname = alloca (strlen (files_etc_dir) + 20);
-      memset( oldname, 0, strlen (files_etc_dir) + 20);
-      strncpy (oldname, files_etc_dir, strlen(files_etc_dir));
-      strncat (oldname, "/passwd.old", strlen("/passwd.old"));
+      strcpy (oldname, files_etc_dir);
+      strcat (oldname, "/passwd.old");
       unlink (oldname);
       if (link (inputname, oldname) < 0)
 	fprintf (stderr,
@@ -496,14 +489,11 @@ loop_over_shadow_file (int quiet)
   int modified = 0;
   char *inputname = alloca (strlen (files_etc_dir) + 8);
   char *outputname = alloca (strlen (files_etc_dir) + 20);
-  char err_buf[ERR_BUF_LEN];  
-  
-  memset( inputname, 0, strlen (files_etc_dir) + 8);
-  memset( outputname, 0, strlen (files_etc_dir) + 20);  
-  strncpy (inputname, files_etc_dir, strlen(files_etc_dir)); 
-  strncat (inputname, "/shadow", strlen("/shadow"));
-  strncpy (outputname, files_etc_dir, strlen(files_etc_dir));
-  strncat (outputname, "/shadow.tmpXXXXXX", strlen("/shadow.tmpXXXXXX"));
+
+  strcpy (inputname, files_etc_dir);
+  strcat (inputname, "/shadow");
+  strcpy (outputname, files_etc_dir);
+  strcat (outputname, "/shadow.tmpXXXXXX");
 
   input = fopen (inputname, "r");
   if (input == NULL)
@@ -552,7 +542,7 @@ loop_over_shadow_file (int quiet)
     {
       fprintf (stderr,
 	       _("Cannot change permissions for `%s': %s\n"),
-	       outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));			
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
@@ -561,8 +551,8 @@ loop_over_shadow_file (int quiet)
   if (fchown (output_fd, shadow_stat.st_uid, shadow_stat.st_gid) < 0)
     {
       fprintf (stderr,
-    	   _("Cannot change owner/group for `%s': %s\n"),
-    	   outputname, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       _("Cannot change owner/group for `%s': %s\n"),
+	       outputname, strerror (errno));
       fclose (input);
       close (output_fd);
       unlink (outputname);
@@ -736,9 +726,8 @@ loop_over_shadow_file (int quiet)
   if (modified)
     {
       char *oldname = alloca (strlen (files_etc_dir) + 20);
-	  memset( oldname, 0, strlen (files_etc_dir) + 20);
-      strncpy (oldname, files_etc_dir, strlen(files_etc_dir));
-      strncat (oldname, "/shadow.old", strlen("/shadow.old"));
+      strcpy (oldname, files_etc_dir);
+      strcat (oldname, "/shadow.old");
       unlink (oldname);
       if (link (inputname, oldname) < 0)
 	fprintf (stderr,
@@ -788,7 +777,6 @@ sort_passwd_file (void)
   struct passwd *pwd;
   struct passwd_list *ptr = NULL;
   int retval = 0;
-  char err_buf[ERR_BUF_LEN];
 
   while ((pwd = files_getpwent ()))
     {
@@ -860,15 +848,13 @@ sort_passwd_file (void)
   int newgf_fd;
   char *cp;
 
-  memset( passwd_tmp, 0, strlen (files_etc_dir) + strlen (file_tmp) + 1);
+
   cp = stpcpy (passwd_tmp, files_etc_dir);
-  strncpy (cp, file_tmp, strlen(file_tmp));
-  memset(passwd_orig, 0 , strlen (files_etc_dir) + 8);
+  strcpy (cp, file_tmp);
   cp = stpcpy (passwd_orig, files_etc_dir);
-  strncpy (cp, "/passwd", strlen("/passwd"));
-  memset(passwd_old, 0 , strlen (files_etc_dir) + 12);
+  strcpy (cp, "/passwd");
   cp = stpcpy (passwd_old, passwd_orig);
-  strncpy (cp, ".old", strlen(".old"));
+  strcpy (cp, ".old");
 
   if ((oldgf = fopen (passwd_orig, "r")) == NULL)
     {
@@ -916,8 +902,8 @@ sort_passwd_file (void)
   if (fchmod (newgf_fd, passwd_stat.st_mode) < 0)
     {
       fprintf (stderr,
-      	   _("Cannot change permissions for `%s': %s\n"),
-      	   passwd_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));
+	       _("Cannot change permissions for `%s': %s\n"),
+	       passwd_tmp, strerror (errno));
       fclose (oldgf);
       close (newgf_fd);
       unlink (passwd_tmp);
@@ -928,7 +914,7 @@ sort_passwd_file (void)
     {
       fprintf (stderr,
 	       _("Cannot change owner/group for `%s': %s\n"),
-	       passwd_tmp, strerror_r (errno, err_buf, ERR_BUF_LEN));	  
+	       passwd_tmp, strerror (errno));
       fclose (oldgf);
       close (newgf_fd);
       unlink (passwd_tmp);
