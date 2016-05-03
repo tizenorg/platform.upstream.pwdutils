@@ -63,13 +63,13 @@ echo ".so man8/useradd.8" > %{buildroot}%{_mandir}/man8/adduser.8
 %config(noreplace) %{_sysconfdir}/default/passwd
 %dir %{_sysconfdir}/pwdutils
 %config(noreplace) %{_sysconfdir}/pwdutils/logging
-%attr (4755,root,shadow) %{_bindir}/chage
-%attr (4755,root,shadow) %{_bindir}/chfn
-%attr (4755,root,shadow) %{_bindir}/chsh
-%attr (4755,root,shadow) %{_bindir}/expiry
-%attr (4755,root,shadow) %{_bindir}/gpasswd
-%attr (4755,root,root) %{_bindir}/newgrp
-%attr (4755,root,shadow) %{_bindir}/passwd
+%attr (755,root,shadow) %{_bindir}/chage
+%attr (755,root,shadow) %{_bindir}/chfn
+%attr (755,root,shadow) %{_bindir}/chsh
+%attr (755,root,shadow) %{_bindir}/expiry
+%attr (755,root,shadow) %{_bindir}/gpasswd
+%attr (755,root,root) %{_bindir}/newgrp
+%attr (755,root,shadow) %{_bindir}/passwd
 %{_bindir}/sg
 %{_sbindir}/chpasswd
 %{_sbindir}/groupadd
