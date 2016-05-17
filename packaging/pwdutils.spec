@@ -8,7 +8,7 @@ Url:            http://www.thkukuk.de/pam/pwdutils/
 Version:        3.2.19
 Release:        0
 Summary:        Utilities to Manage User and Group Accounts
-License:        GPL-2.0
+License:        GPL-2.0 and GPL-2.0+
 Group:          Security/Accounts
 Source:         pwdutils-%{version}.tar.bz2
 Source3:        useradd.default
